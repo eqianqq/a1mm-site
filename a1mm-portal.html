@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A.1MM — Gothic Tarot Atelier & Divination</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --abyss:#0a0a0a;--crypt:#0e0b12;--stone:#14101a;--altar:#1a1520;--surface:#1f192a;
+  --gold:#c9a84c;--gold-dim:#9a7a30;--gold-bright:#e8c960;
+  --amethyst:#6a3d9a;--amethyst-glow:#9a5cd0;
+  --bone:#e8e0d4;--parchment:#c4b9a8;--faded:#8a7e6e;--ghost:#5a5048;
+  --blood:#8b1a1a;--blood-glow:#c42828;
+  --emerald:#1a6b3a;--emerald-glow:#2dba5e;
+  --blue:#2a4a8a;--blue-glow:#4a7ada;
+  --rose:#9a2a4a;--rose-glow:#d44a6a;
+  --mist:rgba(255,255,255,.06);
+  --f-display:'Cinzel Decorative',serif;--f-heading:'Cinzel',serif;--f-body:'Cormorant Garamond',serif;
+  --ease:cubic-bezier(.25,.46,.45,.94);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+body{background:var(--abyss);color:var(--bone);font-family:var(--f-body);font-size:18px;line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 800px 600px at 50% 0%,rgba(106,61,154,.05),transparent 70%),
+  radial-gradient(ellipse 600px 800px at 15% 40%,rgba(139,26,26,.03),transparent 70%),
+  radial-gradient(ellipse 600px 800px at 85% 60%,rgba(42,74,138,.03),transparent 70%),
+  url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v60M0 30h60' stroke='%23fff' stroke-width='.3' opacity='.015'/%3E%3C/svg%3E")}
+img{max-width:100%;display:block}a{color:var(--gold);text-decoration:none;transition:all .3s}a:hover{opacity:.8}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* ═══ NAV ═══ */
+header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,10,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,.12);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+header .logo{font-family:var(--f-display);font-size:1.3rem;color:var(--gold);letter-spacing:3px;cursor:pointer}
+header nav{display:flex;gap:20px;align-items:center}
+header nav a{font-family:var(--f-heading);font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--bone);opacity:.65;transition:all .3s;cursor:pointer}
+header nav a:hover,header nav a.active{color:var(--gold);opacity:1}
+header .cart-btn{position:relative;cursor:pointer;font-size:1.1rem}
+header .cart-badge{position:absolute;top:-6px;right:-10px;background:var(--amethyst);color:#fff;font-size:.55rem;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--f-heading)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1100}
+.hamburger span{width:22px;height:2px;background:var(--gold);transition:all .3s}
+.mobile-nav{position:fixed;inset:0;background:rgba(10,10,10,.97);z-index:1050;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:opacity .4s}
+.mobile-nav.active{opacity:1;pointer-events:all}
+.mobile-nav a{font-family:var(--f-display);font-size:1.4rem;color:var(--gold);letter-spacing:3px;cursor:pointer}
+.mobile-nav .close-btn{position:absolute;top:20px;right:24px;font-size:1.8rem;color:var(--gold);cursor:pointer}
+
+/* ═══ SHARED ═══ */
+section{padding:100px 0;position:relative;z-index:1}
+.s-label{font-family:var(--f-heading);font-size:.68rem;letter-spacing:4px;color:var(--gold);text-transform:uppercase;text-align:center;margin-bottom:8px}
+.s-title{font-family:var(--f-display);font-size:clamp(1.5rem,3vw,2.2rem);color:var(--gold);text-align:center;margin-bottom:10px;text-shadow:0 0 40px rgba(201,168,76,.15)}
+.s-sub{font-family:var(--f-body);font-size:1rem;color:var(--bone);opacity:.6;text-align:center;max-width:560px;margin:0 auto 40px;font-style:italic}
+.ornament{display:flex;align-items:center;justify-content:center;gap:14px;margin:20px auto 36px;max-width:340px}
+.ornament::before,.ornament::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.ornament span{font-size:15px;color:var(--gold-dim)}
+.page{display:none;animation:fadeUp .5s var(--ease) both}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.back-btn{font-family:var(--f-heading);font-size:.72rem;letter-spacing:2px;display:inline-block;margin-bottom:20px;color:var(--faded);cursor:pointer;transition:color .3s}
+.back-btn:hover{color:var(--gold)}
+.free-badge{display:inline-block;font-family:var(--f-heading);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--emerald-glow);background:rgba(45,186,94,.06);border:1px solid rgba(45,186,94,.15);padding:3px 12px;margin-bottom:24px}
+
+/* ═══ HERO ═══ */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 24px 80px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(123,79,162,.06),transparent 70%)}
+.hero h1{font-family:var(--f-display);font-size:clamp(2.8rem,7vw,5.5rem);color:var(--gold);letter-spacing:6px;margin-bottom:12px;position:relative}
+.hero .tagline{font-size:clamp(1rem,2vw,1.3rem);color:var(--bone);opacity:.6;font-style:italic;max-width:540px;margin-bottom:48px}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:680px;width:100%}
+.cat-card{border:1px solid rgba(201,168,76,.1);padding:44px 28px;text-align:center;cursor:pointer;transition:all .5s var(--ease);position:relative;overflow:hidden}
+.cat-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:50px;height:3px;transition:all .5s var(--ease)}
+.cat-card:first-child::before{background:var(--blood-glow)}
+.cat-card:last-child::before{background:var(--amethyst-glow)}
+.cat-card:hover{background:var(--stone)}.cat-card:hover::before{width:100%}
+.cat-icon{font-size:36px;margin-bottom:14px;display:block}
+.cat-name{font-family:var(--f-display);font-size:clamp(1.1rem,2vw,1.4rem);color:var(--bone);margin-bottom:6px}
+.cat-desc{font-size:.92rem;color:var(--faded);font-style:italic;line-height:1.5}
+@media(max-width:560px){.cat-grid{grid-template-columns:1fr}}
+
+/* ═══ DAILY ORACLE (free, on home) ═══ */
+.daily-oracle{background:var(--crypt);text-align:center}
+.daily-spread{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:32px}
+
+/* ═══ APPAREL ═══ */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.product-card{border:1px solid rgba(201,168,76,.1);overflow:hidden;cursor:pointer;transition:all .4s var(--ease)}
+.product-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 0 30px rgba(201,168,76,.08)}
+.product-card .img-wrap{height:290px;background:var(--mist);display:flex;align-items:center;justify-content:center}
+.product-card .img-wrap .placeholder{font-family:var(--f-heading);color:var(--gold);opacity:.3;font-size:.72rem;letter-spacing:2px}
+.product-card .info{padding:14px}
+.product-card .info h3{font-family:var(--f-heading);font-size:.82rem;color:var(--bone);letter-spacing:1px;margin-bottom:3px}
+.product-card .info .price{font-family:var(--f-heading);color:var(--gold);font-size:.78rem}
+.pdp-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;padding-top:16px}
+.pdp-gallery .main-img{width:100%;aspect-ratio:3/4;background:var(--mist);display:flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,.1)}
+.pdp-gallery .thumbs{display:flex;gap:8px;margin-top:10px}
+.pdp-gallery .thumb{width:52px;height:68px;border:1px solid rgba(201,168,76,.1);cursor:pointer;opacity:.35;transition:opacity .3s;display:flex;align-items:center;justify-content:center}
+.pdp-gallery .thumb.active{opacity:1;border-color:var(--gold)}
+.pdp-details h1{font-family:var(--f-display);font-size:1.35rem;color:var(--gold);margin-bottom:8px}
+.pdp-details .pdp-price{font-family:var(--f-heading);font-size:1.05rem;color:var(--bone);margin-bottom:16px}
+.pdp-details .pdp-desc{font-size:.92rem;color:var(--bone);opacity:.6;margin-bottom:18px;line-height:1.6;font-style:italic}
+.size-selector{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap}
+.size-btn{font-family:var(--f-heading);font-size:.7rem;padding:9px 15px;border:1px solid rgba(201,168,76,.22);background:transparent;color:var(--bone);cursor:pointer;letter-spacing:1px;transition:all .2s}
+.size-btn:hover{border-color:var(--gold);color:var(--gold)}
+.size-btn.active{background:var(--gold);color:var(--abyss);border-color:var(--gold)}
+.size-btn.error{border-color:var(--blood-glow);animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.qty-control{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.qty-control button{width:28px;height:28px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-size:1rem;cursor:pointer;font-family:var(--f-heading)}
+.qty-control span{font-family:var(--f-heading);font-size:.9rem;color:var(--bone);min-width:24px;text-align:center}
+.add-to-cart-btn{font-family:var(--f-heading);font-size:.78rem;letter-spacing:3px;text-transform:uppercase;border:1px solid var(--gold);padding:14px 32px;color:var(--gold);background:transparent;cursor:pointer;transition:all .3s;width:100%}
+.add-to-cart-btn:hover{background:var(--gold);color:var(--abyss)}
+.add-to-cart-btn.added{background:var(--amethyst);border-color:var(--amethyst);color:#fff}
+
+/* Cart */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.active{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;top:0;right:0;width:350px;max-width:90vw;height:100vh;background:var(--abyss);border-left:1px solid rgba(201,168,76,.12);z-index:2001;transform:translateX(100%);transition:transform .4s var(--ease);display:flex;flex-direction:column;padding:24px}
+.cart-drawer.active{transform:translateX(0)}
+.cart-drawer .cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.cart-drawer .cart-header h2{font-family:var(--f-display);color:var(--gold);font-size:1.05rem}
+.cart-drawer .cart-close{font-size:1.3rem;color:var(--gold);cursor:pointer}
+.cart-drawer .cart-items{flex:1;overflow-y:auto}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(201,168,76,.06)}
+.cart-item .cart-item-img{width:48px;height:64px;background:var(--mist);flex-shrink:0}
+.cart-item .cart-item-info{flex:1}
+.cart-item h4{font-family:var(--f-heading);font-size:.72rem;color:var(--bone);margin-bottom:2px}
+.cart-item .cart-item-meta{font-size:.68rem;color:var(--bone);opacity:.5}
+.cart-item .cart-item-price{font-family:var(--f-heading);color:var(--gold);font-size:.78rem;margin-top:2px}
+.cart-item .cart-item-remove{color:var(--blood-glow);cursor:pointer;font-size:.7rem;align-self:flex-start}
+.cart-footer{border-top:1px solid rgba(201,168,76,.12);padding-top:14px;margin-top:14px}
+.cart-footer .cart-total{display:flex;justify-content:space-between;font-family:var(--f-heading);font-size:.9rem;color:var(--gold);margin-bottom:14px}
+.cart-footer .checkout-btn{width:100%;padding:13px;font-family:var(--f-heading);font-size:.78rem;letter-spacing:3px;text-transform:uppercase;background:var(--gold);color:var(--abyss);border:none;cursor:pointer;transition:all .3s}
+.cart-footer .checkout-btn:hover{background:var(--gold-bright)}
+
+/* ═══ DIVINATION HUB ═══ */
+.div-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:900px;margin:0 auto}
+@media(max-width:700px){.div-grid{grid-template-columns:1fr;max-width:400px}}
+.div-card{border:1px solid rgba(201,168,76,.08);padding:36px 22px;text-align:center;cursor:pointer;transition:all .5s var(--ease);position:relative;overflow:hidden}
+.div-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:40px;height:2px;transition:all .5s var(--ease)}
+.div-card:nth-child(1)::before{background:var(--gold)}.div-card:nth-child(2)::before{background:var(--amethyst-glow)}.div-card:nth-child(3)::before{background:var(--blue-glow)}
+.div-card:hover{background:var(--stone)}.div-card:hover::before{width:100%}
+.div-card .d-icon{font-size:34px;margin-bottom:12px;display:block}
+.div-card .d-name{font-family:var(--f-heading);font-size:.95rem;color:var(--bone);margin-bottom:5px}
+.div-card .d-price{font-family:var(--f-heading);font-size:.75rem;color:var(--gold);margin-bottom:8px}
+.div-card .d-desc{font-size:.88rem;color:var(--faded);font-style:italic;line-height:1.4}
+
+/* ═══ TAROT CARDS ═══ */
+.spread-types{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.spread-btn{font-family:var(--f-heading);font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;padding:9px 18px;border:1px solid rgba(201,168,76,.18);background:transparent;color:var(--faded);cursor:pointer;transition:all .3s}
+.spread-btn:hover{border-color:var(--gold);color:var(--gold)}
+.spread-btn.active{background:var(--gold);color:var(--abyss);border-color:var(--gold)}
+.spread-area{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:28px;min-height:260px;align-items:center}
+.t-slot{width:130px;perspective:1000px;cursor:pointer}
+.t-inner{position:relative;width:130px;height:225px;transition:transform .8s var(--ease);transform-style:preserve-3d}
+.t-slot.flipped .t-inner{transform:rotateY(180deg)}
+.t-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border:2px solid var(--gold);overflow:hidden}
+.t-back{background:linear-gradient(135deg,#1a0a2e,var(--abyss));display:flex;align-items:center;justify-content:center;flex-direction:column}
+.t-back::before{content:'✦';font-size:2.2rem;color:var(--gold);animation:pulse 2.5s infinite}
+.t-back .label{font-family:var(--f-heading);color:var(--gold);font-size:.58rem;margin-top:6px;letter-spacing:3px;text-transform:uppercase}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+.t-front{transform:rotateY(180deg);background:var(--abyss);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5px}
+.t-front img{width:84%;height:auto;max-height:168px;object-fit:contain}
+.t-front img.reversed{transform:rotate(180deg)}
+.t-front .card-name{font-family:var(--f-heading);color:var(--gold);font-size:.58rem;margin-top:4px;text-align:center;letter-spacing:1px}
+.t-front .orient{font-size:.52rem;color:var(--amethyst-glow);margin-top:1px;font-weight:700;text-transform:uppercase}
+.t-reading{margin-top:6px;padding:0;text-align:left;opacity:0;max-height:0;overflow:hidden;transition:all .5s}
+.t-reading.visible{opacity:1;max-height:600px;padding:8px 4px;overflow-y:auto}
+.t-reading .r-text{font-size:.82rem;line-height:1.5;color:var(--bone);font-style:italic;margin-bottom:5px}
+.t-reading .r-dims{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.t-reading .r-dim{font-size:.62rem;color:var(--gold);font-family:var(--f-heading)}.t-reading .r-dim span{color:var(--bone);opacity:.65}
+
+/* Fortune & Synthesis */
+.fortune-box{margin-top:36px;padding:24px;border:2px solid var(--gold);background:rgba(201,168,76,.02);text-align:center;opacity:0;transform:translateY(20px);transition:all .6s}
+.fortune-box.visible{opacity:1;transform:translateY(0)}
+.fortune-box h2{font-family:var(--f-display);color:var(--gold);font-size:1.2rem;margin-bottom:6px}
+.fortune-box .score{font-size:2.3rem;font-family:var(--f-display);color:var(--amethyst-glow);margin:6px 0}
+.fortune-box .stars{font-size:1.2rem;color:var(--gold);margin-bottom:6px}
+.fortune-box .tier-label{font-family:var(--f-heading);font-size:.85rem;color:var(--bone);letter-spacing:2px;margin-bottom:12px}
+.fortune-box .dims-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.fortune-box .dim-card{text-align:center;padding:8px 4px;border:1px solid rgba(201,168,76,.12)}
+.fortune-box .dl{font-family:var(--f-heading);font-size:.58rem;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
+.fortune-box .ds{font-size:1.4rem;font-family:var(--f-display);color:var(--bone);margin-top:2px}
+.fortune-box .db{height:3px;background:rgba(255,255,255,.06);margin-top:4px}.fortune-box .db-fill{height:100%;background:var(--gold);transition:width 1s}
+.synth-box{margin-top:20px;padding:22px;border:1px solid var(--amethyst);background:rgba(123,79,162,.03);text-align:left}
+.synth-box h3{font-family:var(--f-heading);color:var(--amethyst-glow);font-size:.95rem;margin-bottom:8px}
+.synth-box .cl{font-size:.78rem;color:var(--gold);margin-bottom:10px;font-family:var(--f-heading)}
+.synth-box p{font-size:.9rem;line-height:1.7;color:var(--bone);opacity:.82;margin-bottom:4px}
+.synth-box strong{color:var(--gold);font-family:var(--f-heading);font-size:.78rem;letter-spacing:.5px}
+
+/* ═══ ASTRO DICE — 3D ═══ */
+.dice-stage{display:flex;justify-content:center;gap:36px;flex-wrap:wrap;margin:28px auto;max-width:620px}
+.die-container{text-align:center}
+.die-label{font-family:var(--f-heading);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faded);margin-bottom:10px}
+.die-box{width:100px;height:100px;perspective:600px;margin:0 auto;position:relative}
+.die-cube{width:100px;height:100px;position:relative;transform-style:preserve-3d;transform:rotateX(-20deg) rotateY(25deg)}
+.die-face{position:absolute;width:100px;height:100px;display:flex;align-items:center;justify-content:center;font-size:18px;font-family:var(--f-heading);font-weight:700;border:2px solid;backface-visibility:hidden;text-align:center;line-height:1.15;padding:4px}
+.die-face.f1{transform:translateZ(50px)}.die-face.f2{transform:rotateY(180deg) translateZ(50px)}
+.die-face.f3{transform:rotateY(90deg) translateZ(50px)}.die-face.f4{transform:rotateY(-90deg) translateZ(50px)}
+.die-face.f5{transform:rotateX(90deg) translateZ(50px)}.die-face.f6{transform:rotateX(-90deg) translateZ(50px)}
+.die-planet .die-face{background:rgba(201,168,76,.06);border-color:rgba(201,168,76,.25);color:var(--gold)}
+.die-sign .die-face{background:rgba(106,61,154,.06);border-color:rgba(154,92,208,.25);color:var(--amethyst-glow)}
+.die-house .die-face{background:rgba(42,74,138,.06);border-color:rgba(74,122,218,.25);color:var(--blue-glow)}
+.die-result{margin-top:10px;font-family:var(--f-heading);font-size:.85rem;color:var(--bone);letter-spacing:.04em;min-height:22px}
+.roll-btn{font-family:var(--f-heading);font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;padding:15px 44px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;transition:all .4s var(--ease);margin:20px auto;display:block}
+.roll-btn:hover{background:var(--gold);color:var(--abyss);box-shadow:0 0 40px rgba(201,168,76,.12)}
+.roll-btn:disabled{opacity:.4;cursor:default}
+.dice-reading{max-width:600px;margin:28px auto 0;padding:22px;border:1px solid var(--amethyst);background:rgba(123,79,162,.03);text-align:left;opacity:0;transform:translateY(20px);transition:all .6s}
+.dice-reading.visible{opacity:1;transform:translateY(0)}
+.dice-reading h3{font-family:var(--f-heading);color:var(--amethyst-glow);font-size:.95rem;margin-bottom:8px}
+.dice-reading .combo{font-family:var(--f-heading);font-size:.82rem;color:var(--gold);margin-bottom:8px}
+.dice-reading p{font-size:.9rem;line-height:1.7;color:var(--bone);opacity:.82}
+
+/* ═══ ASTROLOGY ═══ */
+.astro-services{display:grid;grid-template-columns:repeat(2,1fr);gap:0;max-width:700px;margin:0 auto}
+@media(max-width:600px){.astro-services{grid-template-columns:1fr}}
+.astro-card{border:1px solid rgba(201,168,76,.08);padding:30px 22px;text-align:center;cursor:pointer;transition:all .5s var(--ease);position:relative;overflow:hidden}
+.astro-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:30px;height:2px;background:var(--amethyst-glow);transition:all .5s var(--ease)}
+.astro-card:hover{background:var(--stone)}.astro-card:hover::before{width:100%}
+.astro-card .a-icon{font-size:26px;margin-bottom:10px}
+.astro-card .a-name{font-family:var(--f-heading);font-size:.88rem;color:var(--bone);margin-bottom:3px}
+.astro-card .a-price{font-family:var(--f-heading);font-size:.72rem;color:var(--gold);margin-bottom:6px}
+.astro-card .a-desc{font-size:.82rem;color:var(--faded);font-style:italic;line-height:1.4}
+.sky-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:480px;margin:16px auto 0}
+.sky-cell{border:1px solid rgba(201,168,76,.08);padding:18px;text-align:center}
+.sky-cell .sky-icon{font-size:22px;margin-bottom:5px}
+.sky-cell .sky-label{font-family:var(--f-heading);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.sky-cell .sky-val{font-size:.85rem;color:var(--bone);margin-top:3px}
+
+/* ═══ SUBSCRIPTION ═══ */
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:680px;margin:36px auto 0}
+@media(max-width:600px){.sub-grid{grid-template-columns:1fr;max-width:370px}}
+.sub-card{border:1px solid rgba(201,168,76,.08);padding:36px 24px;text-align:center;transition:all .5s var(--ease);position:relative;overflow:hidden}
+.sub-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:50px;height:3px;transition:all .5s var(--ease)}
+.sub-card:first-child::before{background:var(--gold)}.sub-card:last-child::before{background:var(--amethyst-glow)}
+.sub-card:hover{background:var(--stone)}.sub-card:hover::before{width:100%}
+.sub-card.featured{background:var(--stone);box-shadow:0 0 40px rgba(201,168,76,.08)}.sub-card.featured::before{width:100%}
+.sub-tier{font-family:var(--f-heading);font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:5px}
+.sub-card:first-child .sub-tier{color:var(--gold)}.sub-card:last-child .sub-tier{color:var(--amethyst-glow)}
+.sub-name{font-family:var(--f-display);font-size:clamp(1.1rem,2vw,1.4rem);color:var(--bone);margin-bottom:10px}
+.sub-price .amt{font-family:var(--f-heading);font-size:clamp(2rem,4vw,2.6rem);font-weight:700;color:var(--bone)}
+.sub-price .per{font-size:.78rem;color:var(--ghost)}
+.sub-save{font-size:.72rem;color:var(--emerald-glow);margin:4px 0 18px;font-family:var(--f-heading);min-height:16px}
+.sub-features{list-style:none;text-align:left;margin-bottom:24px}
+.sub-features li{font-size:.82rem;color:var(--parchment);padding:7px 0;border-bottom:1px solid rgba(201,168,76,.04);display:flex;gap:9px;align-items:center}
+.sub-features li:last-child{border-bottom:none}
+.sub-features li::before{content:'†';font-family:var(--f-heading);font-size:.68rem;color:var(--gold);flex-shrink:0}
+.sub-cta{display:block;width:100%;padding:13px;font-family:var(--f-heading);font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;text-align:center;border:1px solid;cursor:pointer;transition:all .4s var(--ease);text-decoration:none}
+.sub-card:first-child .sub-cta{color:var(--gold);border-color:rgba(201,168,76,.25);background:transparent}
+.sub-card:first-child .sub-cta:hover{background:var(--gold);color:var(--abyss)}
+.sub-card:last-child .sub-cta{color:var(--abyss);border-color:var(--gold);background:linear-gradient(180deg,var(--gold-bright),var(--gold))}
+.sub-card:last-child .sub-cta:hover{box-shadow:0 0 50px rgba(201,168,76,.18);transform:translateY(-2px)}
+
+/* Footer */
+footer{border-top:1px solid rgba(201,168,76,.08);padding:36px 24px;text-align:center;position:relative;z-index:1}
+footer .f-brand{font-family:var(--f-display);color:var(--gold-dim);font-size:1rem;letter-spacing:3px;margin-bottom:6px}
+footer .f-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:10px}
+footer .f-links a{font-family:var(--f-heading);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--ghost);cursor:pointer}
+footer .f-copy{font-size:.72rem;color:var(--ghost);opacity:.5;font-style:italic}
+
+/* Responsive - see comprehensive mobile rules below */
+
+/* USER SYSTEM */
+.user-wrap{position:relative;display:flex;align-items:center;gap:6px;cursor:pointer;margin-left:4px}
+.user-avatar{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--gold-dim);background:var(--stone);display:flex;align-items:center;justify-content:center;font-family:var(--f-heading);font-size:.6rem;color:var(--gold);letter-spacing:1px;transition:all .3s}
+.user-avatar:hover{border-color:var(--gold-bright);box-shadow:0 0 12px rgba(201,168,76,.15)}
+.user-name{font-family:var(--f-heading);font-size:.62rem;color:var(--bone);opacity:.7;letter-spacing:1px;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vip-badge{font-family:var(--f-heading);font-size:.5rem;color:var(--gold-bright);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);padding:1px 6px;letter-spacing:.15em;border-radius:2px}
+.nav-vip{color:var(--gold-bright)!important;opacity:1!important}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;min-width:180px;background:var(--crypt);border:1px solid rgba(201,168,76,.12);box-shadow:0 8px 32px rgba(0,0,0,.5);opacity:0;pointer-events:none;transform:translateY(-6px);transition:all .3s;z-index:100}
+.user-dropdown.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.user-dropdown .dd-header{padding:14px 16px;border-bottom:1px solid rgba(201,168,76,.08);text-align:center}
+.user-dropdown .dd-name{font-family:var(--f-heading);font-size:.72rem;color:var(--bone);letter-spacing:1px}
+.user-dropdown .dd-vip{margin-top:6px}
+.user-dropdown a{display:block;padding:11px 16px;font-family:var(--f-heading);font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--parchment);transition:all .3s;border-bottom:1px solid rgba(201,168,76,.04);cursor:pointer}
+.user-dropdown a:hover{background:var(--stone);color:var(--gold)}
+.user-dropdown a:last-child{border:none;color:var(--blood-glow)}
+/* PAYMENT MODAL */
+.pay-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:3000;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center}
+.pay-overlay.open{opacity:1;pointer-events:all}
+.pay-modal{background:var(--crypt);border:1px solid rgba(201,168,76,.15);max-width:400px;width:90%;padding:36px 28px;text-align:center;transform:translateY(20px) scale(.96);transition:all .4s}
+.pay-overlay.open .pay-modal{transform:translateY(0) scale(1)}
+.pay-modal h2{font-family:var(--f-display);color:var(--gold);font-size:1.2rem;margin-bottom:8px}
+.pay-modal .pay-service{font-family:var(--f-heading);font-size:.72rem;color:var(--amethyst-glow);letter-spacing:1px;margin-bottom:4px}
+.pay-modal .pay-price{font-size:2rem;font-family:var(--f-heading);color:var(--bone);margin:12px 0}
+.pay-modal .pay-or{font-size:.78rem;color:var(--faded);margin:10px 0;font-style:italic}
+.pay-modal .pay-sub-link{font-family:var(--f-heading);font-size:.62rem;letter-spacing:.15em;color:var(--gold);text-decoration:underline;cursor:pointer}
+.pay-modal .pay-btns{display:flex;gap:10px;margin-top:20px}
+.pay-modal .pay-btns button{flex:1;padding:12px;font-family:var(--f-heading);font-size:.68rem;letter-spacing:2px;text-transform:uppercase;border:1px solid;cursor:pointer;transition:all .3s}
+.btn-pay{background:var(--gold);color:var(--abyss);border-color:var(--gold)!important}.btn-pay:hover{background:var(--gold-bright)}
+.btn-cancel{background:transparent;color:var(--faded);border-color:rgba(201,168,76,.15)!important}.btn-cancel:hover{color:var(--bone)}
+.vip-pass{padding:8px 16px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);text-align:center;margin-bottom:20px;font-family:var(--f-heading);font-size:.62rem;letter-spacing:.15em;color:var(--gold-bright);text-transform:uppercase}
+/* REVEAL ALL BTN */
+.reveal-all-btn{font-family:var(--f-heading);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;padding:12px 32px;border:1px solid var(--amethyst);background:rgba(123,79,162,.08);color:var(--amethyst-glow);cursor:pointer;transition:all .4s;display:block;margin:0 auto 24px}.reveal-all-btn:hover{background:var(--amethyst);color:#fff}.reveal-all-btn:disabled{opacity:.3;cursor:default}
+/* CELESTIAL PANEL */
+.celestial-panel{max-width:680px;margin:24px auto 0;padding:22px;border:1px solid rgba(201,168,76,.1);background:rgba(201,168,76,.015);text-align:left}
+.celestial-panel h3{font-family:var(--f-heading);color:var(--gold);font-size:.9rem;margin-bottom:10px;letter-spacing:1px}
+.celestial-panel p{font-size:.88rem;line-height:1.7;color:var(--bone);opacity:.78;margin-bottom:8px}
+.aspect-tag{display:inline-block;font-family:var(--f-heading);font-size:.55rem;letter-spacing:.12em;padding:2px 8px;margin:2px 3px;border:1px solid rgba(201,168,76,.12);color:var(--gold);text-transform:uppercase}
+.transit-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(201,168,76,.04)}
+.transit-row .t-symbol{font-size:1.1rem;width:28px;text-align:center}
+.transit-row .t-info{flex:1;font-size:.82rem;color:var(--bone);opacity:.75}
+.transit-row .t-aspect{font-family:var(--f-heading);font-size:.6rem;color:var(--amethyst-glow);letter-spacing:1px}
+.sign-selector{display:flex;align-items:center;gap:10px;justify-content:center;margin:18px 0}
+.sign-selector label{font-family:var(--f-heading);font-size:.68rem;color:var(--gold);letter-spacing:1px}
+.sign-selector select{font-family:var(--f-body);font-size:.88rem;background:var(--stone);color:var(--bone);border:1px solid rgba(201,168,76,.2);padding:6px 12px}
+.sign-advice-box{max-width:680px;margin:18px auto 0;padding:22px;border:1px solid var(--amethyst);background:rgba(123,79,162,.03);text-align:left}
+.sign-advice-box h3{font-family:var(--f-heading);color:var(--amethyst-glow);font-size:.9rem;margin-bottom:6px}
+.sign-advice-box p{font-size:.88rem;line-height:1.7;color:var(--bone);opacity:.8;margin-bottom:6px}
+.sign-advice-box .advice-cat{font-family:var(--f-heading);font-size:.68rem;color:var(--gold);letter-spacing:1px;margin-top:10px;margin-bottom:4px;text-transform:uppercase}
+@media(max-width:768px){.user-name{display:none}}
+
+/* ═══ MOBILE OPTIMIZATION ═══ */
+@media(max-width:768px){
+  body{font-size:16px}
+  .container{padding:0 16px}
+  header{padding:12px 16px}
+  header nav{display:none}
+  .hamburger{display:flex}
+  header .logo{font-size:1.1rem;letter-spacing:2px}
+  .pdp-layout{grid-template-columns:1fr}
+  .fortune-box .dims-grid,.sky-grid{grid-template-columns:1fr 1fr}
+  .hero{min-height:85vh;padding:110px 16px 60px}
+  .hero h1{letter-spacing:3px}
+  .hero .tagline{font-size:.95rem;margin-bottom:32px}
+  section{padding:72px 0}
+  .s-title{margin-bottom:8px}
+  .s-sub{font-size:.92rem;margin-bottom:28px;padding:0 8px}
+  .ornament{margin:14px auto 24px}
+  /* Tarot mobile */
+  .spread-types{gap:5px;padding:0 8px}
+  .spread-btn{padding:8px 12px;font-size:.56rem;letter-spacing:1px}
+  .spread-area{gap:8px;min-height:200px}
+  .t-reading .r-text{font-size:.78rem;line-height:1.45}
+  .t-reading .r-dims{grid-template-columns:1fr 1fr;gap:1px}
+  /* Fortune & Synth mobile */
+  .fortune-box{padding:18px 14px;margin-top:24px}
+  .fortune-box h2{font-size:1rem}
+  .fortune-box .score{font-size:1.8rem}
+  .fortune-box .dims-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .fortune-box .dim-card{padding:8px}
+  .synth-box{padding:16px 14px;margin-top:16px}
+  .synth-box h3{font-size:.85rem}
+  .synth-box p{font-size:.84rem;line-height:1.6}
+  /* Divination hub */
+  .div-card{padding:26px 16px}
+  .div-card .d-icon{font-size:28px;margin-bottom:8px}
+  /* Subscription */
+  .sub-card{padding:28px 18px}
+  /* Dice */
+  .dice-stage{gap:14px;flex-wrap:wrap}
+  .dice-label{font-size:.58rem}
+  .dice-reading{margin:16px 12px;padding:16px}
+  .dice-reading h3{font-size:.85rem}
+  .dice-reading p{font-size:.82rem;line-height:1.5}
+  /* Astro cards */
+  .astro-card{padding:22px 14px}
+  .astro-card .a-name{font-size:.82rem}
+  /* Celestial */
+  .celestial-panel{padding:16px 14px;margin-top:18px}
+  .celestial-panel h3{font-size:.82rem}
+  .celestial-panel p{font-size:.82rem;line-height:1.55}
+  .transit-row{flex-direction:column;align-items:flex-start;gap:4px;padding:10px 0}
+  .transit-row .t-info{font-size:.78rem}
+  .sign-selector{flex-direction:column;gap:6px}
+  .sign-selector select{width:100%;max-width:280px}
+  .sign-advice-box{padding:16px 14px}
+  .sign-advice-box h3{font-size:.82rem}
+  .sign-advice-box p{font-size:.82rem;line-height:1.55}
+  /* Payment modal */
+  .pay-modal{padding:28px 20px}
+  .pay-modal h2{font-size:1.05rem}
+  .pay-modal .pay-price{font-size:1.6rem}
+  /* User dropdown */
+  .user-dropdown{min-width:160px;right:-8px}
+  /* PDP */
+  .pdp-details h1{font-size:1.15rem}
+  .add-to-cart-btn{padding:12px 20px;font-size:.72rem}
+  /* Reveal button */
+  .reveal-all-btn{padding:10px 24px;font-size:.62rem;margin-bottom:18px}
+  /* Cart */
+  .cart-drawer{width:100%;max-width:100vw;padding:20px 16px}
+  /* Product grid */
+  .products-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .product-card .img-wrap{height:200px}
+  .product-card .info{padding:10px}
+  .product-card .info h3{font-size:.72rem}
+}
+
+@media(max-width:480px){
+  .hero h1{letter-spacing:2px}
+  .hero .tagline{font-size:.88rem}
+  .cat-card{padding:28px 16px}
+  .cat-name{font-size:1rem}
+  .cat-desc{font-size:.82rem}
+  /* Smaller tarot cards */
+  .spread-area{gap:6px}
+  .t-slot{width:90px}.t-inner{width:90px;height:155px}
+  .t-front img{max-height:110px}
+  .t-front .card-name{font-size:.48rem}
+  .t-front .orient{font-size:.42rem}
+  .t-reading .r-text{font-size:.74rem}
+  .t-reading .r-dim{font-size:.55rem}
+  .daily-spread{gap:8px}
+  /* Dice smaller */
+  .die-box,.die-cube,.die-face{width:76px;height:76px}
+  .die-face{font-size:.5rem}
+  .die-face.f1{transform:translateZ(38px)}.die-face.f2{transform:rotateY(180deg) translateZ(38px)}.die-face.f3{transform:rotateY(90deg) translateZ(38px)}.die-face.f4{transform:rotateY(-90deg) translateZ(38px)}.die-face.f5{transform:rotateX(90deg) translateZ(38px)}.die-face.f6{transform:rotateX(-90deg) translateZ(38px)}
+  /* Product grid single col */
+  .products-grid{grid-template-columns:1fr;max-width:320px;margin:0 auto}
+  .product-card .img-wrap{height:260px}
+  /* Fortune compact */
+  .fortune-box .dims-grid{grid-template-columns:1fr}
+  .synth-box p{font-size:.8rem}
+  /* Transit rows */
+  .transit-row .t-symbol{font-size:.9rem}
+  .aspect-tag{font-size:.48rem;padding:1px 6px}
+  /* Spread buttons scroll */
+  .spread-types{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding:0 16px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .spread-types::-webkit-scrollbar{display:none}
+  .spread-btn{white-space:nowrap;flex-shrink:0}
+}
+
+@media(max-width:360px){
+  header .logo{font-size:.95rem}
+  .hero h1{font-size:2rem}
+  .t-slot{width:78px}.t-inner{width:78px;height:135px}
+  .t-front img{max-height:92px}
+  .s-title{font-size:1.3rem}
+  .die-box,.die-cube,.die-face{width:66px;height:66px}
+  .die-face.f1{transform:translateZ(33px)}.die-face.f2{transform:rotateY(180deg) translateZ(33px)}.die-face.f3{transform:rotateY(90deg) translateZ(33px)}.die-face.f4{transform:rotateY(-90deg) translateZ(33px)}.die-face.f5{transform:rotateX(90deg) translateZ(33px)}.die-face.f6{transform:rotateX(-90deg) translateZ(33px)}
+}
+</style>
+</head>
+<body>
+<header>
+  <span class="logo" onclick="go('home')">A.1MM</span>
+  <nav id="mainNav">
+    <a onclick="go('home')">Home</a>
+    <a onclick="go('apparel')">Collection</a>
+    <a onclick="go('divination')">Divination</a>
+    <a href="mailto:ritual@a1mm.com">Contact</a>
+    <span class="cart-btn" onclick="toggleCart()">&#128722;<span class="cart-badge" id="cartBadge">0</span></span>
+    <a id="navVip" class="nav-vip" style="display:none" onclick="go('subscription')">&#10022; VIP</a>
+    <div class="user-wrap" onclick="toggleUserDD(event)">
+      <div class="user-avatar" id="userAvatar">G</div>
+      <span class="user-name" id="userName">Guest</span>
+      <span class="vip-badge" id="vipBadge" style="display:none">&#10022; VIP</span>
+      <div class="user-dropdown" id="userDD">
+        <div class="dd-header"><div class="dd-name" id="ddName">Guest</div><div class="dd-vip" id="ddVip"></div></div>
+        <a onclick="go('orders');closeUserDD()">My Orders</a>
+        <a onclick="go('subscription');closeUserDD()">My Subscription</a>
+        <a onclick="doLogout()">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <div class="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></div>
+</header>
+<div class="mobile-nav" id="mobileNav">
+  <span class="close-btn" onclick="toggleMobileNav()">&#10005;</span>
+  <a onclick="toggleMobileNav();go('home')">Home</a>
+  <a onclick="toggleMobileNav();go('apparel')">Collection</a>
+  <a onclick="toggleMobileNav();go('divination')">Divination</a>
+  <a onclick="toggleMobileNav();toggleCart()">Ritual Bag</a>
+  <a onclick="toggleMobileNav();go('orders')">My Orders</a>
+  <a onclick="toggleMobileNav();go('subscription')">Subscription</a>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="pg-home">
+  <section class="hero"><h1>A.1MM</h1><p class="tagline">Where gothic devotion meets tarot mysticism — each thread woven with arcane intention.</p>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="go('apparel')"><span class="cat-icon">🕯</span><div class="cat-name">Atelier</div><p class="cat-desc">Garments consecrated under the signs they embody.</p></div>
+      <div class="cat-card" onclick="go('divination')"><span class="cat-icon">🔮</span><div class="cat-name">Divination</div><p class="cat-desc">Tarot, astrology, and astro dice. Peer beyond the veil.</p></div>
+    </div>
+  </section>
+  <section class="daily-oracle"><div class="container">
+    <p class="s-label">— Free Daily Oracle —</p><h2 class="s-title">Draw Your Fate</h2>
+    <p class="s-sub">Five cards from the 78-card Rider-Waite-Smith deck — each may appear upright or reversed.</p>
+    <div class="daily-spread" id="dailySpread"></div>
+    <div class="fortune-box" id="dailyFortune"></div>
+    <div class="synth-box" id="dailySynth" style="display:none"></div>
+  </div></section>
+</div>
+
+<!-- APPAREL -->
+<div class="page" id="pg-apparel"><section style="padding-top:120px"><div class="container">
+  <span class="back-btn" onclick="go('home')">&larr; Back to Sanctum</span>
+  <p class="s-label">— The Atelier —</p><h2 class="s-title">The Collection</h2><p class="s-sub">Each piece is consecrated under the sign it embodies.</p>
+  <div class="products-grid" id="productGrid"></div>
+</div></section></div>
+
+<!-- PDP -->
+<div class="page" id="pg-pdp"><section style="padding-top:120px"><div class="container">
+  <span class="back-btn" onclick="go('apparel')">&larr; Back to Collection</span>
+  <div class="pdp-layout"><div class="pdp-gallery" id="pdpGallery"></div><div class="pdp-details" id="pdpDetails"></div></div>
+</div></section></div>
+
+<!-- DIVINATION HUB -->
+<div class="page" id="pg-divination"><section style="padding-top:120px"><div class="container">
+  <span class="back-btn" onclick="go('home')">&larr; Back to Sanctum</span>
+  <p class="s-label">— The Oracle Chamber —</p><h2 class="s-title">Divination Services</h2>
+  <p class="s-sub">Three sacred instruments to illuminate your path. New seekers receive one complimentary reading of each type.</p>
+  <div class="free-badge" style="text-align:center;display:block">✦ First Reading Free for All Services</div>
+  <div class="div-grid">
+    <div class="div-card" onclick="go('tarot')"><span class="d-icon">🃏</span><div class="d-name">Tarot Spreads</div><div class="d-price">$9 – $39</div><p class="d-desc">Single card, three-card, Celtic Cross, relationship, and career layouts.</p></div>
+    <div class="div-card" onclick="go('astrology')"><span class="d-icon">🌟</span><div class="d-name">Astrology Reading</div><div class="d-price">$29 – $49</div><p class="d-desc">Birth chart, annual forecast, planetary transits, moon phase guidance.</p></div>
+    <div class="div-card" onclick="go('dice')"><span class="d-icon">🎲</span><div class="d-name">Astro Dice</div><div class="d-price">$15</div><p class="d-desc">Planet × Sign × House — three dice cast and interpreted.</p></div>
+  </div>
+  <div style="margin-top:72px"><div class="ornament"><span>⚜</span></div>
+    <p class="s-label">— Subscription Covenant —</p><h2 class="s-title" style="font-size:clamp(1.15rem,2.4vw,1.7rem)">Unlimited Access</h2>
+    <p class="s-sub">Subscribe for unlimited readings across all instruments, plus exclusive perks.</p>
+    <div class="sub-grid">
+      <div class="sub-card"><div class="sub-tier">Monthly</div><div class="sub-name">Seeker</div><div class="sub-price"><span class="amt">$49</span><span class="per"> /mo</span></div><div class="sub-save">&nbsp;</div>
+        <ul class="sub-features"><li>Unlimited tarot + astro dice + astrology</li><li>Personal 1-on-1 oracle guidance</li><li>5 free premium spreads / month</li><li>Daily cosmic briefing</li></ul><a class="sub-cta" onclick="doSubscribe('seeker')">Begin the Covenant</a></div>
+      <div class="sub-card featured"><div class="sub-tier">Annual</div><div class="sub-name">Devotee</div><div class="sub-price"><span class="amt">$399</span><span class="per"> /yr</span></div><div class="sub-save">Save $189 — 2 months free ✦</div>
+        <ul class="sub-features"><li>Everything in Seeker</li><li>Annual celestial forecast report</li><li>Priority scheduling</li><li>Birthday exclusive reading</li><li>Early access to new rituals</li></ul><a class="sub-cta" onclick="doSubscribe('devotee')">Ascend to Devotee</a></div>
+    </div>
+  </div>
+</div></section></div>
+
+<!-- TAROT SPREADS -->
+<div class="page" id="pg-tarot"><section style="padding-top:120px"><div class="container" style="max-width:1000px">
+  <span class="back-btn" onclick="go('divination')">&larr; Back to Oracle Chamber</span>
+  <p class="s-label">— Arcanum I —</p><h2 class="s-title">Tarot Spreads</h2><p class="s-sub">Choose your spread, then tap each card to reveal its whisper.</p>
+  <div class="spread-types" id="spreadTypes"></div>
+  <div class="spread-area" id="spreadArea"></div>
+  <button class="reveal-all-btn" id="revealAllBtn" style="display:none" onclick="revealAllCards()">&#10022; Reveal All Cards</button>
+  <div class="fortune-box" id="fortuneBox"></div>
+  <div class="synth-box" id="synthBox" style="display:none"></div>
+</div></section></div>
+
+<!-- ASTRO DICE -->
+<div class="page" id="pg-dice"><section style="padding-top:120px"><div class="container" style="max-width:700px">
+  <span class="back-btn" onclick="go('divination')">&larr; Back to Oracle Chamber</span>
+  <p class="s-label">— Arcanum III —</p><h2 class="s-title">Astro Dice Oracle</h2><p class="s-sub">Cast three dice — Planet, Sign, House — and the cosmos shall speak.</p>
+  <div class="dice-stage">
+    <div class="die-container"><div class="die-label">Planet</div><div class="die-box"><div class="die-cube die-planet" id="diePlanet"></div></div><div class="die-result" id="resPlanet"></div></div>
+    <div class="die-container"><div class="die-label">Sign</div><div class="die-box"><div class="die-cube die-sign" id="dieSign"></div></div><div class="die-result" id="resSign"></div></div>
+    <div class="die-container"><div class="die-label">House</div><div class="die-box"><div class="die-cube die-house" id="dieHouse"></div></div><div class="die-result" id="resHouse"></div></div>
+  </div>
+  <button class="roll-btn" id="rollBtn" onclick="rollDice()">Cast the Dice</button>
+  <div class="dice-reading" id="diceReading"></div>
+</div></section></div>
+
+<!-- ASTROLOGY -->
+<div class="page" id="pg-astrology"><section style="padding-top:120px"><div class="container" style="max-width:800px">
+  <span class="back-btn" onclick="go('divination')">&larr; Back to Oracle Chamber</span>
+  <p class="s-label">— Arcanum II —</p><h2 class="s-title">Astrology Readings</h2><p class="s-sub">Select a celestial service to illuminate your cosmic blueprint.</p>
+  <div class="astro-services">
+    <div class="astro-card" onclick="showPayModal('Birth Chart Reading','29','astrology',function(){document.getElementById('skyGrid').scrollIntoView({behavior:'smooth'})})"><div class="a-icon">🌙</div><div class="a-name">Birth Chart</div><div class="a-price">$29</div><p class="a-desc">Full natal chart — Sun, Moon, Rising, and planetary positions.</p></div>
+    <div class="astro-card" onclick="showPayModal('Annual Forecast','49','astrology',function(){document.getElementById('skyGrid').scrollIntoView({behavior:'smooth'})})"><div class="a-icon">☀️</div><div class="a-name">Annual Forecast</div><div class="a-price">$49</div><p class="a-desc">Year-ahead transit analysis with month-by-month cosmic weather.</p></div>
+    <div class="astro-card" onclick="showPayModal('Planetary Transits','35','astrology',function(){document.getElementById('celestialPanel').scrollIntoView({behavior:'smooth'})})"><div class="a-icon">🪐</div><div class="a-name">Planetary Transits</div><div class="a-price">$35</div><p class="a-desc">Current planetary movements and their natal influence.</p></div>
+    <div class="astro-card" onclick="showPayModal('Moon Phase Guide','29','astrology',function(){document.getElementById('skyGrid').scrollIntoView({behavior:'smooth'})})"><div class="a-icon">🌕</div><div class="a-name">Moon Phase Guide</div><div class="a-price">$29</div><p class="a-desc">Lunar cycle alignment for intentions, release, and renewal.</p></div>
+  </div>
+  <div style="margin-top:56px"><div class="ornament"><span>☽</span></div><p class="s-label">Today's Celestial Snapshot</p>
+    <div class="sky-grid" id="skyGrid"></div>
+    <div class="celestial-panel" id="celestialPanel"></div>
+    <div class="sign-selector">
+      <label>Your Birth Sign:</label>
+      <select id="birthSignSelect" onchange="showSignAdvice(this.value)">
+        <option value="">Select your sign...</option>
+        <option value="Aries">♈ Aries</option><option value="Taurus">♉ Taurus</option>
+        <option value="Gemini">♊ Gemini</option><option value="Cancer">♋ Cancer</option>
+        <option value="Leo">♌ Leo</option><option value="Virgo">♍ Virgo</option>
+        <option value="Libra">♎ Libra</option><option value="Scorpio">♏ Scorpio</option>
+        <option value="Sagittarius">♐ Sagittarius</option><option value="Capricorn">♑ Capricorn</option>
+        <option value="Aquarius">♒ Aquarius</option><option value="Pisces">♓ Pisces</option>
+      </select>
+    </div>
+    <div class="sign-advice-box" id="signAdviceBox" style="display:none"></div>
+  </div>
+</div></section></div>
+
+
+<!-- PAYMENT MODAL -->
+<div class="pay-overlay" id="payOverlay" onclick="closePayModal()">
+  <div class="pay-modal" onclick="event.stopPropagation()">
+    <h2>Unlock Reading</h2>
+    <div class="pay-service" id="payService"></div>
+    <div class="pay-price" id="payPrice"></div>
+    <div class="pay-or">or subscribe for unlimited access</div>
+    <div class="pay-sub-link" onclick="closePayModal();go('divination')">View Subscription Plans &#8594;</div>
+    <div class="pay-btns"><button class="btn-cancel" onclick="closePayModal()">Cancel</button><button class="btn-pay" id="payBtn" onclick="confirmPay()">Pay Now</button></div>
+  </div>
+</div>
+<!-- MY ORDERS -->
+<div class="page" id="pg-orders"><section style="padding-top:120px"><div class="container">
+  <span class="back-btn" onclick="go('home')">&larr; Back</span>
+  <p class="s-label">&mdash; Account &mdash;</p><h2 class="s-title">My Orders</h2>
+  <div id="ordersContent" style="max-width:600px;margin:0 auto"></div>
+</div></section></div>
+<!-- MY SUBSCRIPTION -->
+<div class="page" id="pg-subscription"><section style="padding-top:120px"><div class="container">
+  <span class="back-btn" onclick="go('home')">&larr; Back</span>
+  <p class="s-label">&mdash; Account &mdash;</p><h2 class="s-title">My Subscription</h2>
+  <div id="subContent" style="max-width:600px;margin:0 auto;text-align:center"></div>
+</div></section></div>
+
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header"><h2>Ritual Bag</h2><span class="cart-close" onclick="toggleCart()">✕</span></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer"><div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div><button class="checkout-btn">Proceed to Checkout</button></div>
+</div>
+<footer>
+  <div class="f-brand">A.1MM</div>
+  <div class="f-links"><a onclick="go('home')">Home</a><a onclick="go('apparel')">Collection</a><a onclick="go('divination')">Divination</a><a href="mailto:ritual@a1mm.com">Contact</a></div>
+  <p class="f-copy">© MMXXVI A.1MM — All rites reserved. ☩</p>
+</footer>
+
+<script>
+// ══════════════ NAV ══════════════
+function go(pg){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  var el=document.getElementById('pg-'+pg);if(el){el.classList.add('active');el.style.animation='none';el.offsetHeight;el.style.animation='';}
+  window.scrollTo(0,0);
+  if(pg==='apparel')renderProducts();
+  if(pg==='tarot')initTarot();
+  if(pg==='dice')initDice();
+  if(pg==='astrology')initCelestial();
+  if(pg==='orders')renderOrders();
+  if(pg==='subscription')renderSubscription();
+  if(pg==='home'&&!dailyInited){dailyInited=true;initDailyOracle();}
+}
+function toggleMobileNav(){var n=document.getElementById('mobileNav');n.classList.toggle('active');if(n.classList.contains('active'))gsap.fromTo(n.querySelectorAll('a'),{opacity:0,y:30},{opacity:1,y:0,stagger:.07,duration:.5,ease:'power2.out'})}
+function toggleCart(){document.getElementById('cartOverlay').classList.toggle('active');document.getElementById('cartDrawer').classList.toggle('active');renderCart()}
+
+// ══════════════ PRODUCTS ══════════════
+var PRODUCTS=[
+{id:1,name:"Nightfall Corset Dress",price:328,desc:"A structured corset bodice descends into cascading black tulle, embroidered with sigil thread.",sizes:["XS","S","M","L"],images:["img1","img2","img3","img4"]},
+{id:2,name:"Mist Veil Organza Gown",price:398,desc:"Layers of smoke-grey organza drift like restless spirits.",sizes:["XS","S","M","L","XL"],images:["img1","img2","img3","img4"]},
+{id:3,name:"Arcana Sigil Tee",price:128,desc:"Heavyweight cotton consecrated with screen-printed arcana sigils.",sizes:["S","M","L","XL"],images:["img1","img2"]},
+{id:4,name:"Tower Deconstructed Jacket",price:458,desc:"Raw-edge wool blazer with asymmetric lapel and Tower card lining.",sizes:["XS","S","M","L"],images:["img1","img2","img3"]},
+{id:5,name:"Priestess Silk Slip",price:268,desc:"Liquid silk charmeuse in midnight blue. A garment between worlds.",sizes:["XS","S","M","L"],images:["img1","img2","img3"]},
+{id:6,name:"Death & Rebirth Hoodie",price:188,desc:"Oversized French terry with embroidered Death card motif.",sizes:["S","M","L","XL","XXL"],images:["img1","img2"]}];
+var cart=JSON.parse(localStorage.getItem('a1mm_cart')||'[]'),currentPdp=null,selectedSize=null,qty=1;
+function renderProducts(){var g=document.getElementById('productGrid');if(!g)return;g.innerHTML='';PRODUCTS.forEach(function(p){var c=document.createElement('div');c.className='product-card';c.innerHTML='<div class="img-wrap"><div class="placeholder">[ '+p.name.split(' ')[0]+' ]</div></div><div class="info"><h3>'+p.name+'</h3><div class="price">$'+p.price+'</div></div>';c.onclick=function(){openPdp(p)};g.appendChild(c)})}
+function openPdp(p){currentPdp=p;selectedSize=null;qty=1;go('pdp');document.getElementById('pdpGallery').innerHTML='<div class="main-img"><div class="placeholder" style="font-family:var(--f-heading);color:var(--gold);opacity:.3;font-size:.78rem;letter-spacing:2px">[ '+p.name+' ]</div></div><div class="thumbs">'+p.images.map(function(_,i){return'<div class="thumb '+(i===0?'active':'')+'"><div class="placeholder" style="font-size:.42rem;color:var(--gold);opacity:.25">'+(i+1)+'</div></div>'}).join('')+'</div>';document.getElementById('pdpDetails').innerHTML='<h1>'+p.name+'</h1><div class="pdp-price">$'+p.price+'</div><p class="pdp-desc">'+p.desc+'</p><div class="size-selector">'+p.sizes.map(function(s){return'<button class="size-btn" onclick="selSize(\''+s+'\',this)">'+s+'</button>'}).join('')+'</div><div class="qty-control"><button onclick="chgQty(-1)">\u2212</button><span id="qtyDisplay">1</span><button onclick="chgQty(1)">+</button></div><button class="add-to-cart-btn" onclick="addToCart()">Add to Ritual Bag</button>'}
+function selSize(s,btn){selectedSize=s;document.querySelectorAll('.size-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active')}
+function chgQty(d){qty=Math.max(1,qty+d);document.getElementById('qtyDisplay').textContent=qty}
+function addToCart(){if(!selectedSize){document.querySelectorAll('.size-btn').forEach(function(b){b.classList.add('error');setTimeout(function(){b.classList.remove('error')},400)});return}var item={id:currentPdp.id,name:currentPdp.name,price:currentPdp.price,size:selectedSize,qty:qty};var ex=cart.find(function(c){return c.id===item.id&&c.size===item.size});if(ex)ex.qty+=qty;else cart.push(item);localStorage.setItem('a1mm_cart',JSON.stringify(cart));updBadge();var btn=document.querySelector('.add-to-cart-btn');btn.classList.add('added');btn.textContent='\u2713 Added';setTimeout(function(){btn.classList.remove('added');btn.textContent='Add to Ritual Bag'},1500)}
+function renderCart(){var c=document.getElementById('cartItems');if(!cart.length){c.innerHTML='<p style="color:var(--bone);opacity:.35;text-align:center;margin-top:40px;font-style:italic">Your ritual bag is empty.</p>'}else{c.innerHTML=cart.map(function(item,i){return'<div class="cart-item"><div class="cart-item-img"></div><div class="cart-item-info"><h4>'+item.name+'</h4><div class="cart-item-meta">Size: '+item.size+' · Qty: '+item.qty+'</div><div class="cart-item-price">$'+(item.price*item.qty)+'</div></div><span class="cart-item-remove" onclick="rmCart('+i+')">✕</span></div>'}).join('')}document.getElementById('cartTotal').textContent='$'+cart.reduce(function(s,i){return s+i.price*i.qty},0)}
+function rmCart(i){cart.splice(i,1);localStorage.setItem('a1mm_cart',JSON.stringify(cart));updBadge();renderCart()}
+function updBadge(){document.getElementById('cartBadge').textContent=cart.reduce(function(s,i){return s+i.qty},0)}
+
+// ══════════════ 78-CARD DECK ══════════════
+var D=[
+["The Fool","9/90/RWS_Tarot_00_Fool.jpg","A leap of faith into the unknown.",8,7,6,9,"Recklessness clouds your path.",4,4,3,5],
+["The Magician","d/de/RWS_Tarot_01_Magician.jpg","Channel willpower into manifestation.",9,7,9,8,"Manipulation or squandered talent.",4,3,4,3],
+["The High Priestess","8/88/RWS_Tarot_02_High_Priestess.jpg","Intuition speaks louder than logic.",7,8,6,10,"Secrets withheld or intuition blocked.",4,4,5,3],
+["The Empress","d/d2/RWS_Tarot_03_Empress.jpg","Abundance flows. Creativity surrounds you.",9,9,7,8,"Creative block or smothering love.",4,5,4,4],
+["The Emperor","c/c3/RWS_Tarot_04_Emperor.jpg","Structure and authority serve you.",8,6,9,6,"Tyranny or rigidity.",5,3,4,4],
+["The Hierophant","8/8d/RWS_Tarot_05_Hierophant.jpg","Seek guidance from tradition or a mentor.",7,7,7,8,"Dogma suffocates growth.",5,4,5,4],
+["The Lovers","3/3a/RWS_Tarot_06_Lovers.jpg","A sacred union or pivotal choice.",8,10,6,9,"Disharmony or avoidance of choice.",4,3,4,4],
+["The Chariot","9/9b/RWS_Tarot_07_Chariot.jpg","Willpower conquers obstacles.",9,6,9,7,"Loss of direction.",4,4,3,4],
+["Strength","f/f5/RWS_Tarot_08_Strength.jpg","Gentle courage tames the beast within.",8,8,7,9,"Self-doubt or raw impulse.",4,4,4,3],
+["The Hermit","4/4d/RWS_Tarot_09_Hermit.jpg","Withdraw to illuminate.",6,5,6,10,"Isolation becomes avoidance.",3,3,4,4],
+["Wheel of Fortune","3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg","The wheel turns in your favor.",9,7,8,8,"Resistance to change.",3,4,3,4],
+["Justice","e/e0/RWS_Tarot_11_Justice.jpg","Truth and fairness prevail.",7,6,8,8,"Injustice or dishonesty.",4,4,3,4],
+["The Hanged Man","2/2b/RWS_Tarot_12_Hanged_Man.jpg","Surrender to gain perspective.",6,6,5,9,"Stalling without purpose.",3,3,3,4],
+["Death","d/d7/RWS_Tarot_13_Death.jpg","Transformation. Endings are beginnings.",7,6,6,9,"Resistance to necessary endings.",3,3,3,4],
+["Temperance","f/f8/RWS_Tarot_14_Temperance.jpg","Balance and alchemy. Moderation is mastery.",8,7,7,9,"Excess or impatience.",4,4,4,4],
+["The Devil","5/55/RWS_Tarot_15_Devil.jpg","Bondage to shadow pleasures.",5,4,5,4,"Breaking free from toxic patterns.",7,6,6,7],
+["The Tower","5/53/RWS_Tarot_16_Tower.jpg","Sudden upheaval clears false structures.",4,3,3,7,"Avoiding inevitable collapse.",3,3,3,4],
+["The Star","d/db/RWS_Tarot_17_Star.jpg","Hope after darkness.",9,8,7,10,"Despair or disconnection from hope.",3,4,4,3],
+["The Moon","7/7f/RWS_Tarot_18_Moon.jpg","Illusion and the subconscious stir.",6,6,5,8,"Clarity emerges from confusion.",7,6,6,7],
+["The Sun","1/17/RWS_Tarot_19_Sun.jpg","Radiant joy and success.",10,9,9,10,"Dimmed joy or temporary setbacks.",6,5,5,5],
+["Judgement","d/dd/RWS_Tarot_20_Judgement.jpg","Rise to your higher purpose.",8,7,8,9,"Self-doubt blocks your rising.",4,4,4,3],
+["The World","f/ff/RWS_Tarot_21_World.jpg","Completion and wholeness.",10,9,10,10,"Incompletion. Finish what was started.",5,5,4,5],
+["Ace of Wands","1/11/Wands01.jpg","A spark of inspiration ignites.",9,7,8,8,"Delayed initiative.",4,4,4,4],
+["Two of Wands","0/0f/Wands02.jpg","Planning and foresight.",7,6,8,7,"Fear stalls progress.",4,4,4,4],
+["Three of Wands","f/ff/Wands03.jpg","Expansion. Vision gains momentum.",8,6,8,7,"Delays in returns.",4,4,3,4],
+["Four of Wands","a/a4/Wands04.jpg","Celebration and homecoming.",8,9,7,8,"Unstable foundations.",4,4,4,4],
+["Five of Wands","9/9d/Wands05.jpg","Competition and conflict.",6,4,6,5,"Avoidance of conflict.",4,4,4,4],
+["Six of Wands","3/3b/Wands06.jpg","Victory and recognition.",9,7,9,7,"Ego inflation.",4,4,3,4],
+["Seven of Wands","e/e4/Wands07.jpg","Defend your position.",7,5,7,7,"Overwhelmed or giving up.",3,4,3,4],
+["Eight of Wands","6/6b/Wands08.jpg","Swift movement.",9,7,8,7,"Delays or scattered energy.",4,4,3,4],
+["Nine of Wands","e/e7/Wands09.jpg","Resilience near the finish.",6,5,7,7,"Paranoia or burnout.",3,3,3,4],
+["Ten of Wands","0/0b/Wands10.jpg","Heavy burdens carried alone.",4,4,5,4,"Release of burdens.",7,6,6,6],
+["Page of Wands","6/6a/Wands11.jpg","Enthusiastic new energy.",8,6,7,7,"Scattered enthusiasm.",4,4,3,4],
+["Knight of Wands","1/16/Wands12.jpg","Bold action and charisma.",9,7,8,7,"Reckless haste.",4,3,4,4],
+["Queen of Wands","0/0d/Wands13.jpg","Magnetic confidence.",9,8,9,8,"Jealousy or domineering.",4,3,4,3],
+["King of Wands","c/ce/Wands14.jpg","Visionary leadership.",9,7,10,8,"Tyrannical leadership.",4,3,3,3],
+["Ace of Cups","3/36/Cups01.jpg","Emotional new beginning. Love overflows.",8,10,6,9,"Blocked emotions.",4,3,4,4],
+["Two of Cups","f/f8/Cups02.jpg","Partnership and mutual attraction.",8,10,7,8,"Imbalance in partnership.",4,3,4,4],
+["Three of Cups","7/7a/Cups03.jpg","Celebration with community.",8,8,7,8,"Overindulgence or drama.",4,4,4,4],
+["Four of Cups","3/35/Cups04.jpg","Contemplation. An offering is missed.",4,4,4,6,"Renewed motivation.",7,6,6,6],
+["Five of Cups","d/d7/Cups05.jpg","Grief. Two cups remain standing.",3,3,4,5,"Acceptance and moving on.",7,6,6,7],
+["Six of Cups","1/17/Cups06.jpg","Nostalgia and innocent joy.",7,8,5,7,"Living in the past.",4,4,4,4],
+["Seven of Cups","a/ae/Cups07.jpg","Fantasy and choices.",6,5,5,6,"Clarity from confusion.",7,6,6,7],
+["Eight of Cups","6/60/Cups08.jpg","Walking away for deeper meaning.",6,4,5,8,"Fear of abandoning the familiar.",4,4,3,4],
+["Nine of Cups","2/24/Cups09.jpg","Wish fulfillment.",9,9,8,9,"Smugness masks emptiness.",5,4,5,4],
+["Ten of Cups","8/84/Cups10.jpg","Emotional fulfillment.",10,10,8,9,"Broken harmony.",4,3,4,4],
+["Page of Cups","a/ad/Cups11.jpg","Intuitive offering surfaces.",7,7,6,8,"Emotional immaturity.",4,3,4,4],
+["Knight of Cups","f/fa/Cups12.jpg","Romantic proposal.",7,9,6,8,"Moodiness or unrealism.",4,3,3,4],
+["Queen of Cups","6/62/Cups13.jpg","Emotional depth and compassion.",8,9,6,9,"Overwhelm or codependency.",3,3,4,3],
+["King of Cups","0/04/Cups14.jpg","Emotional mastery and calm authority.",8,8,8,9,"Manipulation or volatility.",4,3,4,3],
+["Ace of Swords","1/1a/Swords01.jpg","Mental breakthrough and clarity.",8,6,9,7,"Confusion or harsh words.",4,3,4,3],
+["Two of Swords","9/9e/Swords02.jpg","Difficult decision.",5,5,5,5,"Forced choice brings freedom.",6,5,6,6],
+["Three of Swords","0/02/Swords03.jpg","Heartbreak. Grief must be felt.",3,2,4,5,"Recovery from heartbreak.",6,5,5,6],
+["Four of Swords","b/bf/Swords04.jpg","Rest and recuperation.",5,5,5,8,"Restlessness or burnout.",3,4,3,4],
+["Five of Swords","2/23/Swords05.jpg","Hollow victory.",4,3,5,3,"Reconciliation. Pride softens.",6,6,5,6],
+["Six of Swords","2/29/Swords06.jpg","Transition to calmer waters.",6,5,6,7,"Stuck in rough waters.",3,3,3,4],
+["Seven of Swords","3/34/Swords07.jpg","Strategy or deception.",5,3,6,4,"Conscience returns.",5,5,4,6],
+["Eight of Swords","a/a7/Swords08.jpg","Mental imprisonment.",3,3,3,4,"Breaking free.",7,6,6,7],
+["Nine of Swords","2/2f/Swords09.jpg","Anxiety and nightmares.",2,3,3,3,"Release from anxiety.",6,5,5,6],
+["Ten of Swords","d/d4/Swords10.jpg","Rock bottom. Sunrise on horizon.",2,2,2,5,"The worst is over.",6,5,5,6],
+["Page of Swords","4/4c/Swords11.jpg","Curiosity and vigilance.",7,5,7,6,"Gossip or all talk.",4,3,4,3],
+["Knight of Swords","b/b0/Swords12.jpg","Swift decisive action.",8,5,8,6,"Impulsive or ruthless.",4,3,4,3],
+["Queen of Swords","d/d4/Swords13.jpg","Clear perception.",7,5,8,7,"Cold or overly critical.",4,3,4,3],
+["King of Swords","3/33/Swords14.jpg","Intellectual authority.",7,5,9,7,"Abuse of power.",4,2,4,3],
+["Ace of Pentacles","f/fd/Pents01.jpg","Material new beginning.",8,6,9,7,"Missed opportunity.",4,4,3,4],
+["Two of Pentacles","9/9f/Pents02.jpg","Juggling priorities.",7,6,7,6,"Overwhelm.",3,4,3,4],
+["Three of Pentacles","4/42/Pents03.jpg","Collaboration and craftsmanship.",8,6,9,7,"Poor teamwork.",4,4,3,4],
+["Four of Pentacles","3/35/Pents04.jpg","Security and conservation.",6,4,7,4,"Greed or fear of loss.",4,3,4,5],
+["Five of Pentacles","9/96/Pents05.jpg","Hardship. Sanctuary is near.",3,3,3,4,"Recovery from loss.",6,6,6,6],
+["Six of Pentacles","a/a6/Pents06.jpg","Generosity and reciprocity.",8,7,7,8,"Strings attached.",4,4,4,4],
+["Seven of Pentacles","6/6a/Pents07.jpg","Patience. Do not dig up seeds.",6,6,7,7,"Impatience.",4,4,3,4],
+["Eight of Pentacles","4/49/Pents08.jpg","Dedicated craftsmanship.",8,5,9,6,"Perfectionism or drudgery.",4,4,4,3],
+["Nine of Pentacles","f/f0/Pents09.jpg","Luxury earned independently.",9,7,9,8,"Over-dependence.",4,4,4,4],
+["Ten of Pentacles","4/42/Pents10.jpg","Legacy and generational wealth.",9,8,9,8,"Family conflict.",4,3,4,4],
+["Page of Pentacles","e/ec/Pents11.jpg","Studious ambition.",7,5,7,6,"Dreams without discipline.",4,4,3,4],
+["Knight of Pentacles","d/d5/Pents12.jpg","Steady progress.",7,6,8,6,"Stagnation.",3,4,3,4],
+["Queen of Pentacles","8/88/Pents13.jpg","Nurturing abundance.",8,8,8,7,"Neglect of self.",4,4,4,3],
+["King of Pentacles","1/1c/Pents14.jpg","Material mastery.",9,7,10,7,"Corruption by wealth.",4,3,4,3]
+];
+var DECK=D.map(function(c){return{name:c[0],img:'https://upload.wikimedia.org/wikipedia/commons/'+c[1],upright:{reading:c[2],energy:c[3],love:c[4],career:c[5],spirit:c[6]},reversed:{reading:c[7],energy:c[8],love:c[9],career:c[10],spirit:c[11]}}});
+
+var SYNTH_TIER={
+transcendent:{open:'The stars themselves bow to your reading \u2014 a rare convergence of archetypal forces channels through each card position with crystalline clarity. The planetary rulers harmonize in a grand trine of purpose, and the Tree of Life lights from Kether to Malkuth.',elem:'The elemental balance across your spread is extraordinary \u2014 {elemDetail}. This level of coherence is exceptionally rare and signals a period of profound spiritual acceleration where intention and manifestation operate almost simultaneously.',rev:'With {revCount} of {total} cards upright, the archetypal energies flow with minimal resistance. The conscious and unconscious are aligned; your waking intentions match your soul\u2019s deeper trajectory.',suit:'The dominant suit of {domSuit} ({domCount} cards) channels the energy of {suitMeaning}, amplifying the reading\u2019s transcendent quality.',close:'Act with absolute confidence in the days ahead. The cosmos rarely speaks with this degree of unanimity. Whatever you have been hesitating on \u2014 the answer is unambiguously yes. Trust implicitly what emerges from this spread, for the Sephirothic resonance confirms your path.'},
+radiant:{open:'A luminous pattern weaves through your cards \u2014 the archetypal energies tell a narrative of growth, reward, and spiritual deepening. Venus and Jupiter aspect favorably across your spread, and the reading suggests you are entering a period where effort and grace converge beautifully.',elem:'The elements in your spread lean toward {elemDetail}. This configuration favors active creation and forward momentum \u2014 the universe is providing both fuel and direction.',rev:'With {revCount} of {total} cards upright, the energy flows predominantly outward into manifestation. The reversals present ({revNames}) offer important counterpoints that add nuance and depth rather than obstruction.',suit:'The presence of {domSuit} ({domCount} cards) brings the energy of {suitMeaning} to the fore, suggesting that this domain is where your greatest opportunities currently reside.',close:'Move forward with measured confidence. The cosmic weather is favorable but not effortless \u2014 think of it as wind at your back rather than a magic carpet. The cards counsel bold action tempered by awareness. Pay attention to the reversed cards as teachers rather than obstacles; they hold the keys to sustaining this positive momentum long-term.'},
+balanced:{open:'A thoughtful equilibrium defines your spread \u2014 neither shadow nor light dominates, but both inform with equal voice. Mercury\u2019s presence brings communication and analysis to the fore. The middle pillar of the Tree of Life activates, harmonizing severity and mercy in equal measure.',elem:'Your elemental distribution shows {elemDetail}. This balance suggests a crossroads where multiple paths hold genuine merit \u2014 the universe is not pushing you in one direction but inviting conscious choice.',rev:'With {revCount} reversals out of {total} cards, you stand at the threshold between inner and outer work. The reversed cards ({revNames}) represent areas requiring introspection before action, while the upright cards show domains ready for engagement.',suit:'The spread shows {domSuit} slightly dominant ({domCount} cards), gently steering attention toward {suitMeaning}, though no single element overwhelms the reading.',close:'This is the territory of the wise \u2014 the place where rushing would waste the reading\u2019s deepest gift. Use discernment now to shape what comes next. Journal on what each card means to you personally; the synthesis between them will reveal itself over the coming days rather than all at once. The cards counsel patience, reflection, and deliberate choice rather than impulsive action.'},
+contemplative:{open:'Shadow cards populate your spread, but shadow is the birthplace of depth and transformation. Pluto\u2019s influence runs through each position like an underground river, and the Qliphothic shells crack to reveal hidden light. This reading is an invitation to descend before you ascend \u2014 the gold is in the darkness.',elem:'The elemental signature reads {elemDetail}. This configuration asks you to slow down and listen before acting \u2014 the answers you seek are not in the external world right now but in the silence of honest self-examination.',rev:'With {revCount} of {total} cards reversed, significant energy is turned inward. The reversed cards ({revNames}) are not blocking your path but redirecting you toward inner work that must precede outer achievement. Honor the withdrawal.',suit:'The presence of {domSuit} ({domCount} cards) in this contemplative spread suggests that the domain of {suitMeaning} is where your deepest unresolved material currently lives.',close:'Saturn\u2019s rings encircle this reading with necessary limitation. This is a period of pruning, not punishment \u2014 what falls away was draining resources meant for your authentic growth. Resist the urge to force outcomes or seek external validation. The cards counsel solitude, journaling, and radical honesty with yourself. What you confront now in the dark becomes your greatest source of power when you eventually emerge.'},
+transformative:{open:'The cards speak of a soul in alchemical crisis \u2014 nigredo, the blackening phase where the prima materia is broken down for reconstitution. Pluto and Mars aspect intensely across your spread. This is not gentle, but it is sacred. The phoenix does not choose comfortable timber for its pyre. What burns now fuels your rebirth.',elem:'The elemental turbulence shows {elemDetail}. The elements themselves are in conflict, mirroring the internal restructuring you are undergoing. Do not try to impose order \u2014 chaos is the prerequisite for a higher pattern to emerge.',rev:'With {revCount} of {total} cards reversed, the unconscious dominates the conscious. The reversed cards ({revNames}) represent shadow material that can no longer be suppressed. These reversals are the reading\u2019s true heart \u2014 they show what must be faced, metabolized, and integrated.',suit:'The weight of {domSuit} ({domCount} cards) in this transformative reading points to {suitMeaning} as the arena of your deepest metamorphosis right now.',close:'Deep transformation rumbles beneath this reading like tectonic plates. The Moon and Pluto combine in your spread\u2019s undercurrent \u2014 the unconscious demands expression. Resistance will increase pressure; surrender will accelerate metamorphosis. Trust the process even when it feels like annihilation. You are not breaking down \u2014 you are breaking open. Seek support from those who have walked through their own fires; avoid those who would minimize your experience or rush your healing.'}
+};
+
+// ══════════════ DAILY ORACLE (free) ══════════════
+var dailyInited=false,DAILY_KEY='a1mm_daily_v4';
+function getTodayStr(){return new Date().toISOString().slice(0,10)}
+function loadDaily(){var s=localStorage.getItem(DAILY_KEY);if(s){var d=JSON.parse(s);if(d.date===getTodayStr())return d}var idx=[...Array(78).keys()].sort(function(){return Math.random()-.5}).slice(0,5);var cards=idx.map(function(i){return{index:i,reversed:Math.random()<.5,revealed:false}});var data={date:getTodayStr(),cards:cards,allRevealed:false};localStorage.setItem(DAILY_KEY,JSON.stringify(data));return data}
+function saveDaily(st){localStorage.setItem(DAILY_KEY,JSON.stringify(st))}
+function initDailyOracle(){
+  var state=loadDaily(),el=document.getElementById('dailySpread');el.innerHTML='';
+  state.cards.forEach(function(c,idx){var card=DECK[c.index],orient=c.reversed?'reversed':'upright',rd=card[orient];
+    var slot=document.createElement('div');slot.className='t-slot'+(c.revealed?' flipped':'');slot.style.width='130px';
+    slot.innerHTML='<div class="t-inner"><div class="t-face t-back"><span></span><div class="label">A.1MM</div></div><div class="t-face t-front"><img src="'+card.img+'" alt="'+card.name+'" class="'+(c.reversed?'reversed':'')+'"><div class="card-name">'+card.name+'</div><div class="orient">'+(c.reversed?'\u27F2 Rev':'\u2191 Up')+'</div></div></div><div class="t-reading '+(c.revealed?'visible':'')+'" id="dr-'+idx+'"><div class="r-text">'+getProReading(card.name,c.reversed)+'</div><div class="r-dims"><div class="r-dim">Energy <span>'+rd.energy+'/10</span></div><div class="r-dim">Love <span>'+rd.love+'/10</span></div><div class="r-dim">Career <span>'+rd.career+'/10</span></div><div class="r-dim">Spirit <span>'+rd.spirit+'/10</span></div></div></div>';
+    if(!c.revealed&&!state.allRevealed)slot.onclick=function(){flipDaily(idx)};else slot.style.cursor='default';
+    el.appendChild(slot);
+  });
+  if(state.allRevealed){showDailyFortune(state);showDailySynth(state)}
+}
+function flipDaily(idx){
+  var state=loadDaily();if(state.cards[idx].revealed||state.allRevealed)return;
+  state.cards[idx].revealed=true;if(state.cards.every(function(c){return c.revealed}))state.allRevealed=true;saveDaily(state);
+  var slots=document.querySelectorAll('#dailySpread .t-slot'),slot=slots[idx];slot.classList.add('flipped');slot.style.cursor='default';
+  gsap.fromTo(slot.querySelector('.t-inner'),{rotateY:0,scale:.85},{rotateY:180,scale:1,duration:.8,ease:'back.out(1.4)'});
+  setTimeout(function(){document.getElementById('dr-'+idx).classList.add('visible')},600);
+  if(state.allRevealed)setTimeout(function(){showDailyFortune(state);showDailySynth(state)},1000);
+}
+function showDailyFortune(state){showFortuneGeneric(state,'dailyFortune','Daily Fortune')}
+function showDailySynth(state){showSynthGeneric(state,'dailySynth')}
+
+// ══════════════ TAROT SPREADS ══════════════
+var SPREADS=[{id:'single',name:'Single Card',count:1,price:9},{id:'three',name:'Three Card',count:3,price:15},{id:'celtic',name:'Celtic Cross',count:10,price:39},{id:'relationship',name:'Relationship',count:4,price:25},{id:'career',name:'Career Path',count:5,price:29}];
+var currentSpread='three',tarotState={};
+function initTarot(){var rab=document.getElementById('revealAllBtn');if(rab)rab.style.display='none';var el=document.getElementById('spreadTypes');el.innerHTML='';SPREADS.forEach(function(s){el.innerHTML+='<button class="spread-btn'+(s.id===currentSpread?' active':'')+'" onclick="selSpread(\''+s.id+'\')">'+s.name+' · $'+s.price+'</button>'});startSpread()}
+function selSpread(id){var sp=SPREADS.find(function(s){return s.id===id});showPayModal(sp.name+' Spread',''+sp.price,'tarot',function(){currentSpread=id;document.querySelectorAll('.spread-btn').forEach(function(b,i){b.classList.toggle('active',SPREADS[i].id===id)});startSpread()})}
+function startSpread(){var sp=SPREADS.find(function(s){return s.id===currentSpread});var idx=[...Array(78).keys()].sort(function(){return Math.random()-.5}).slice(0,sp.count);tarotState={cards:idx.map(function(i){return{index:i,reversed:Math.random()<.5,revealed:false}}),allRevealed:false};renderSpread();document.getElementById('fortuneBox').className='fortune-box';document.getElementById('fortuneBox').innerHTML='';document.getElementById('synthBox').style.display='none';var rab=document.getElementById('revealAllBtn');if(rab){rab.style.display='block';rab.disabled=false}}
+function renderSpread(){var area=document.getElementById('spreadArea');area.innerHTML='';tarotState.cards.forEach(function(c,idx){var card=DECK[c.index],orient=c.reversed?'reversed':'upright',rd=card[orient];var slot=document.createElement('div');slot.className='t-slot'+(c.revealed?' flipped':'');slot.innerHTML='<div class="t-inner"><div class="t-face t-back"><span></span><div class="label">A.1MM</div></div><div class="t-face t-front"><img src="'+card.img+'" alt="'+card.name+'" class="'+(c.reversed?'reversed':'')+'"><div class="card-name">'+card.name+'</div><div class="orient">'+(c.reversed?'\u27F2 Rev':'\u2191 Up')+'</div></div></div><div class="t-reading '+(c.revealed?'visible':'')+'" id="tr-'+idx+'"><div class="r-text">'+getProReading(card.name,c.reversed)+'</div><div class="r-dims"><div class="r-dim">Energy <span>'+rd.energy+'/10</span></div><div class="r-dim">Love <span>'+rd.love+'/10</span></div><div class="r-dim">Career <span>'+rd.career+'/10</span></div><div class="r-dim">Spirit <span>'+rd.spirit+'/10</span></div></div></div>';if(!c.revealed)slot.onclick=function(){flipSpreadCard(idx)};else slot.style.cursor='default';area.appendChild(slot);if(!c.revealed)gsap.from(slot,{opacity:0,y:24,rotateX:12,duration:.45,delay:idx*.08,ease:'power3.out'})})}
+function flipSpreadCard(idx){if(tarotState.cards[idx].revealed||tarotState.allRevealed)return;tarotState.cards[idx].revealed=true;if(tarotState.cards.every(function(c){return c.revealed}))tarotState.allRevealed=true;var slots=document.querySelectorAll('#spreadArea .t-slot'),slot=slots[idx];slot.classList.add('flipped');slot.style.cursor='default';gsap.fromTo(slot.querySelector('.t-inner'),{rotateY:0,scale:.85},{rotateY:180,scale:1,duration:.8,ease:'back.out(1.4)'});setTimeout(function(){document.getElementById('tr-'+idx).classList.add('visible')},600);if(tarotState.allRevealed){var rab=document.getElementById('revealAllBtn');if(rab)rab.style.display='none';setTimeout(function(){showFortuneGeneric(tarotState,'fortuneBox','Spread Reading');showSynthGeneric(tarotState,'synthBox')},1000)}}
+
+// ══════════════ FORTUNE & SYNTH (shared) ══════════════
+function showFortuneGeneric(state,elId,title){var n=state.cards.length;var sc=state.cards.map(function(c){return DECK[c.index][c.reversed?'reversed':'upright']});var aE=sc.reduce(function(a,s){return a+s.energy},0)/n,aL=sc.reduce(function(a,s){return a+s.love},0)/n,aC=sc.reduce(function(a,s){return a+s.career},0)/n,aS=sc.reduce(function(a,s){return a+s.spirit},0)/n;var t=Math.round((aE+aL+aC+aS)/4*10);var stars=t>=85?'\u2605\u2605\u2605\u2605\u2605':t>=70?'\u2605\u2605\u2605\u2605\u2606':t>=55?'\u2605\u2605\u2605\u2606\u2606':t>=40?'\u2605\u2605\u2606\u2606\u2606':'\u2605\u2606\u2606\u2606\u2606';var tier=t>=85?'Transcendent':t>=70?'Radiant':t>=55?'Balanced':t>=40?'Contemplative':'Transformative';var p=document.getElementById(elId);p.innerHTML='<h2>'+title+'</h2><div class="score">'+t+'/100</div><div class="stars">'+stars+'</div><div class="tier-label">'+tier+'</div><div class="dims-grid"><div class="dim-card"><div class="dl">Energy</div><div class="ds">'+aE.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aE*10+'%"></div></div></div><div class="dim-card"><div class="dl">Love</div><div class="ds">'+aL.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aL*10+'%"></div></div></div><div class="dim-card"><div class="dl">Career</div><div class="ds">'+aC.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aC*10+'%"></div></div></div><div class="dim-card"><div class="dl">Spirit</div><div class="ds">'+aS.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aS*10+'%"></div></div></div></div>';p.classList.add('visible');gsap.fromTo(p,{opacity:0,y:24},{opacity:1,y:0,duration:.8,ease:'power2.out'})}
+function showSynthGeneric(state,elId){
+  var n=state.cards.length;
+  var sc=state.cards.map(function(c){return DECK[c.index][c.reversed?'reversed':'upright']});
+  var t=Math.round(sc.reduce(function(a,s){return a+(s.energy+s.love+s.career+s.spirit)},0)/n/4*10);
+  var tk=t>=85?'transcendent':t>=70?'radiant':t>=55?'balanced':t>=40?'contemplative':'transformative';
+  var tpl=SYNTH_TIER[tk];
+  // Card list
+  var cl=state.cards.map(function(c){return'<strong>'+DECK[c.index].name+'</strong> ('+(c.reversed?'Rev':'Up')+')'}).join(' \u00B7 ');
+  // Reversal analysis
+  var revCount=state.cards.filter(function(c){return c.reversed}).length;
+  var revNames=state.cards.filter(function(c){return c.reversed}).map(function(c){return DECK[c.index].name}).join(', ')||'none';
+  // Element analysis
+  var elems={Fire:0,Water:0,Air:0,Earth:0,Major:0};
+  state.cards.forEach(function(c){var nm=DECK[c.index].name;if(nm.indexOf('Wands')>-1)elems.Fire++;else if(nm.indexOf('Cups')>-1)elems.Water++;else if(nm.indexOf('Swords')>-1)elems.Air++;else if(nm.indexOf('Pentacles')>-1)elems.Earth++;else elems.Major++});
+  var elemParts=[];
+  if(elems.Fire)elemParts.push(elems.Fire+' Fire (Wands \u2014 will, passion, creativity)');
+  if(elems.Water)elemParts.push(elems.Water+' Water (Cups \u2014 emotion, intuition, love)');
+  if(elems.Air)elemParts.push(elems.Air+' Air (Swords \u2014 intellect, conflict, truth)');
+  if(elems.Earth)elemParts.push(elems.Earth+' Earth (Pentacles \u2014 material, body, resources)');
+  if(elems.Major)elemParts.push(elems.Major+' Major Arcana (karmic forces, soul lessons)');
+  var elemDetail=elemParts.join(', ');
+  // Dominant suit
+  var suitMap={Fire:'creative willpower and passionate action',Water:'emotional depth and intuitive wisdom',Air:'intellectual clarity and communicative truth',Earth:'material stability and embodied practice',Major:'deep karmic currents and archetypal transformation'};
+  var domSuit='Major',domCount=elems.Major;
+  if(elems.Fire>domCount){domSuit='Fire';domCount=elems.Fire}
+  if(elems.Water>domCount){domSuit='Water';domCount=elems.Water}
+  if(elems.Air>domCount){domSuit='Air';domCount=elems.Air}
+  if(elems.Earth>domCount){domSuit='Earth';domCount=elems.Earth}
+  var suitMeaning=suitMap[domSuit];
+  // Missing elements
+  var missing=[];
+  if(!elems.Fire&&n>=3)missing.push('Fire (action, initiative)');
+  if(!elems.Water&&n>=3)missing.push('Water (emotion, receptivity)');
+  if(!elems.Air&&n>=3)missing.push('Air (analysis, communication)');
+  if(!elems.Earth&&n>=3)missing.push('Earth (practicality, grounding)');
+  // Dimension analysis
+  var aE=sc.reduce(function(a,s){return a+s.energy},0)/n;
+  var aL=sc.reduce(function(a,s){return a+s.love},0)/n;
+  var aC=sc.reduce(function(a,s){return a+s.career},0)/n;
+  var aS=sc.reduce(function(a,s){return a+s.spirit},0)/n;
+  var dims=[{n:'Energy',v:aE},{n:'Love',v:aL},{n:'Career',v:aC},{n:'Spirit',v:aS}];
+  dims.sort(function(a,b){return b.v-a.v});
+  var strongDim=dims[0],weakDim=dims[3];
+  // Build synthesis HTML
+  function fill(s){return s.replace('{elemDetail}',elemDetail).replace('{revCount}',revCount).replace('{total}',n).replace('{revNames}',revNames).replace('{domSuit}',domSuit).replace('{domCount}',domCount).replace('{suitMeaning}',suitMeaning)}
+  var html='<h3>\u2726 Synthesis</h3>';
+  html+='<p class="cl">'+cl+'</p>';
+  html+='<p>'+fill(tpl.open)+'</p>';
+  html+='<p style="margin-top:8px"><strong>Elemental Analysis:</strong> '+fill(tpl.elem)+'</p>';
+  if(missing.length&&n>=3)html+='<p style="margin-top:6px;color:var(--faded);font-style:italic"><strong>Missing Elements:</strong> '+missing.join(', ')+' \u2014 consider consciously inviting these energies into your life to restore balance.</p>';
+  html+='<p style="margin-top:8px"><strong>Reversal Pattern:</strong> '+fill(tpl.rev)+'</p>';
+  if(n>=3)html+='<p style="margin-top:8px"><strong>Dominant Energy:</strong> '+fill(tpl.suit)+'</p>';
+  html+='<p style="margin-top:8px"><strong>Dimensional Highlights:</strong> Your strongest dimension is <strong>'+strongDim.n+'</strong> ('+strongDim.v.toFixed(1)+'/10), suggesting this is where cosmic support is most concentrated. Your most challenged dimension is <strong>'+weakDim.n+'</strong> ('+weakDim.v.toFixed(1)+'/10) \u2014 this area invites conscious attention and healing work.</p>';
+  html+='<p style="margin-top:10px;border-top:1px solid rgba(201,168,76,.1);padding-top:10px">'+fill(tpl.close)+'</p>';
+  var sb=document.getElementById(elId);sb.style.display='block';sb.innerHTML=html;
+  gsap.fromTo(sb,{opacity:0,y:16},{opacity:1,y:0,duration:.8,delay:.3,ease:'power2.out'});
+}
+
+// ══════════════ ASTRO DICE ══════════════
+var PLANETS=['\u2609 Sun','\u263D Moon','\u263F Mercury','\u2640 Venus','\u2642 Mars','\u2643 Jupiter','\u2644 Saturn','\u2645 Uranus','\u2646 Neptune','\u2647 Pluto','\u260A N.Node','\u26B7 Chiron'];
+var SIGNS=['\u2648 Aries','\u2649 Taurus','\u264A Gemini','\u264B Cancer','\u264C Leo','\u264D Virgo','\u264E Libra','\u264F Scorpio','\u2650 Sagittarius','\u2651 Capricorn','\u2652 Aquarius','\u2653 Pisces'];
+var HOUSES=['1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'];
+var DR={planet:{Sun:'The Solar principle activates your core identity and conscious will. Leo\'s ruler demands authentic self-expression and creative sovereignty. The Sun illuminates what was hidden, bringing clarity to purpose and direction. Expect increased vitality and visibility.',Moon:'The Lunar principle stirs your emotional depths and instinctual responses. Cancer\'s ruler draws you into the tidal rhythms of feeling, memory, and the unconscious. Dreams carry messages. Honor your need for emotional security and nurturing.',Mercury:'The Mercurial principle of transmission and connection takes center stage. Ruler of Gemini and Virgo, Mercury sharpens perception and demands precise articulation. Communication, contracts, and intellectual pursuits are highlighted. Pay attention to the details.',Venus:'The Venusian principle of attraction, beauty, and worth activates. Ruler of Taurus and Libra, Venus asks what you truly desire and what you are willing to give for it. Relationships, aesthetics, and financial matters seek harmonious resolution.',Mars:'The Martial principle of directed force demands action. Ruler of Aries and traditional ruler of Scorpio, Mars ignites courage and decisive movement. Conflicts may arise but they serve to clarify boundaries. Channel aggression into achievement.',Jupiter:'The Jovian principle of expansion, wisdom, and fortune activates. Ruler of Sagittarius and traditional ruler of Pisces, Jupiter opens doors and broadens horizons. Generosity is rewarded. Philosophy and higher learning beckon. Think bigger.',Saturn:'The Saturnian principle of structure, discipline, and karmic accountability emerges. Ruler of Capricorn and traditional ruler of Aquarius, Saturn tests foundations and rewards endurance. What is built now under pressure will last. Accept the lesson.',Uranus:'The Uranian principle of sudden liberation and revolutionary insight strikes. Modern ruler of Aquarius, Uranus shatters outdated structures with electric precision. Expect the unexpected. Freedom calls, but it requires courage to answer.',Neptune:'The Neptunian principle of dissolution, dreams, and transcendence surfaces. Modern ruler of Pisces, Neptune dissolves boundaries between self and cosmos. Spiritual sensitivity heightens. Guard against illusion while honoring imagination.',Pluto:'The Plutonian principle of death, rebirth, and excavated power emerges. Modern ruler of Scorpio, Pluto demands confrontation with shadow material and irreversible transformation. What dies now was already decaying. Trust the metamorphosis.','N.Node':'The North Node points toward your soul\'s evolutionary direction and dharmic purpose. Karmic momentum accelerates. Destiny is not a destination but a current that carries you when you stop resisting. Follow the discomfort toward growth.',Chiron:'Chiron, the Wounded Healer, reveals where your deepest pain becomes your greatest gift. The centaur bridges mortal suffering and divine wisdom. What you have survived qualifies you to guide others through similar passages.'},sign:{Aries:'Cardinal Fire — Mars-ruled impulse to initiate, to pioneer, to be first. The Ram charges forward with primal courage. Act decisively now; refinement comes later. Identity is forged in the heat of doing, not deliberating.',Taurus:'Fixed Earth — Venus-ruled presence grounded in the senses. The Bull knows what is real through touch, taste, and patient accumulation. Slow down and trust the body\'s wisdom. What endures is built with care, not speed.',Gemini:'Mutable Air — Mercury-ruled dance of duality and curiosity. The Twins seek every angle, every voice, every version of truth. Communication is your superpower now. Connect the dots others cannot see.',Cancer:'Cardinal Water — Moon-ruled tides of emotion, memory, and belonging. The Crab protects what is tender beneath the shell. Home, family, and emotional security are paramount. Nurture and be nurtured.',Leo:'Fixed Fire — Sun-ruled radiance demanding authentic self-expression. The Lion commands attention not through force but through genuine creative shine. Your heart\'s truth is magnetic now. Perform your destiny with joy.',Virgo:'Mutable Earth — Mercury-ruled precision in service and analysis. The Maiden separates wheat from chaff with sacred discernment. Healing comes through attention to detail, daily ritual, and humble excellence.',Libra:'Cardinal Air — Venus-ruled pursuit of harmony, beauty, and justice. The Scales seek the balance point where self meets other in mutual recognition. Relationships hold the mirror. Negotiate with grace.',Scorpio:'Fixed Water — Pluto-ruled depths where nothing remains hidden. The Scorpion, Eagle, and Phoenix represent three octaves of transformative power. Go deeper. The truth you fear is the truth that liberates.',Sagittarius:'Mutable Fire — Jupiter-ruled arrow aimed at truth and meaning. The Centaur bridges animal instinct and divine aspiration. Expand your horizons through travel, philosophy, or bold vision. Aim high and release.',Capricorn:'Cardinal Earth — Saturn-ruled ascent toward mastery and legacy. The Sea-Goat climbs from ocean depths to mountain peaks through discipline. Build structures that outlast you. Authority earned is authority deserved.',Aquarius:'Fixed Air — Uranus-ruled vision of collective evolution and innovation. The Water-Bearer pours consciousness itself for humanity\'s awakening. Think beyond the personal. Your individuality serves the whole.',Pisces:'Mutable Water — Neptune-ruled dissolution into the All. The Fish swim in opposite directions: one toward form, one toward formlessness. Intuition, compassion, and spiritual surrender are your pathways now.'},house:{'1st':'The House of Self — your physical body, appearance, and how you initiate new beginnings. The Ascendant\'s domain shapes first impressions. Identity itself is the arena. Who are you becoming?','2nd':'The House of Values — possessions, income, self-worth, and what you truly treasure. Material security and personal resources are activated. What you own, and what owns you, comes into focus.','3rd':'The House of Communication — siblings, neighbors, daily exchange of ideas, short journeys, and early education. The restless mind seeks connection. Write, speak, listen. The message matters now.','4th':'The House of Roots — home, family, ancestry, and psychological foundations. The IC anchors your inner world. Where you come from shapes where you are going. Tend your foundation.','5th':'The House of Creation — creativity, romance, children, pleasure, and self-expression. Joy and artistic expression demand attention. Create for the pure delight of creation. Love boldly.','6th':'The House of Service — health, daily routines, work as craft, and the sacred mundane. The body-temple needs tending. Efficiency and devotion to process yield quiet miracles.','7th':'The House of Partnership — marriage, committed relationships, open enemies, and the mirror of the other. The Descendant reflects what you project. Cooperation or confrontation: choose consciously.','8th':'The House of Transformation — shared resources, sexuality, death, rebirth, and other people\'s power. The alchemical crucible where ego dissolves. Intimacy requires vulnerability. Trust the process.','9th':'The House of Meaning — higher education, philosophy, long-distance travel, publishing, and spiritual teaching. The search for truth beyond the familiar. Expand your mind before your map.','10th':'The House of Legacy — career, public reputation, authority, and the Midheaven. Your visible contribution to the world. What you build here is remembered. Earn your place at the summit.','11th':'The House of Community — friends, groups, collective ideals, hopes, and the future you envision. The tribe that shares your vision. Together, you reshape what is possible.','12th':'The House of the Unseen — the subconscious, hidden enemies, hidden gifts, isolation, and spiritual surrender. The cosmic womb before rebirth. What you resist here controls you; what you accept heals you.'}};
+
+function initDice(){
+  ['diePlanet','dieSign','dieHouse'].forEach(function(id,i){var arr=i===0?PLANETS:i===1?SIGNS:HOUSES.map(function(h){return h+' House'});buildDieFaces(id,arr)});
+  document.getElementById('resPlanet').textContent='';document.getElementById('resSign').textContent='';document.getElementById('resHouse').textContent='';
+  document.getElementById('diceReading').classList.remove('visible');document.getElementById('rollBtn').disabled=false;document.getElementById('rollBtn').textContent='Cast the Dice';
+}
+function buildDieFaces(id,arr){var el=document.getElementById(id);var items=[];for(var i=0;i<6;i++)items.push(arr[Math.floor(Math.random()*arr.length)]);el.innerHTML=['f1','f2','f3','f4','f5','f6'].map(function(f,i){return'<div class="die-face '+f+'">'+items[i]+'</div>'}).join('');gsap.set(el,{rotateX:-20,rotateY:25,rotateZ:0})}
+function rollDice(){
+  var btn=document.getElementById('rollBtn');btn.disabled=true;btn.textContent='Casting\u2026';
+  document.getElementById('diceReading').classList.remove('visible');
+  var pI=Math.floor(Math.random()*12),sI=Math.floor(Math.random()*12),hI=Math.floor(Math.random()*12);
+  // Setup result on face 1 (front)
+  [['diePlanet',PLANETS,pI],['dieSign',SIGNS,sI],['dieHouse',HOUSES.map(function(h){return h+' House'}),hI]].forEach(function(cfg){
+    var el=document.getElementById(cfg[0]),arr=cfg[1],ri=cfg[2];var items=[arr[ri]];for(var i=1;i<6;i++)items.push(arr[Math.floor(Math.random()*arr.length)]);el.innerHTML=['f1','f2','f3','f4','f5','f6'].map(function(f,i){return'<div class="die-face '+f+'">'+items[i]+'</div>'}).join('');
+  });
+  // GSAP dice roll animation — throw up, tumble, bounce down, settle on front face
+  ['diePlanet','dieSign','dieHouse'].forEach(function(id,i){
+    var el=document.getElementById(id);
+    var rx=720+Math.random()*360, ry=720+Math.random()*360, rz=Math.random()*360;
+    var tl=gsap.timeline({delay:i*.18});
+    tl.set(el,{rotateX:-20,rotateY:25,rotateZ:0,y:0})
+      .to(el,{rotateX:rx*.4,rotateY:ry*.4,rotateZ:rz*.3,y:-130,duration:.5,ease:'power2.out'})
+      .to(el,{rotateX:rx*.7,rotateY:ry*.7,rotateZ:rz*.6,y:-50,duration:.35,ease:'power2.in'})
+      .to(el,{rotateX:rx*.85,rotateY:ry*.85,rotateZ:rz*.8,y:-20,duration:.25,ease:'power2.out'})
+      .to(el,{rotateX:rx*.95,rotateY:ry*.95,rotateZ:rz*.9,y:-8,duration:.2,ease:'power2.in'})
+      .to(el,{rotateX:0,rotateY:0,rotateZ:0,y:0,duration:.5,ease:'elastic.out(1,.6)'});
+  });
+  setTimeout(function(){
+    var pN=PLANETS[pI].split(' ').slice(1).join(' '),sN=SIGNS[sI].split(' ').slice(1).join(' '),hN=HOUSES[hI];
+    document.getElementById('resPlanet').textContent=PLANETS[pI];document.getElementById('resSign').textContent=SIGNS[sI];document.getElementById('resHouse').textContent=hN+' House';
+    var combos={Sun:'your essential nature demands expression',Moon:'your emotional depths stir',Mercury:'your thoughts crystallize',Venus:'your heart seeks alignment',Mars:'your will finds its target',Jupiter:'fortune expands before you',Saturn:'discipline reveals its gifts',Uranus:'disruption opens doors',Neptune:'the veil grows thin',Pluto:'power transforms from roots','N.Node':'fate draws you toward destiny',Chiron:'the wound becomes healing'};
+    var rd=document.getElementById('diceReading');
+    rd.innerHTML='<h3>\u2726 Oracle Interpretation</h3><div class="combo">'+PLANETS[pI]+' in '+SIGNS[sI]+' \u2014 '+hN+' House</div><p><strong>Planet:</strong> '+(DR.planet[pN]||'')+'</p><p style="margin-top:6px"><strong>Sign:</strong> '+(DR.sign[sN]||'')+'</p><p style="margin-top:6px"><strong>House:</strong> '+(DR.house[hN]||'')+'</p><p style="margin-top:12px;border-top:1px solid rgba(154,92,208,.12);padding-top:12px"><em>The cosmos speaks: '+(combos[pN]||'cosmic forces align')+'. Meditate on how '+sN.toLowerCase()+' energy manifests in your '+hN.toLowerCase()+' house matters.</em></p>';
+    rd.classList.add('visible');gsap.fromTo(rd,{opacity:0,y:16},{opacity:1,y:0,duration:.8,ease:'power2.out'});
+    btn.disabled=false;btn.textContent='Cast Again';
+  },2500);
+}
+
+// ══════════════ USER SYSTEM ══════════════
+function loadUser(){try{return JSON.parse(localStorage.getItem('a1mm_user'))||defaultUser()}catch(e){return defaultUser()}}
+function defaultUser(){return{name:'Guest',email:'',vip:false,vipTier:'',vipDate:'',freeTrials:{tarot:true,dice:true,astrology:true},orders:[]}}
+function saveUser(u){localStorage.setItem('a1mm_user',JSON.stringify(u))}
+function isVip(){return loadUser().vip}
+function refreshUserUI(){
+  var u=loadUser();
+  var av=document.getElementById('userAvatar'),nm=document.getElementById('userName'),vb=document.getElementById('vipBadge'),nv=document.getElementById('navVip'),dn=document.getElementById('ddName'),dv=document.getElementById('ddVip');
+  if(av)av.textContent=u.name.charAt(0).toUpperCase();
+  if(nm)nm.textContent=u.name;if(dn)dn.textContent=u.name;
+  if(u.vip){if(vb)vb.style.display='inline-block';if(nv)nv.style.display='inline';if(dv)dv.innerHTML='<span class="vip-badge" style="display:inline-block">\u2726 VIP '+u.vipTier+'</span>';}
+  else{if(vb)vb.style.display='none';if(nv)nv.style.display='none';if(dv)dv.innerHTML='';}
+}
+function toggleUserDD(e){if(e)e.stopPropagation();var dd=document.getElementById('userDD');dd.classList.toggle('open');if(dd.classList.contains('open'))setTimeout(function(){document.addEventListener('click',function h(){dd.classList.remove('open');document.removeEventListener('click',h)})},0)}
+function closeUserDD(){document.getElementById('userDD').classList.remove('open')}
+function doSubscribe(tier){var u=loadUser();u.vip=true;u.vipTier=tier==='devotee'?'Devotee':'Seeker';u.vipDate=new Date().toISOString();if(!u.name||u.name==='Guest'){u.name='Seeker';u.email='seeker@a1mm.com'}u.orders.push({type:'subscription',tier:u.vipTier,date:u.vipDate,price:tier==='devotee'?399:49});saveUser(u);refreshUserUI();go('subscription')}
+function cancelSub(){var u=loadUser();u.vip=false;u.vipTier='';saveUser(u);refreshUserUI();go('subscription')}
+function doLogout(){localStorage.removeItem('a1mm_user');refreshUserUI();closeUserDD();go('home')}
+
+// ══════════════ PAYMENT MODAL ══════════════
+var pendingPayCb=null,pendingPayType='';
+function showPayModal(name,price,type,cb){
+  var u=loadUser();
+  if(u.vip){cb();return}
+  if(u.freeTrials&&u.freeTrials[type]){u.freeTrials[type]=false;u.orders.push({type:type,date:new Date().toISOString(),price:0,note:'Free Trial'});saveUser(u);cb();return}
+  pendingPayCb=cb;pendingPayType=type;
+  document.getElementById('payService').textContent=name;document.getElementById('payPrice').textContent='$'+price;
+  document.getElementById('payOverlay').classList.add('open');
+}
+function closePayModal(){document.getElementById('payOverlay').classList.remove('open');pendingPayCb=null}
+function confirmPay(){if(pendingPayCb){var u=loadUser();u.orders.push({type:pendingPayType,date:new Date().toISOString(),price:parseInt(document.getElementById('payPrice').textContent.replace('$',''))});saveUser(u);pendingPayCb();}closePayModal()}
+
+// ══════════════ ACCOUNT PAGES ══════════════
+function renderOrders(){var u=loadUser(),el=document.getElementById('ordersContent');if(!el)return;if(!u.orders||!u.orders.length){el.innerHTML='<p style="color:var(--bone);opacity:.4;text-align:center;margin-top:40px;font-style:italic">No orders yet.</p>';return}el.innerHTML='<div style="text-align:left">'+u.orders.slice().reverse().map(function(o){var d=new Date(o.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});return'<div style="padding:14px 0;border-bottom:1px solid rgba(201,168,76,.06);display:flex;justify-content:space-between"><div><div style="font-family:var(--f-heading);font-size:.72rem;color:var(--bone);letter-spacing:1px;text-transform:capitalize">'+o.type+(o.tier?' \u2014 '+o.tier:'')+(o.note?' ('+o.note+')':'')+'</div><div style="font-size:.68rem;color:var(--faded);margin-top:2px">'+d+'</div></div><div style="font-family:var(--f-heading);color:var(--gold);font-size:.78rem">'+(o.price?'$'+o.price:'Free')+'</div></div>'}).join('')+'</div>'}
+function renderSubscription(){var u=loadUser(),el=document.getElementById('subContent');if(!el)return;if(u.vip){var d=new Date(u.vipDate).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});el.innerHTML='<div style="padding:30px;border:2px solid var(--gold);background:rgba(201,168,76,.03)"><div style="font-size:2rem;margin-bottom:8px">\u2726</div><div style="font-family:var(--f-display);font-size:1.2rem;color:var(--gold);margin-bottom:6px">'+u.vipTier+'</div><div style="font-size:.88rem;color:var(--bone);opacity:.6;margin-bottom:16px">Active since '+d+'</div><p style="font-size:.85rem;color:var(--bone);opacity:.55;margin-bottom:20px;font-style:italic">All services unlocked.</p><button onclick="cancelSub()" style="font-family:var(--f-heading);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border:1px solid rgba(201,168,76,.15);background:transparent;color:var(--faded);cursor:pointer">Cancel</button></div>';}else{el.innerHTML='<p style="color:var(--bone);opacity:.4;font-style:italic;margin-top:40px">No active subscription.</p><p style="margin-top:12px"><a onclick="go(\'divination\')" style="font-family:var(--f-heading);font-size:.72rem;letter-spacing:2px;color:var(--gold);cursor:pointer;text-decoration:underline">View Plans</a></p>';}}
+
+// ══════════════ REVEAL ALL CARDS ══════════════
+function revealAllCards(){
+  if(!tarotState||tarotState.allRevealed)return;
+  var btn=document.getElementById('revealAllBtn');if(btn)btn.disabled=true;
+  var toReveal=[];
+  tarotState.cards.forEach(function(c,i){if(!c.revealed)toReveal.push(i)});
+  toReveal.forEach(function(idx,delay){setTimeout(function(){flipSpreadCard(idx)},delay*250)});
+}
+
+
+// ══════════════ PROFESSIONAL TAROT READINGS ══════════════
+var PRO_MAJOR={
+"The Fool":{u:"The Fool stands at the precipice between the known and the infinite. Ruled by Uranus, assigned Hebrew letter Aleph (breath of spirit), this is primordial innocence before the descent into matter. The Kabbalistic path between Kether and Chokmah opens. Trust the leap \u2014 the universe has cleared the road even if your mortal eyes cannot see it. A new cycle demands you shed the armor of past experience and move with beginner\u2019s mind. Uranian breakthroughs are imminent.",r:"The Fool reversed warns of recklessness masquerading as spontaneity. Uranus manifests as chaos without purpose. You may be avoiding necessary preparation, or leaping to escape rather than to grow. The shadow warns against spiritual bypassing \u2014 not all emptiness is sacred. Ground yourself before the next step, lest you fall rather than fly."},
+"The Magician":{u:"Mercury\u2019s chosen vessel channels divine will through the four elements arrayed on his altar. Beth, the Hebrew letter of the house, reminds you that you ARE the temple. The path from Kether to Binah activates pure creative intelligence. All tools are present \u2014 your willpower is the fifth element that binds them. This is mastery through focused intention: as above, so below. Expect breakthroughs in communication and manifestation.",r:"The Magician reversed reveals Mercury in its trickster aspect \u2014 manipulation, deceit, or talent squandered on illusions. The tools remain on the altar but the will is scattered. Beware of charlatans, including the one in your mirror. Shadow work: confronting where you use intelligence to avoid rather than to create."},
+"The High Priestess":{u:"The Moon\u2019s sacred guardian sits between the pillars of Boaz and Jachin \u2014 severity and mercy, the known and unknown. Gimel leads from Kether to Tiphareth along the path of intuitive knowing that bypasses rational mind. The Torah scroll holds mysteries revealed only in silence. Your subconscious broadcasts clearly; still the noise and listen. Lunar intuition peaks \u2014 dreams and synchronicities are messages, not coincidences.",r:"Reversed, the High Priestess warns that secrets are being kept from you \u2014 or by you, from yourself. The Moon\u2019s shadow brings denial, repression, and willful blindness. You may be ignoring intuition in favor of comfort. The veil is not a barrier but a mirror \u2014 what you refuse to see in darkness will manifest in waking life."},
+"The Empress":{u:"Venus incarnate in fullest expression \u2014 Daleth, the doorway through which creation pours into the material plane. The path from Chokmah to Binah bridges divine masculine seed into feminine form. Abundance is not something you seek but something you allow. Open your senses to beauty and let creativity flow without judgment. A period of lush growth and sensory awakening begins.",r:"The Empress reversed reveals Venus in her possessive aspect. Creative blocks stem from self-neglect or over-giving that depletes the source. The shadow of the Great Mother is codependency \u2014 nurturing others to avoid nurturing the self. Return to your own garden before tending others\u2019."},
+"The Emperor":{u:"Aries-ruled authority manifests through structure, discipline, and sovereign will. Heh, the window \u2014 through the Emperor\u2019s framework you gain vision and perspective. The path from Chokmah to Tiphareth establishes divine order. This is not tyranny but sacred architecture that allows freedom to flourish within form. Assert your boundaries. Build the throne from which you rule your own kingdom with wisdom.",r:"The Emperor reversed reveals the tyrant within \u2014 Mars in its destructive aspect, rigidity that crushes what it claims to protect. Control born of fear rather than strength. Authority without compassion becomes oppression. Examine where you are either over-controlling or abdicating your rightful power."},
+"The Hierophant":{u:"Taurus grounds the spiritual into teachable tradition \u2014 Vav, the nail connecting heaven to earth. The path from Chokmah to Chesed transmits esoteric wisdom through exoteric forms. A teacher, mentor, or institution holds keys you need. Receive the teaching, then transcend the teacher. Sacred tradition offers structure for growth.",r:"Reversed, tradition calcifies into dogma. The shadow of Taurus is spiritual materialism \u2014 collecting teachings like possessions. You may be trapped in someone else\u2019s belief system or rebelling against all structure without discernment. Become your own hierophant while honoring what came before."},
+"The Lovers":{u:"Gemini\u2019s duality finds resolution in sacred union. Zayin, the sword of discernment, cuts through illusion to reveal authentic choice. The path from Binah to Tiphareth demands choosing with full awareness. This is not merely romance but the alchemical marriage of opposing forces within yourself. A pivotal decision approaches where head and heart must align.",r:"The Lovers reversed warns of disharmony born from avoidance. Gemini\u2019s shadow is indecision that becomes self-betrayal. Misaligned values, broken trust, or refusal to commit. The sword of discernment rusts when unused. Examine which unions are sacred and which are chains disguised as bonds."},
+"The Chariot":{u:"Cancer\u2019s cardinal water surges forward through sheer willpower. Cheth, the fence, contains and directs emotional force into triumph. The sphinxes of light and dark obey through mastery of inner polarity, not domination. Victory comes through emotional intelligence wielded with warrior precision. Move forward \u2014 the cosmos has cleared the road.",r:"Reversed, the charioteer loses the reins. Cancer\u2019s shadow: emotional overwhelm disguised as aggression, or passivity disguised as patience. Direction is lost because internal conflicts pull in opposite directions. Stop. Realign inner polarity before attempting to advance."},
+"Strength":{u:"Leo\u2019s solar fire tamed by infinite gentleness. Teth, the serpent of kundalini energy, rises through the lemniscate of eternal balance. The path from Chesed to Geburah harmonizes mercy with severity. True strength is mastery of instinct through compassion. The lion submits not through force but through recognition of love as supreme power. Your courage now must be soft, patient, and unwavering.",r:"Strength reversed reveals Leo\u2019s shadow \u2014 self-doubt masking as false humility, or raw instinct overwhelming reason. The inner beast slips its leash not because you lack power but because you doubt it. Where have you abandoned your own authority? The serpent energy turns destructive when denied expression."},
+"The Hermit":{u:"Virgo\u2019s discriminating wisdom illuminates through deliberate solitude. Yod, the divine spark, the hand of creation itself. The path from Chesed to Tiphareth is the soul\u2019s pilgrimage inward. The lantern holds the hexagram of integrated truth. This is sacred withdrawal \u2014 the teacher goes to the mountain to return with fire. Your answers are in the silence between heartbeats.",r:"Reversed, sacred solitude becomes pathological isolation. Virgo\u2019s shadow is analysis paralysis \u2014 withdrawing not to seek wisdom but to avoid vulnerability. The lantern dims with fear of what it might reveal. The mountain becomes a prison when you refuse to descend with what you\u2019ve learned."},
+"Wheel of Fortune":{u:"Jupiter\u2019s great wheel turns through Kaph, the open palm of receiving. The path from Chesed to Netzach. The sphinx atop the wheel represents consciousness that remains stable amid change. A major cycle shifts in your favor. Karmic acceleration \u2014 what you seeded in past cycles now bears fruit. Accept the turn with grace.",r:"Reversed, Jupiter\u2019s downturn meets resistance. Excess expectation followed by bitter disappointment. You may be clinging to a cycle that has completed or forcing the wheel\u2019s direction. The karmic lesson is surrender \u2014 the wisdom to know what you can and cannot control."},
+"Justice":{u:"Libra\u2019s scales weigh truth with mathematical precision. Lamed, the ox-goad, drives toward balance. The path from Geburah to Tiphareth demands radical honesty. Legal matters, contracts, and karmic debts are adjudicated now. Cause and effect are clarified \u2014 not punishment but recalibration. Accept what is fair, even if it stings.",r:"Justice reversed warns of dishonesty \u2014 yours or another\u2019s. Libra\u2019s shadow is false equilibrium maintained through denial. Legal outcomes may be unjust. The scales are tampered with. Examine where you are rationalizing unfairness for comfort\u2019s sake."},
+"The Hanged Man":{u:"Neptune dissolves the ego\u2019s grip through sacred surrender. Mem, the waters of the unconscious. The path from Geburah to Hod inverts all assumptions. Odin hung nine days to receive the runes; the crucified god sees the world anew. This is not defeat but deliberate sacrifice of perspective. Let go of how you think things should be.",r:"Reversed, sacrifice becomes martyrdom without purpose. Neptune\u2019s shadow is passive suffering dressed as spirituality. You may be stalling, refusing either the old or the new. Make the sacrifice or end it \u2014 but stop dangling."},
+"Death":{u:"Scorpio\u2019s transformative power strips away what no longer serves. Nun, the seed that must die to become the tree. The path from Tiphareth to Netzach demands ego death for the soul\u2019s resurrection. A major ending clears the field for new growth. Grieve what passes, then turn toward the sunrise visible between the towers. Pluto ensures this transformation is irreversible and necessary.",r:"Death reversed warns of resistance to necessary transformation. Scorpio\u2019s shadow clings to what is decaying, mistaking preservation for loyalty. The longer you postpone the ending, the more painful the collapse. That which refuses to die becomes undead \u2014 animated but lifeless."},
+"Temperance":{u:"Sagittarius\u2019s philosophical fire tempered by angelic alchemy. Samekh, the tent-prop supporting integrated being. The path from Tiphareth to Yesod brings solar consciousness into lunar receptivity. The angel pours between chalices of fire and water, achieving the impossible blend. Moderation is not mediocrity but mastery. Patience and precise calibration yield miracles.",r:"Temperance reversed reveals Sagittarius\u2019s shadow \u2014 excess, impatience, the arrogant belief that more is always better. The alchemical blend is off-ratio. You may be rushing a process that requires time, or numbing yourself to avoid the discipline of integration."},
+"The Devil":{u:"Capricorn\u2019s earthly ambition meets its shadow in chains worn by choice. Ayin, the eye that sees only surfaces. The path from Tiphareth to Hod traps consciousness in materiality. Pan\u2019s laughter echoes: the chains are loose enough to remove. This card mirrors your addiction \u2014 substance, person, pattern, or belief. The Devil doesn\u2019t imprison; he illuminates your complicity.",r:"Reversed, the Devil\u2019s chains shatter. Shadow work bears fruit as you recognize the bondage. An addiction broken, a toxic pattern seen clearly. The dark night yields to dawn. But freedom from one devil means nothing if you immediately seek another."},
+"The Tower":{u:"Mars strikes the tower of false security. Peh, the mouth speaking devastating truth. The path from Hod to Netzach annihilates the intellectual fortress that once served but now imprisons. Lightning is divine will correcting human hubris. What crumbles was never solid. The crown that falls is the ego\u2019s false sovereignty. This destruction is liberation.",r:"The Tower reversed suggests internal collapse, invisible or being delayed. Mars\u2019s force turns inward as anxiety or slow erosion of a condemned structure. Avoiding the inevitable only increases devastation. Sometimes the kindest thing is to strike the match yourself."},
+"The Star":{u:"Aquarius pours celestial waters onto earth and sea. Tzaddi, the fishhook drawing the soul upward. The path from Netzach to Yesod restores hope after devastation. Naked and vulnerable under infinite sky, you are never more connected to Source. The eight-pointed star is the compass of spiritual navigation. Healing flows. Faith is restored as direct experience.",r:"The Star reversed warns of despair or disconnection from hope. Aquarius\u2019s shadow is alienation disguised as independence. You may have lost faith not in the divine but in yourself as worthy of its gifts. Return to the source \u2014 vulnerability is the prerequisite for grace."},
+"The Moon":{u:"Pisces navigates the labyrinth of the unconscious. Qoph, the back of the head where dreams reside. The path from Netzach to Malkuth descends through illusion to embodied truth. Nothing is as it appears. Walk between the towers with instinct as your guide. Neptune heightens psychic sensitivity but also capacity for self-deception.",r:"Reversed, the Moon\u2019s terrors dissipate. What seemed like monsters were projections of unintegrated shadow. The tide recedes, revealing solid ground. Trust the emerging clarity but don\u2019t rush \u2014 some illusions served a protective purpose."},
+"The Sun":{u:"Solar radiance in purest expression. Resh, the face turned toward divine light. The path from Hod to Yesod bathes intellect in golden warmth. The child rides bareback, innocent and free. This is ego integrated with soul \u2014 not destroyed but illuminated. Success, vitality, and clarity shine on all endeavors. The inner child reclaims its throne.",r:"The Sun reversed dims but does not extinguish. Temporary clouds obscure your natural radiance \u2014 imposter syndrome, burnout, or inability to receive joy fully. The inner child retreats behind walls. The light is still there; you have merely turned from it."},
+"Judgement":{u:"Pluto\u2019s trumpet sounds the resurrection of the integrated self. Shin, the triple flame of spirit descending into matter. The path from Hod to Malkuth calls the dead parts of yourself to rise. This is not punishment but recognition \u2014 a higher self calling the earthly self to account, to rise, to remember purpose. A major calling announces itself. Answer.",r:"Judgement reversed: you are ignoring the call. Pluto\u2019s shadow refuses to transform \u2014 hearing the trumpet but pulling the coffin lid closed. Self-doubt or fear keeps you entombed. The resurrection is not optional; its timing depends on your willingness."},
+"The World":{u:"Saturn\u2019s final gift \u2014 completion, integration, the dance at the center of the mandala. Tav, cosmic signature. The path from Yesod to Malkuth brings the entire Tree of Life into manifestation. The four fixed signs surround the dancer who has transcended duality. A major cycle completes. The World is not an ending but the pause before the Fool steps off the next cliff into a higher octave.",r:"The World reversed: near-completion frustrated by a final obstacle. Saturn\u2019s shadow is fear of completion itself \u2014 because to finish is to begin again. Closure is delayed by internal resistance. Tie the last thread. The new world awaits beyond your hesitation."}
+};
+function getProReading(name,isRev){
+  var m=PRO_MAJOR[name];
+  if(m)return isRev?m.r:m.u;
+  var card=DECK.find(function(c){return c.name===name});
+  if(!card)return isRev?'Reversed energy calls for introspection.':'The upright energy flows with clarity.';
+  var base=isRev?card.reversed.reading:card.upright.reading;
+  var suit=name.indexOf('Wands')>-1?'Fire':name.indexOf('Cups')>-1?'Water':name.indexOf('Swords')>-1?'Air':'Earth';
+  var elem={Fire:'Mars and the creative will of Atziluth, the archetypal world',Water:'the Moon and emotional currents of Briah, the creative world',Air:'Mercury and the blade of intellect in Yetzirah, the formative world',Earth:'Venus and material manifestation in Assiah, the world of action'};
+  var shadow={Fire:'burnout, scattered ambition, and misdirected aggression',Water:'emotional flooding, codependency, and boundary dissolution',Air:'anxiety, mental cruelty, and overthinking that paralyzes',Earth:'greed, spiritual stagnation, and clinging to the material'};
+  if(isRev)return base+' The shadow of '+suit+' emerges \u2014 '+shadow[suit]+'. This reversal is not punishment but redirection. Examine where the '+suit.toLowerCase()+' element has become stagnant or destructive. The path forward requires honest shadow work and releasing what no longer serves your highest good.';
+  return base+' The pure essence of '+suit+' flows through this position, activated by '+elem[suit]+'. The planetary influences support decisive movement. Trust the elemental current and let it carry you toward alignment.';
+}
+
+// ══════════════ CELESTIAL ANALYSIS ══════════════
+function initCelestial(){
+  var now=new Date(),m=now.getMonth()+1,d=now.getDate();
+  var sunSign='',sunIcon='';
+  if((m===3&&d>=21)||(m===4&&d<=19)){sunSign='Aries';sunIcon='\u2648'}
+  else if((m===4&&d>=20)||(m===5&&d<=20)){sunSign='Taurus';sunIcon='\u2649'}
+  else if((m===5&&d>=21)||(m===6&&d<=20)){sunSign='Gemini';sunIcon='\u264A'}
+  else if((m===6&&d>=21)||(m===7&&d<=22)){sunSign='Cancer';sunIcon='\u264B'}
+  else if((m===7&&d>=23)||(m===8&&d<=22)){sunSign='Leo';sunIcon='\u264C'}
+  else if((m===8&&d>=23)||(m===9&&d<=22)){sunSign='Virgo';sunIcon='\u264D'}
+  else if((m===9&&d>=23)||(m===10&&d<=22)){sunSign='Libra';sunIcon='\u264E'}
+  else if((m===10&&d>=23)||(m===11&&d<=21)){sunSign='Scorpio';sunIcon='\u264F'}
+  else if((m===11&&d>=22)||(m===12&&d<=21)){sunSign='Sagittarius';sunIcon='\u2650'}
+  else if((m===12&&d>=22)||(m===1&&d<=19)){sunSign='Capricorn';sunIcon='\u2651'}
+  else if((m===1&&d>=20)||(m===2&&d<=18)){sunSign='Aquarius';sunIcon='\u2652'}
+  else{sunSign='Pisces';sunIcon='\u2653'}
+  // Moon phase
+  var lp=new Date(2024,0,11,11,57),diff=(now-lp)/1000,cycle=diff/(29.53058867*86400),phase=cycle-Math.floor(cycle);
+  var moonName,moonIcon;
+  if(phase<0.0625){moonName='New Moon';moonIcon='\uD83C\uDF11'}
+  else if(phase<0.1875){moonName='Waxing Crescent';moonIcon='\uD83C\uDF12'}
+  else if(phase<0.3125){moonName='First Quarter';moonIcon='\uD83C\uDF13'}
+  else if(phase<0.4375){moonName='Waxing Gibbous';moonIcon='\uD83C\uDF14'}
+  else if(phase<0.5625){moonName='Full Moon';moonIcon='\uD83C\uDF15'}
+  else if(phase<0.6875){moonName='Waning Gibbous';moonIcon='\uD83C\uDF16'}
+  else if(phase<0.8125){moonName='Last Quarter';moonIcon='\uD83C\uDF17'}
+  else if(phase<0.9375){moonName='Waning Crescent';moonIcon='\uD83C\uDF18'}
+  else{moonName='New Moon';moonIcon='\uD83C\uDF11'}
+  // Mercury Rx
+  var mercRx=false,mercNote='Direct';
+  [[new Date(2026,0,26),new Date(2026,1,16)],[new Date(2026,4,20),new Date(2026,5,12)],[new Date(2026,8,13),new Date(2026,9,5)],[new Date(2026,11,8),new Date(2026,11,28)]].forEach(function(p){if(now>=p[0]&&now<=p[1]){mercRx=true;mercNote='RETROGRADE'}});
+  // Render sky grid
+  document.getElementById('skyGrid').innerHTML='<div class="sky-cell"><div class="sky-icon">'+moonIcon+'</div><div class="sky-label">Moon Phase</div><div class="sky-val">'+moonName+'</div></div><div class="sky-cell"><div class="sky-icon">'+sunIcon+'</div><div class="sky-label">Sun Sign</div><div class="sky-val">'+sunSign+'</div></div><div class="sky-cell"><div class="sky-icon">'+(mercRx?'\u26A0':'\u26A1')+'</div><div class="sky-label">Mercury</div><div class="sky-val" style="'+(mercRx?'color:var(--blood-glow)':'')+'">'+mercNote+'</div></div>';
+  // Transits
+  var transits=[
+    {s:'\u2647',n:'Pluto in Aquarius',t:'Generational power shift (2024\u20132044). Old hierarchies dissolve as decentralized networks reshape society.'},
+    {s:'\u2645',n:'Uranus in Gemini',t:'Revolutionary shifts in communication, AI, and media (Jul 2025\u20132032). How humanity shares knowledge is being rewritten.'},
+    {s:'\u2644',n:'Saturn in Aries',t:'New structures demand courage (May 2025\u2013Apr 2028). Discipline channels into pioneering initiatives. Identity is forged.'},
+    {s:'\u2646',n:'Neptune in Aries',t:'Spiritual identity crisis and rebirth (Mar 2025\u20132039). Collective dreams become bold and fiercely individualistic.'},
+    {s:'\u2643',n:'Jupiter in Cancer',t:'Jupiter in exaltation (Jun 2025\u2013Jun 2026). Abundance flows to home, family, and emotional security.'},
+    {s:'\u260A',n:'North Node in Pisces',t:'Collective soul path moves toward compassion and dissolving ego (Jan 2025\u2013Jul 2026).'}
+  ];
+  if(mercRx)transits.unshift({s:'\u263F',n:'Mercury Retrograde',t:'Communication breakdowns, tech glitches. Excellent for review and revision. Avoid new contracts.'});
+  var cp=document.getElementById('celestialPanel');
+  var th=transits.map(function(tr){return'<div class="transit-row"><div class="t-symbol">'+tr.s+'</div><div class="t-info">'+tr.t+'</div><div class="t-aspect"><span class="aspect-tag">'+tr.n+'</span></div></div>'}).join('');
+  var desc={Aries:'identity, courage, and new beginnings',Taurus:'stability, sensuality, and material security',Gemini:'communication, curiosity, and exploration',Cancer:'home, emotional depth, and ancestry',Leo:'creativity, self-expression, and leadership',Virgo:'analysis, health, and sacred service',Libra:'partnership, harmony, and balance',Scorpio:'transformation, power, and depth',Sagittarius:'philosophy, adventure, and vision',Capricorn:'ambition, structure, and legacy',Aquarius:'innovation, collective progress, and liberation',Pisces:'intuition, compassion, and spiritual surrender'};
+  var narrative='<p>The heavens on <strong>'+now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})+'</strong> present a striking configuration. The Sun transits <strong>'+sunSign+'</strong>, illuminating themes of '+(desc[sunSign]||'')+'. The Moon in its <strong>'+moonName+'</strong> phase '+(phase<0.5?'builds energy toward manifestation.':'releases and surrenders \u2014 let go of what no longer serves.')+'</p>';
+  narrative+='<p><strong>Pluto in Aquarius</strong> continues its generational overhaul, while <strong>Uranus in Gemini</strong> electrifies communication. <strong>Saturn in Aries</strong> and <strong>Neptune in Aries</strong> create a cosmic paradox: build with faith, not just force.</p>';
+  if(mercRx)narrative+='<p style="color:var(--blood-glow)"><strong>\u26A0 Mercury Retrograde active.</strong> Triple-check communications. Use this period for revision, not initiation.</p>';
+  cp.innerHTML='<h3>\u2726 Celestial Analysis \u2014 '+now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+'</h3>'+narrative+'<div style="margin-top:16px">'+th+'</div>';
+}
+
+// ══════════════ SIGN ADVICE ══════════════
+var SIGN_ADVICE={
+Aries:{o:'Saturn and Neptune both transit your sign \u2014 identity tested and rebuilt at a higher octave.',sat:'Saturn in 1st: radical self-discipline demanded. Define who you truly are.',jup:'Jupiter in Cancer (4th house): domestic expansion, family blessings, real estate favored.',ura:'Uranus in Gemini (3rd house): radical new ideas, disruptive conversations.',mer:'Mercury Rx hits your communication zones hard. Double-check every message.'},
+Taurus:{o:'Uranus moves into Gemini (your 2nd house) \u2014 revolution shifts to finances and values.',sat:'Saturn in Aries (12th house): hidden fears, karmic debts, spiritual surrender.',jup:'Jupiter in Cancer (3rd house): learning, writing, sibling connections expand.',ura:'Uranus in 2nd house: income streams become unpredictable but more authentic.',mer:'Mercury Rx disrupts material zone. Avoid major purchases during Rx.'},
+Gemini:{o:'Uranus entering your sign begins a 7-year identity revolution. Expect to surprise yourself.',sat:'Saturn in Aries (11th house): social circle restructured. Fair-weather friends fall away.',jup:'Jupiter in Cancer (2nd house): income grows. Your sense of personal value deepens.',ura:'Uranus in 1st house: appearance, personality, life direction shift dramatically.',mer:'As your ruler, Mercury Rx affects you most. Use Rx for journaling, not launching.'},
+Cancer:{o:'Jupiter in your sign through mid-2026 \u2014 the luckiest transit of the decade for you!',sat:'Saturn in Aries (10th house): career responsibilities increase. Build your legacy.',jup:'Jupiter in 1st house: personal growth, vitality, charisma enhanced. The universe says yes.',ura:'Uranus in Gemini (12th house): breakthrough insights through dreams and meditation.',mer:'Mercury Rx activates your inner world. Journal dreams during Rx for insights.'},
+Leo:{o:'Several planets activate your hidden houses. Build the foundation for your next triumph.',sat:'Saturn in Aries (9th house): academic pursuits and philosophy require disciplined effort.',jup:'Jupiter in Cancer (12th house): hidden blessings, spiritual expansion occurs invisibly.',ura:'Uranus in Gemini (11th house): social circle transforms. New humanitarian alliances.',mer:'Mercury Rx affects your networks. Miscommunications with friends and colleagues.'},
+Virgo:{o:'Mercury retrogrades hit you personally, but broader transits support career advancement.',sat:'Saturn in Aries (8th house): financial entanglements demand responsible management.',jup:'Jupiter in Cancer (11th house): social circles grow. Influential friends appear.',ura:'Uranus in Gemini (10th house): sudden career changes. Embrace non-traditional paths.',mer:'As Mercury\u2019s other sign, Rx requires extreme attention to detail. Back up everything.'},
+Libra:{o:'Relationships and career undergo simultaneous restructuring. Balance starts within.',sat:'Saturn opposes from 7th house: committed relationships face serious tests.',jup:'Jupiter in Cancer (10th house): professional expansion, promotions, recognition.',ura:'Uranus in Gemini (9th house): radical shifts in worldview. Unexpected journeys.',mer:'Mercury Rx disrupts travel and philosophical zones. Revisit abandoned studies.'},
+Scorpio:{o:'Pluto in Aquarius transforms your home life and psychological foundations completely.',sat:'Saturn in Aries (6th house): health and daily routines demand discipline.',jup:'Jupiter in Cancer (9th house): spiritual journeys, academic success, travel brings wisdom.',ura:'Uranus in Gemini (8th house): sudden financial shifts. Psychological breakthroughs.',mer:'Mercury Rx activates shared finances. Joint accounts need review during Rx.'},
+Sagittarius:{o:'Jupiter in Cancer supports emotional intelligence. Adventure starts from a stable home.',sat:'Saturn in Aries (5th house): creative projects need discipline. Romance matures.',jup:'Jupiter in Cancer (8th house): financial benefits through others. Depth increases.',ura:'Uranus in Gemini opposes from 7th: relationships undergo radical change.',mer:'Mercury Rx hits your partnership axis. Communication breakdowns with significant others.'},
+Capricorn:{o:'Pluto has left your sign after 16 years. You\u2019ve been reborn. Now build with wisdom.',sat:'Saturn in Aries (4th house): domestic responsibilities intensify. Establish foundations.',jup:'Jupiter opposes from 7th: partnerships expand. Business partnerships especially favored.',ura:'Uranus in Gemini (6th house): radical health and work changes. Embrace tech.',mer:'Mercury Rx disrupts routines. Use Rx for health check-ups and workflow optimization.'},
+Aquarius:{o:'Pluto in your sign (2024\u20132044) \u2014 the defining transit of your lifetime. Total metamorphosis.',sat:'Saturn in Aries (3rd house): writing, speaking, teaching demand effort.',jup:'Jupiter in Cancer (6th house): wellness improves. Work in healing fields favored.',ura:'Uranus in Gemini (5th house): artistic breakthroughs. Unexpected romances.',mer:'Mercury Rx affects creative and romantic zones. Use Rx for creative revision.'},
+Pisces:{o:'North Node in your sign through mid-2026 \u2014 destiny accelerates. Trust your intuition.',sat:'Saturn in Aries (2nd house): finances require sober attention. Build structures.',jup:'Jupiter in Cancer trines your Sun (5th house): romance, art, and joy are cosmically blessed.',ura:'Uranus in Gemini (4th house): sudden home changes. Family dynamics shift.',mer:'Mercury Rx disrupts home communication. Use Rx for organization and reconnecting.'}
+};
+function showSignAdvice(sign){
+  var box=document.getElementById('signAdviceBox');
+  if(!sign){box.style.display='none';return}
+  var a=SIGN_ADVICE[sign];if(!a){box.style.display='none';return}
+  box.style.display='block';
+  box.innerHTML='<h3>\u2726 Transit Guidance for '+sign+'</h3><p>'+a.o+'</p><div class="advice-cat">\u2644 Saturn</div><p>'+a.sat+'</p><div class="advice-cat">\u2643 Jupiter</div><p>'+a.jup+'</p><div class="advice-cat">\u2645 Uranus</div><p>'+a.ura+'</p><div class="advice-cat">\u263F Mercury Rx</div><p>'+a.mer+'</p>';
+  gsap.fromTo(box,{opacity:0,y:16},{opacity:1,y:0,duration:.6,ease:'power2.out'});
+}
+
+
+// ══════════════ INIT ══════════════
+gsap.registerPlugin(ScrollTrigger);updBadge();refreshUserUI();dailyInited=true;initDailyOracle();
+gsap.from('.hero h1',{opacity:0,y:36,duration:1,ease:'power3.out'});
+gsap.from('.hero .tagline',{opacity:0,y:24,duration:1,delay:.2,ease:'power3.out'});
+gsap.from('.cat-grid',{opacity:0,y:36,duration:1,delay:.4,ease:'power3.out'});
+</script>
+</body>
+</html>
