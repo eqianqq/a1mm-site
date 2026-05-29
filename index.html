@@ -262,6 +262,10 @@ footer .f-copy{font-size:.72rem;color:var(--ghost);opacity:.5;font-style:italic}
 
 /* Responsive - see comprehensive mobile rules below */
 
+/* LANG TOGGLE */
+.lang-toggle{font-family:var(--f-heading);font-size:.58rem;letter-spacing:1px;color:var(--faded);cursor:pointer;border:1px solid rgba(201,168,76,.15);padding:3px 8px;transition:all .3s;margin-left:2px;white-space:nowrap}
+.lang-toggle:hover{color:var(--gold);border-color:var(--gold)}
+.lang-toggle .active-lang{color:var(--gold)}
 /* USER SYSTEM */
 .user-wrap{position:relative;display:flex;align-items:center;gap:6px;cursor:pointer;margin-left:4px}
 .user-avatar{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--gold-dim);background:var(--stone);display:flex;align-items:center;justify-content:center;font-family:var(--f-heading);font-size:.6rem;color:var(--gold);letter-spacing:1px;transition:all .3s}
@@ -438,10 +442,11 @@ footer .f-copy{font-size:.72rem;color:var(--ghost);opacity:.5;font-style:italic}
 <header>
   <span class="logo" onclick="go('home')">A.1MM</span>
   <nav id="mainNav">
-    <a onclick="go('home')">Home</a>
-    <a onclick="go('apparel')">Collection</a>
-    <a onclick="go('divination')">Divination</a>
-    <a href="mailto:ritual@a1mm.com">Contact</a>
+    <a onclick="go('home')" data-i18n="nav_home">Home</a>
+    <a onclick="go('apparel')" data-i18n="nav_collection">Collection</a>
+    <a onclick="go('divination')" data-i18n="nav_divination">Divination</a>
+    <a href="mailto:ritual@a1mm.com" data-i18n="nav_contact">Contact</a>
+    <span class="lang-toggle" id="langToggle" onclick="toggleLang()"><span class="active-lang">EN</span> / 中</span>
     <span class="cart-btn" onclick="toggleCart()">&#128722;<span class="cart-badge" id="cartBadge">0</span></span>
     <a id="navVip" class="nav-vip" style="display:none" onclick="go('subscription')">&#10022; VIP</a>
     <div class="user-wrap" onclick="toggleUserDD(event)">
@@ -450,9 +455,9 @@ footer .f-copy{font-size:.72rem;color:var(--ghost);opacity:.5;font-style:italic}
       <span class="vip-badge" id="vipBadge" style="display:none">&#10022; VIP</span>
       <div class="user-dropdown" id="userDD">
         <div class="dd-header"><div class="dd-name" id="ddName">Guest</div><div class="dd-vip" id="ddVip"></div></div>
-        <a onclick="go('orders');closeUserDD()">My Orders</a>
-        <a onclick="go('subscription');closeUserDD()">My Subscription</a>
-        <a onclick="doLogout()">Logout</a>
+        <a onclick="go('orders');closeUserDD()" data-i18n="nav_orders">My Orders</a>
+        <a onclick="go('subscription');closeUserDD()" data-i18n="dd_sub">My Subscription</a>
+        <a onclick="doLogout()" data-i18n="dd_logout">Logout</a>
       </div>
     </div>
   </nav>
@@ -460,25 +465,26 @@ footer .f-copy{font-size:.72rem;color:var(--ghost);opacity:.5;font-style:italic}
 </header>
 <div class="mobile-nav" id="mobileNav">
   <span class="close-btn" onclick="toggleMobileNav()">&#10005;</span>
-  <a onclick="toggleMobileNav();go('home')">Home</a>
-  <a onclick="toggleMobileNav();go('apparel')">Collection</a>
-  <a onclick="toggleMobileNav();go('divination')">Divination</a>
-  <a onclick="toggleMobileNav();toggleCart()">Ritual Bag</a>
-  <a onclick="toggleMobileNav();go('orders')">My Orders</a>
-  <a onclick="toggleMobileNav();go('subscription')">Subscription</a>
+  <a onclick="toggleMobileNav();go('home')" data-i18n="nav_home">Home</a>
+  <a onclick="toggleMobileNav();go('apparel')" data-i18n="nav_collection">Collection</a>
+  <a onclick="toggleMobileNav();go('divination')" data-i18n="nav_divination">Divination</a>
+  <a onclick="toggleMobileNav();toggleCart()" data-i18n="nav_bag">Ritual Bag</a>
+  <a onclick="toggleLang();toggleMobileNav()">中文 / English</a>
+  <a onclick="toggleMobileNav();go('orders')" data-i18n="nav_orders">My Orders</a>
+  <a onclick="toggleMobileNav();go('subscription')" data-i18n="nav_subscription">Subscription</a>
 </div>
 
 <!-- HOME -->
 <div class="page active" id="pg-home">
-  <section class="hero"><h1>A.1MM</h1><p class="tagline">Where gothic devotion meets tarot mysticism — each thread woven with arcane intention.</p>
+  <section class="hero"><h1>A.1MM</h1><p class="tagline" data-i18n="hero_tagline">Where gothic devotion meets tarot mysticism — each thread woven with arcane intention.</p>
     <div class="cat-grid">
-      <div class="cat-card" onclick="go('apparel')"><span class="cat-icon">🕯</span><div class="cat-name">Atelier</div><p class="cat-desc">Garments consecrated under the signs they embody.</p></div>
-      <div class="cat-card" onclick="go('divination')"><span class="cat-icon">🔮</span><div class="cat-name">Divination</div><p class="cat-desc">Tarot, astrology, and astro dice. Peer beyond the veil.</p></div>
+      <div class="cat-card" onclick="go('apparel')"><span class="cat-icon">🕯</span><div class="cat-name" data-i18n="cat_atelier">Atelier</div><p class="cat-desc" data-i18n="cat_atelier_desc">Garments consecrated under the signs they embody.</p></div>
+      <div class="cat-card" onclick="go('divination')"><span class="cat-icon">🔮</span><div class="cat-name" data-i18n="cat_divination">Divination</div><p class="cat-desc" data-i18n="cat_divination_desc">Tarot, astrology, and astro dice. Peer beyond the veil.</p></div>
     </div>
   </section>
   <section class="daily-oracle"><div class="container">
-    <p class="s-label">— Free Daily Oracle —</p><h2 class="s-title">Draw Your Fate</h2>
-    <p class="s-sub">Five cards from the 78-card Rider-Waite-Smith deck — each may appear upright or reversed.</p>
+    <p class="s-label" data-i18n="daily_label">— Free Daily Oracle —</p><h2 class="s-title" data-i18n="daily_title">Draw Your Fate</h2>
+    <p class="s-sub" data-i18n="daily_sub">Five cards from the 78-card Rider-Waite-Smith deck — each may appear upright or reversed.</p>
     <div class="daily-spread" id="dailySpread"></div>
     <div class="fortune-box" id="dailyFortune"></div>
     <div class="synth-box" id="dailySynth" style="display:none"></div>
@@ -487,44 +493,44 @@ footer .f-copy{font-size:.72rem;color:var(--ghost);opacity:.5;font-style:italic}
 
 <!-- APPAREL -->
 <div class="page" id="pg-apparel"><section style="padding-top:120px"><div class="container">
-  <span class="back-btn" onclick="go('home')">&larr; Back to Sanctum</span>
-  <p class="s-label">— The Atelier —</p><h2 class="s-title">The Collection</h2><p class="s-sub">Each piece is consecrated under the sign it embodies.</p>
+  <span class="back-btn" onclick="go('home')" data-i18n="back_sanctum">&larr; Back to Sanctum</span>
+  <p class="s-label" data-i18n="atelier_label">— The Atelier —</p><h2 class="s-title" data-i18n="atelier_title">The Collection</h2><p class="s-sub" data-i18n="atelier_sub">Each piece is consecrated under the sign it embodies.</p>
   <div class="products-grid" id="productGrid"></div>
 </div></section></div>
 
 <!-- PDP -->
 <div class="page" id="pg-pdp"><section style="padding-top:120px"><div class="container">
-  <span class="back-btn" onclick="go('apparel')">&larr; Back to Collection</span>
+  <span class="back-btn" onclick="go('apparel')" data-i18n="back_collection">&larr; Back to Collection</span>
   <div class="pdp-layout"><div class="pdp-gallery" id="pdpGallery"></div><div class="pdp-details" id="pdpDetails"></div></div>
 </div></section></div>
 
 <!-- DIVINATION HUB -->
 <div class="page" id="pg-divination"><section style="padding-top:120px"><div class="container">
-  <span class="back-btn" onclick="go('home')">&larr; Back to Sanctum</span>
-  <p class="s-label">— The Oracle Chamber —</p><h2 class="s-title">Divination Services</h2>
-  <p class="s-sub">Three sacred instruments to illuminate your path. New seekers receive one complimentary reading of each type.</p>
-  <div class="free-badge" style="text-align:center;display:block">✦ First Reading Free for All Services</div>
+  <span class="back-btn" onclick="go('home')" data-i18n="back_sanctum">&larr; Back to Sanctum</span>
+  <p class="s-label" data-i18n="oracle_label">— The Oracle Chamber —</p><h2 class="s-title" data-i18n="oracle_title">Divination Services</h2>
+  <p class="s-sub" data-i18n="oracle_sub">Three sacred instruments to illuminate your path. New seekers receive one complimentary reading of each type.</p>
+  <div class="free-badge" style="text-align:center;display:block" data-i18n="free_badge">✦ First Reading Free for All Services</div>
   <div class="div-grid">
-    <div class="div-card" onclick="go('tarot')"><span class="d-icon">🃏</span><div class="d-name">Tarot Spreads</div><div class="d-price">$9 – $39</div><p class="d-desc">Single card, three-card, Celtic Cross, relationship, and career layouts.</p></div>
-    <div class="div-card" onclick="go('astrology')"><span class="d-icon">🌟</span><div class="d-name">Astrology Reading</div><div class="d-price">$29 – $49</div><p class="d-desc">Birth chart, annual forecast, planetary transits, moon phase guidance.</p></div>
-    <div class="div-card" onclick="go('dice')"><span class="d-icon">🎲</span><div class="d-name">Astro Dice</div><div class="d-price">$15</div><p class="d-desc">Planet × Sign × House — three dice cast and interpreted.</p></div>
+    <div class="div-card" onclick="go('tarot')"><span class="d-icon">🃏</span><div class="d-name" data-i18n="srv_tarot">Tarot Spreads</div><div class="d-price">$9 – $39</div><p class="d-desc" data-i18n="srv_tarot_desc">Single card, three-card, Celtic Cross, relationship, and career layouts.</p></div>
+    <div class="div-card" onclick="go('astrology')"><span class="d-icon">🌟</span><div class="d-name" data-i18n="srv_astro">Astrology Reading</div><div class="d-price">$29 – $49</div><p class="d-desc" data-i18n="srv_astro_desc">Birth chart, annual forecast, planetary transits, moon phase guidance.</p></div>
+    <div class="div-card" onclick="go('dice')"><span class="d-icon">🎲</span><div class="d-name" data-i18n="srv_dice">Astro Dice</div><div class="d-price">$15</div><p class="d-desc" data-i18n="srv_dice_desc">Planet × Sign × House — three dice cast and interpreted.</p></div>
   </div>
   <div style="margin-top:72px"><div class="ornament"><span>⚜</span></div>
-    <p class="s-label">— Subscription Covenant —</p><h2 class="s-title" style="font-size:clamp(1.15rem,2.4vw,1.7rem)">Unlimited Access</h2>
-    <p class="s-sub">Subscribe for unlimited readings across all instruments, plus exclusive perks.</p>
+    <p class="s-label" data-i18n="sub_label">— Subscription Covenant —</p><h2 class="s-title" style="font-size:clamp(1.15rem,2.4vw,1.7rem)" data-i18n="sub_title">Unlimited Access</h2>
+    <p class="s-sub" data-i18n="sub_sub">Subscribe for unlimited readings across all instruments, plus exclusive perks.</p>
     <div class="sub-grid">
       <div class="sub-card"><div class="sub-tier">Monthly</div><div class="sub-name">Seeker</div><div class="sub-price"><span class="amt">$49</span><span class="per"> /mo</span></div><div class="sub-save">&nbsp;</div>
-        <ul class="sub-features"><li>Unlimited tarot + astro dice + astrology</li><li>Personal 1-on-1 oracle guidance</li><li>5 free premium spreads / month</li><li>Daily cosmic briefing</li></ul><a class="sub-cta" onclick="doSubscribe('seeker')">Begin the Covenant</a></div>
+        <ul class="sub-features"><li>Unlimited tarot + astro dice + astrology</li><li>Personal 1-on-1 oracle guidance</li><li>5 free premium spreads / month</li><li>Daily cosmic briefing</li></ul><a class="sub-cta" onclick="doSubscribe('seeker')" data-i18n="sub_begin">Begin the Covenant</a></div>
       <div class="sub-card featured"><div class="sub-tier">Annual</div><div class="sub-name">Devotee</div><div class="sub-price"><span class="amt">$399</span><span class="per"> /yr</span></div><div class="sub-save">Save $189 — 2 months free ✦</div>
-        <ul class="sub-features"><li>Everything in Seeker</li><li>Annual celestial forecast report</li><li>Priority scheduling</li><li>Birthday exclusive reading</li><li>Early access to new rituals</li></ul><a class="sub-cta" onclick="doSubscribe('devotee')">Ascend to Devotee</a></div>
+        <ul class="sub-features"><li>Everything in Seeker</li><li>Annual celestial forecast report</li><li>Priority scheduling</li><li>Birthday exclusive reading</li><li>Early access to new rituals</li></ul><a class="sub-cta" onclick="doSubscribe('devotee')" data-i18n="sub_ascend">Ascend to Devotee</a></div>
     </div>
   </div>
 </div></section></div>
 
 <!-- TAROT SPREADS -->
 <div class="page" id="pg-tarot"><section style="padding-top:120px"><div class="container" style="max-width:1000px">
-  <span class="back-btn" onclick="go('divination')">&larr; Back to Oracle Chamber</span>
-  <p class="s-label">— Arcanum I —</p><h2 class="s-title">Tarot Spreads</h2><p class="s-sub">Choose your spread, then tap each card to reveal its whisper.</p>
+  <span class="back-btn" onclick="go('divination')" data-i18n="back_oracle">&larr; Back to Oracle Chamber</span>
+  <p class="s-label" data-i18n="tarot_label">— Arcanum I —</p><h2 class="s-title" data-i18n="tarot_title">Tarot Spreads</h2><p class="s-sub" data-i18n="tarot_sub">Choose your spread, then tap each card to reveal its whisper.</p>
   <div class="spread-types" id="spreadTypes"></div>
   <div class="spread-area" id="spreadArea"></div>
   <button class="reveal-all-btn" id="revealAllBtn" style="display:none" onclick="revealAllCards()">&#10022; Reveal All Cards</button>
@@ -534,32 +540,32 @@ footer .f-copy{font-size:.72rem;color:var(--ghost);opacity:.5;font-style:italic}
 
 <!-- ASTRO DICE -->
 <div class="page" id="pg-dice"><section style="padding-top:120px"><div class="container" style="max-width:700px">
-  <span class="back-btn" onclick="go('divination')">&larr; Back to Oracle Chamber</span>
-  <p class="s-label">— Arcanum III —</p><h2 class="s-title">Astro Dice Oracle</h2><p class="s-sub">Cast three dice — Planet, Sign, House — and the cosmos shall speak.</p>
+  <span class="back-btn" onclick="go('divination')" data-i18n="back_oracle">&larr; Back to Oracle Chamber</span>
+  <p class="s-label" data-i18n="dice_label">— Arcanum III —</p><h2 class="s-title" data-i18n="dice_title">Astro Dice Oracle</h2><p class="s-sub" data-i18n="dice_sub">Cast three dice — Planet, Sign, House — and the cosmos shall speak.</p>
   <div class="dice-stage">
     <div class="die-container"><div class="die-label">Planet</div><div class="die-box"><div class="die-cube die-planet" id="diePlanet"></div></div><div class="die-result" id="resPlanet"></div></div>
     <div class="die-container"><div class="die-label">Sign</div><div class="die-box"><div class="die-cube die-sign" id="dieSign"></div></div><div class="die-result" id="resSign"></div></div>
     <div class="die-container"><div class="die-label">House</div><div class="die-box"><div class="die-cube die-house" id="dieHouse"></div></div><div class="die-result" id="resHouse"></div></div>
   </div>
-  <button class="roll-btn" id="rollBtn" onclick="rollDice()">Cast the Dice</button>
+  <button class="roll-btn" id="rollBtn" onclick="rollDice()" data-i18n="dice_cast">Cast the Dice</button>
   <div class="dice-reading" id="diceReading"></div>
 </div></section></div>
 
 <!-- ASTROLOGY -->
 <div class="page" id="pg-astrology"><section style="padding-top:120px"><div class="container" style="max-width:800px">
-  <span class="back-btn" onclick="go('divination')">&larr; Back to Oracle Chamber</span>
-  <p class="s-label">— Arcanum II —</p><h2 class="s-title">Astrology Readings</h2><p class="s-sub">Select a celestial service to illuminate your cosmic blueprint.</p>
+  <span class="back-btn" onclick="go('divination')" data-i18n="back_oracle">&larr; Back to Oracle Chamber</span>
+  <p class="s-label" data-i18n="astro_label">— Arcanum II —</p><h2 class="s-title" data-i18n="astro_title">Astrology Readings</h2><p class="s-sub" data-i18n="astro_sub">Select a celestial service to illuminate your cosmic blueprint.</p>
   <div class="astro-services">
     <div class="astro-card" onclick="showPayModal('Birth Chart Reading','29','astrology',function(){document.getElementById('skyGrid').scrollIntoView({behavior:'smooth'})})"><div class="a-icon">🌙</div><div class="a-name">Birth Chart</div><div class="a-price">$29</div><p class="a-desc">Full natal chart — Sun, Moon, Rising, and planetary positions.</p></div>
     <div class="astro-card" onclick="showPayModal('Annual Forecast','49','astrology',function(){document.getElementById('skyGrid').scrollIntoView({behavior:'smooth'})})"><div class="a-icon">☀️</div><div class="a-name">Annual Forecast</div><div class="a-price">$49</div><p class="a-desc">Year-ahead transit analysis with month-by-month cosmic weather.</p></div>
     <div class="astro-card" onclick="showPayModal('Planetary Transits','35','astrology',function(){document.getElementById('celestialPanel').scrollIntoView({behavior:'smooth'})})"><div class="a-icon">🪐</div><div class="a-name">Planetary Transits</div><div class="a-price">$35</div><p class="a-desc">Current planetary movements and their natal influence.</p></div>
     <div class="astro-card" onclick="showPayModal('Moon Phase Guide','29','astrology',function(){document.getElementById('skyGrid').scrollIntoView({behavior:'smooth'})})"><div class="a-icon">🌕</div><div class="a-name">Moon Phase Guide</div><div class="a-price">$29</div><p class="a-desc">Lunar cycle alignment for intentions, release, and renewal.</p></div>
   </div>
-  <div style="margin-top:56px"><div class="ornament"><span>☽</span></div><p class="s-label">Today's Celestial Snapshot</p>
+  <div style="margin-top:56px"><div class="ornament"><span>☽</span></div><p class="s-label" data-i18n="celestial_label">Today's Celestial Snapshot</p>
     <div class="sky-grid" id="skyGrid"></div>
     <div class="celestial-panel" id="celestialPanel"></div>
     <div class="sign-selector">
-      <label>Your Birth Sign:</label>
+      <label data-i18n="birth_sign_label">Your Birth Sign:</label>
       <select id="birthSignSelect" onchange="showSignAdvice(this.value)">
         <option value="">Select your sign...</option>
         <option value="Aries">♈ Aries</option><option value="Taurus">♉ Taurus</option>
@@ -578,37 +584,37 @@ footer .f-copy{font-size:.72rem;color:var(--ghost);opacity:.5;font-style:italic}
 <!-- PAYMENT MODAL -->
 <div class="pay-overlay" id="payOverlay" onclick="closePayModal()">
   <div class="pay-modal" onclick="event.stopPropagation()">
-    <h2>Unlock Reading</h2>
+    <h2 data-i18n="pay_title">Unlock Reading</h2>
     <div class="pay-service" id="payService"></div>
     <div class="pay-price" id="payPrice"></div>
-    <div class="pay-or">or subscribe for unlimited access</div>
-    <div class="pay-sub-link" onclick="closePayModal();go('divination')">View Subscription Plans &#8594;</div>
-    <div class="pay-btns"><button class="btn-cancel" onclick="closePayModal()">Cancel</button><button class="btn-pay" id="payBtn" onclick="confirmPay()">Pay Now</button></div>
+    <div class="pay-or" data-i18n="pay_or">or subscribe for unlimited access</div>
+    <div class="pay-sub-link" onclick="closePayModal();go('divination')" data-i18n="pay_sub_link">View Subscription Plans &#8594;</div>
+    <div class="pay-btns"><button class="btn-cancel" onclick="closePayModal()" data-i18n="pay_cancel">Cancel</button><button class="btn-pay" id="payBtn" onclick="confirmPay()" data-i18n="pay_now">Pay Now</button></div>
   </div>
 </div>
 <!-- MY ORDERS -->
 <div class="page" id="pg-orders"><section style="padding-top:120px"><div class="container">
   <span class="back-btn" onclick="go('home')">&larr; Back</span>
-  <p class="s-label">&mdash; Account &mdash;</p><h2 class="s-title">My Orders</h2>
+  <p class="s-label">&mdash; Account &mdash;</p><h2 class="s-title" data-i18n="orders_title">My Orders</h2>
   <div id="ordersContent" style="max-width:600px;margin:0 auto"></div>
 </div></section></div>
 <!-- MY SUBSCRIPTION -->
 <div class="page" id="pg-subscription"><section style="padding-top:120px"><div class="container">
   <span class="back-btn" onclick="go('home')">&larr; Back</span>
-  <p class="s-label">&mdash; Account &mdash;</p><h2 class="s-title">My Subscription</h2>
+  <p class="s-label">&mdash; Account &mdash;</p><h2 class="s-title" data-i18n="mysub_title">My Subscription</h2>
   <div id="subContent" style="max-width:600px;margin:0 auto;text-align:center"></div>
 </div></section></div>
 
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
-  <div class="cart-header"><h2>Ritual Bag</h2><span class="cart-close" onclick="toggleCart()">✕</span></div>
+  <div class="cart-header"><h2 data-i18n="cart_title">Ritual Bag</h2><span class="cart-close" onclick="toggleCart()">✕</span></div>
   <div class="cart-items" id="cartItems"></div>
-  <div class="cart-footer"><div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div><button class="checkout-btn">Proceed to Checkout</button></div>
+  <div class="cart-footer"><div class="cart-total"><span data-i18n="cart_total">Total</span><span id="cartTotal">$0</span></div><button class="checkout-btn" data-i18n="cart_checkout">Proceed to Checkout</button></div>
 </div>
 <footer>
   <div class="f-brand">A.1MM</div>
-  <div class="f-links"><a onclick="go('home')">Home</a><a onclick="go('apparel')">Collection</a><a onclick="go('divination')">Divination</a><a href="mailto:ritual@a1mm.com">Contact</a></div>
-  <p class="f-copy">© MMXXVI A.1MM — All rites reserved. ☩</p>
+  <div class="f-links"><a onclick="go('home')" data-i18n="nav_home">Home</a><a onclick="go('apparel')" data-i18n="nav_collection">Collection</a><a onclick="go('divination')" data-i18n="nav_divination">Divination</a><a href="mailto:ritual@a1mm.com" data-i18n="nav_contact">Contact</a></div>
+  <p class="f-copy" data-i18n="footer_copy">© MMXXVI A.1MM — All rites reserved. ☩</p>
 </footer>
 
 <script>
@@ -648,84 +654,84 @@ function updBadge(){document.getElementById('cartBadge').textContent=cart.reduce
 
 // ══════════════ 78-CARD DECK ══════════════
 var D=[
-["The Fool","9/90/RWS_Tarot_00_Fool.jpg","A leap of faith into the unknown.",8,7,6,9,"Recklessness clouds your path.",4,4,3,5],
-["The Magician","d/de/RWS_Tarot_01_Magician.jpg","Channel willpower into manifestation.",9,7,9,8,"Manipulation or squandered talent.",4,3,4,3],
-["The High Priestess","8/88/RWS_Tarot_02_High_Priestess.jpg","Intuition speaks louder than logic.",7,8,6,10,"Secrets withheld or intuition blocked.",4,4,5,3],
-["The Empress","d/d2/RWS_Tarot_03_Empress.jpg","Abundance flows. Creativity surrounds you.",9,9,7,8,"Creative block or smothering love.",4,5,4,4],
-["The Emperor","c/c3/RWS_Tarot_04_Emperor.jpg","Structure and authority serve you.",8,6,9,6,"Tyranny or rigidity.",5,3,4,4],
-["The Hierophant","8/8d/RWS_Tarot_05_Hierophant.jpg","Seek guidance from tradition or a mentor.",7,7,7,8,"Dogma suffocates growth.",5,4,5,4],
-["The Lovers","3/3a/RWS_Tarot_06_Lovers.jpg","A sacred union or pivotal choice.",8,10,6,9,"Disharmony or avoidance of choice.",4,3,4,4],
-["The Chariot","9/9b/RWS_Tarot_07_Chariot.jpg","Willpower conquers obstacles.",9,6,9,7,"Loss of direction.",4,4,3,4],
-["Strength","f/f5/RWS_Tarot_08_Strength.jpg","Gentle courage tames the beast within.",8,8,7,9,"Self-doubt or raw impulse.",4,4,4,3],
-["The Hermit","4/4d/RWS_Tarot_09_Hermit.jpg","Withdraw to illuminate.",6,5,6,10,"Isolation becomes avoidance.",3,3,4,4],
-["Wheel of Fortune","3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg","The wheel turns in your favor.",9,7,8,8,"Resistance to change.",3,4,3,4],
-["Justice","e/e0/RWS_Tarot_11_Justice.jpg","Truth and fairness prevail.",7,6,8,8,"Injustice or dishonesty.",4,4,3,4],
-["The Hanged Man","2/2b/RWS_Tarot_12_Hanged_Man.jpg","Surrender to gain perspective.",6,6,5,9,"Stalling without purpose.",3,3,3,4],
-["Death","d/d7/RWS_Tarot_13_Death.jpg","Transformation. Endings are beginnings.",7,6,6,9,"Resistance to necessary endings.",3,3,3,4],
-["Temperance","f/f8/RWS_Tarot_14_Temperance.jpg","Balance and alchemy. Moderation is mastery.",8,7,7,9,"Excess or impatience.",4,4,4,4],
-["The Devil","5/55/RWS_Tarot_15_Devil.jpg","Bondage to shadow pleasures.",5,4,5,4,"Breaking free from toxic patterns.",7,6,6,7],
-["The Tower","5/53/RWS_Tarot_16_Tower.jpg","Sudden upheaval clears false structures.",4,3,3,7,"Avoiding inevitable collapse.",3,3,3,4],
-["The Star","d/db/RWS_Tarot_17_Star.jpg","Hope after darkness.",9,8,7,10,"Despair or disconnection from hope.",3,4,4,3],
-["The Moon","7/7f/RWS_Tarot_18_Moon.jpg","Illusion and the subconscious stir.",6,6,5,8,"Clarity emerges from confusion.",7,6,6,7],
-["The Sun","1/17/RWS_Tarot_19_Sun.jpg","Radiant joy and success.",10,9,9,10,"Dimmed joy or temporary setbacks.",6,5,5,5],
-["Judgement","d/dd/RWS_Tarot_20_Judgement.jpg","Rise to your higher purpose.",8,7,8,9,"Self-doubt blocks your rising.",4,4,4,3],
-["The World","f/ff/RWS_Tarot_21_World.jpg","Completion and wholeness.",10,9,10,10,"Incompletion. Finish what was started.",5,5,4,5],
-["Ace of Wands","1/11/Wands01.jpg","A spark of inspiration ignites.",9,7,8,8,"Delayed initiative.",4,4,4,4],
-["Two of Wands","0/0f/Wands02.jpg","Planning and foresight.",7,6,8,7,"Fear stalls progress.",4,4,4,4],
-["Three of Wands","f/ff/Wands03.jpg","Expansion. Vision gains momentum.",8,6,8,7,"Delays in returns.",4,4,3,4],
-["Four of Wands","a/a4/Wands04.jpg","Celebration and homecoming.",8,9,7,8,"Unstable foundations.",4,4,4,4],
-["Five of Wands","9/9d/Wands05.jpg","Competition and conflict.",6,4,6,5,"Avoidance of conflict.",4,4,4,4],
-["Six of Wands","3/3b/Wands06.jpg","Victory and recognition.",9,7,9,7,"Ego inflation.",4,4,3,4],
-["Seven of Wands","e/e4/Wands07.jpg","Defend your position.",7,5,7,7,"Overwhelmed or giving up.",3,4,3,4],
-["Eight of Wands","6/6b/Wands08.jpg","Swift movement.",9,7,8,7,"Delays or scattered energy.",4,4,3,4],
-["Nine of Wands","e/e7/Wands09.jpg","Resilience near the finish.",6,5,7,7,"Paranoia or burnout.",3,3,3,4],
-["Ten of Wands","0/0b/Wands10.jpg","Heavy burdens carried alone.",4,4,5,4,"Release of burdens.",7,6,6,6],
-["Page of Wands","6/6a/Wands11.jpg","Enthusiastic new energy.",8,6,7,7,"Scattered enthusiasm.",4,4,3,4],
-["Knight of Wands","1/16/Wands12.jpg","Bold action and charisma.",9,7,8,7,"Reckless haste.",4,3,4,4],
-["Queen of Wands","0/0d/Wands13.jpg","Magnetic confidence.",9,8,9,8,"Jealousy or domineering.",4,3,4,3],
-["King of Wands","c/ce/Wands14.jpg","Visionary leadership.",9,7,10,8,"Tyrannical leadership.",4,3,3,3],
-["Ace of Cups","3/36/Cups01.jpg","Emotional new beginning. Love overflows.",8,10,6,9,"Blocked emotions.",4,3,4,4],
-["Two of Cups","f/f8/Cups02.jpg","Partnership and mutual attraction.",8,10,7,8,"Imbalance in partnership.",4,3,4,4],
-["Three of Cups","7/7a/Cups03.jpg","Celebration with community.",8,8,7,8,"Overindulgence or drama.",4,4,4,4],
-["Four of Cups","3/35/Cups04.jpg","Contemplation. An offering is missed.",4,4,4,6,"Renewed motivation.",7,6,6,6],
-["Five of Cups","d/d7/Cups05.jpg","Grief. Two cups remain standing.",3,3,4,5,"Acceptance and moving on.",7,6,6,7],
-["Six of Cups","1/17/Cups06.jpg","Nostalgia and innocent joy.",7,8,5,7,"Living in the past.",4,4,4,4],
-["Seven of Cups","a/ae/Cups07.jpg","Fantasy and choices.",6,5,5,6,"Clarity from confusion.",7,6,6,7],
-["Eight of Cups","6/60/Cups08.jpg","Walking away for deeper meaning.",6,4,5,8,"Fear of abandoning the familiar.",4,4,3,4],
-["Nine of Cups","2/24/Cups09.jpg","Wish fulfillment.",9,9,8,9,"Smugness masks emptiness.",5,4,5,4],
-["Ten of Cups","8/84/Cups10.jpg","Emotional fulfillment.",10,10,8,9,"Broken harmony.",4,3,4,4],
-["Page of Cups","a/ad/Cups11.jpg","Intuitive offering surfaces.",7,7,6,8,"Emotional immaturity.",4,3,4,4],
-["Knight of Cups","f/fa/Cups12.jpg","Romantic proposal.",7,9,6,8,"Moodiness or unrealism.",4,3,3,4],
-["Queen of Cups","6/62/Cups13.jpg","Emotional depth and compassion.",8,9,6,9,"Overwhelm or codependency.",3,3,4,3],
-["King of Cups","0/04/Cups14.jpg","Emotional mastery and calm authority.",8,8,8,9,"Manipulation or volatility.",4,3,4,3],
-["Ace of Swords","1/1a/Swords01.jpg","Mental breakthrough and clarity.",8,6,9,7,"Confusion or harsh words.",4,3,4,3],
-["Two of Swords","9/9e/Swords02.jpg","Difficult decision.",5,5,5,5,"Forced choice brings freedom.",6,5,6,6],
-["Three of Swords","0/02/Swords03.jpg","Heartbreak. Grief must be felt.",3,2,4,5,"Recovery from heartbreak.",6,5,5,6],
-["Four of Swords","b/bf/Swords04.jpg","Rest and recuperation.",5,5,5,8,"Restlessness or burnout.",3,4,3,4],
-["Five of Swords","2/23/Swords05.jpg","Hollow victory.",4,3,5,3,"Reconciliation. Pride softens.",6,6,5,6],
-["Six of Swords","2/29/Swords06.jpg","Transition to calmer waters.",6,5,6,7,"Stuck in rough waters.",3,3,3,4],
-["Seven of Swords","3/34/Swords07.jpg","Strategy or deception.",5,3,6,4,"Conscience returns.",5,5,4,6],
-["Eight of Swords","a/a7/Swords08.jpg","Mental imprisonment.",3,3,3,4,"Breaking free.",7,6,6,7],
-["Nine of Swords","2/2f/Swords09.jpg","Anxiety and nightmares.",2,3,3,3,"Release from anxiety.",6,5,5,6],
-["Ten of Swords","d/d4/Swords10.jpg","Rock bottom. Sunrise on horizon.",2,2,2,5,"The worst is over.",6,5,5,6],
-["Page of Swords","4/4c/Swords11.jpg","Curiosity and vigilance.",7,5,7,6,"Gossip or all talk.",4,3,4,3],
-["Knight of Swords","b/b0/Swords12.jpg","Swift decisive action.",8,5,8,6,"Impulsive or ruthless.",4,3,4,3],
-["Queen of Swords","d/d4/Swords13.jpg","Clear perception.",7,5,8,7,"Cold or overly critical.",4,3,4,3],
-["King of Swords","3/33/Swords14.jpg","Intellectual authority.",7,5,9,7,"Abuse of power.",4,2,4,3],
-["Ace of Pentacles","f/fd/Pents01.jpg","Material new beginning.",8,6,9,7,"Missed opportunity.",4,4,3,4],
-["Two of Pentacles","9/9f/Pents02.jpg","Juggling priorities.",7,6,7,6,"Overwhelm.",3,4,3,4],
-["Three of Pentacles","4/42/Pents03.jpg","Collaboration and craftsmanship.",8,6,9,7,"Poor teamwork.",4,4,3,4],
-["Four of Pentacles","3/35/Pents04.jpg","Security and conservation.",6,4,7,4,"Greed or fear of loss.",4,3,4,5],
-["Five of Pentacles","9/96/Pents05.jpg","Hardship. Sanctuary is near.",3,3,3,4,"Recovery from loss.",6,6,6,6],
-["Six of Pentacles","a/a6/Pents06.jpg","Generosity and reciprocity.",8,7,7,8,"Strings attached.",4,4,4,4],
-["Seven of Pentacles","6/6a/Pents07.jpg","Patience. Do not dig up seeds.",6,6,7,7,"Impatience.",4,4,3,4],
-["Eight of Pentacles","4/49/Pents08.jpg","Dedicated craftsmanship.",8,5,9,6,"Perfectionism or drudgery.",4,4,4,3],
-["Nine of Pentacles","f/f0/Pents09.jpg","Luxury earned independently.",9,7,9,8,"Over-dependence.",4,4,4,4],
-["Ten of Pentacles","4/42/Pents10.jpg","Legacy and generational wealth.",9,8,9,8,"Family conflict.",4,3,4,4],
-["Page of Pentacles","e/ec/Pents11.jpg","Studious ambition.",7,5,7,6,"Dreams without discipline.",4,4,3,4],
-["Knight of Pentacles","d/d5/Pents12.jpg","Steady progress.",7,6,8,6,"Stagnation.",3,4,3,4],
-["Queen of Pentacles","8/88/Pents13.jpg","Nurturing abundance.",8,8,8,7,"Neglect of self.",4,4,4,3],
-["King of Pentacles","1/1c/Pents14.jpg","Material mastery.",9,7,10,7,"Corruption by wealth.",4,3,4,3]
+["The Fool","9/90/RWS_Tarot_00_Fool.jpg","A leap of faith into the unknown.",8,7,6,9,"Recklessness clouds your path.",6,6,5,7],
+["The Magician","d/de/RWS_Tarot_01_Magician.jpg","Channel willpower into manifestation.",9,7,9,8,"Manipulation or squandered talent.",6,5,6,5],
+["The High Priestess","8/88/RWS_Tarot_02_High_Priestess.jpg","Intuition speaks louder than logic.",7,8,6,10,"Secrets withheld or intuition blocked.",6,6,7,5],
+["The Empress","d/d2/RWS_Tarot_03_Empress.jpg","Abundance flows. Creativity surrounds you.",9,9,7,8,"Creative block or smothering love.",6,7,6,6],
+["The Emperor","c/c3/RWS_Tarot_04_Emperor.jpg","Structure and authority serve you.",8,6,9,6,"Tyranny or rigidity.",7,5,6,6],
+["The Hierophant","8/8d/RWS_Tarot_05_Hierophant.jpg","Seek guidance from tradition or a mentor.",7,7,7,8,"Dogma suffocates growth.",7,6,7,6],
+["The Lovers","3/3a/RWS_Tarot_06_Lovers.jpg","A sacred union or pivotal choice.",8,10,6,9,"Disharmony or avoidance of choice.",6,5,6,6],
+["The Chariot","9/9b/RWS_Tarot_07_Chariot.jpg","Willpower conquers obstacles.",9,6,9,7,"Loss of direction.",6,6,5,6],
+["Strength","f/f5/RWS_Tarot_08_Strength.jpg","Gentle courage tames the beast within.",8,8,7,9,"Self-doubt or raw impulse.",6,6,6,5],
+["The Hermit","4/4d/RWS_Tarot_09_Hermit.jpg","Withdraw to illuminate.",6,5,6,10,"Isolation becomes avoidance.",5,5,6,6],
+["Wheel of Fortune","3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg","The wheel turns in your favor.",9,7,8,8,"Resistance to change.",5,6,5,6],
+["Justice","e/e0/RWS_Tarot_11_Justice.jpg","Truth and fairness prevail.",7,6,8,8,"Injustice or dishonesty.",6,6,5,6],
+["The Hanged Man","2/2b/RWS_Tarot_12_Hanged_Man.jpg","Surrender to gain perspective.",6,6,5,9,"Stalling without purpose.",5,5,5,6],
+["Death","d/d7/RWS_Tarot_13_Death.jpg","Transformation. Endings are beginnings.",7,6,6,9,"Resistance to necessary endings.",5,5,5,6],
+["Temperance","f/f8/RWS_Tarot_14_Temperance.jpg","Balance and alchemy. Moderation is mastery.",8,7,7,9,"Excess or impatience.",6,6,6,6],
+["The Devil","5/55/RWS_Tarot_15_Devil.jpg","Bondage to shadow pleasures.",5,4,5,4,"Breaking free from toxic patterns.",8,8,8,8],
+["The Tower","5/53/RWS_Tarot_16_Tower.jpg","Sudden upheaval clears false structures.",4,3,3,7,"Avoiding inevitable collapse.",5,5,5,6],
+["The Star","d/db/RWS_Tarot_17_Star.jpg","Hope after darkness.",9,8,7,10,"Despair or disconnection from hope.",5,6,6,5],
+["The Moon","7/7f/RWS_Tarot_18_Moon.jpg","Illusion and the subconscious stir.",6,6,5,8,"Clarity emerges from confusion.",8,8,8,8],
+["The Sun","1/17/RWS_Tarot_19_Sun.jpg","Radiant joy and success.",10,9,9,10,"Dimmed joy or temporary setbacks.",8,7,7,7],
+["Judgement","d/dd/RWS_Tarot_20_Judgement.jpg","Rise to your higher purpose.",8,7,8,9,"Self-doubt blocks your rising.",6,6,6,5],
+["The World","f/ff/RWS_Tarot_21_World.jpg","Completion and wholeness.",10,9,10,10,"Incompletion. Finish what was started.",7,7,6,7],
+["Ace of Wands","1/11/Wands01.jpg","A spark of inspiration ignites.",9,7,8,8,"Delayed initiative.",6,6,6,6],
+["Two of Wands","0/0f/Wands02.jpg","Planning and foresight.",7,6,8,7,"Fear stalls progress.",6,6,6,6],
+["Three of Wands","f/ff/Wands03.jpg","Expansion. Vision gains momentum.",8,6,8,7,"Delays in returns.",6,6,5,6],
+["Four of Wands","a/a4/Wands04.jpg","Celebration and homecoming.",8,9,7,8,"Unstable foundations.",6,6,6,6],
+["Five of Wands","9/9d/Wands05.jpg","Competition and conflict.",6,4,6,5,"Avoidance of conflict.",6,6,6,6],
+["Six of Wands","3/3b/Wands06.jpg","Victory and recognition.",9,7,9,7,"Ego inflation.",6,6,5,6],
+["Seven of Wands","e/e4/Wands07.jpg","Defend your position.",7,5,7,7,"Overwhelmed or giving up.",5,6,5,6],
+["Eight of Wands","6/6b/Wands08.jpg","Swift movement.",9,7,8,7,"Delays or scattered energy.",6,6,5,6],
+["Nine of Wands","e/e7/Wands09.jpg","Resilience near the finish.",6,5,7,7,"Paranoia or burnout.",5,5,5,6],
+["Ten of Wands","0/0b/Wands10.jpg","Heavy burdens carried alone.",4,4,5,4,"Release of burdens.",8,8,8,8],
+["Page of Wands","6/6a/Wands11.jpg","Enthusiastic new energy.",8,6,7,7,"Scattered enthusiasm.",6,6,5,6],
+["Knight of Wands","1/16/Wands12.jpg","Bold action and charisma.",9,7,8,7,"Reckless haste.",6,5,6,6],
+["Queen of Wands","0/0d/Wands13.jpg","Magnetic confidence.",9,8,9,8,"Jealousy or domineering.",6,5,6,5],
+["King of Wands","c/ce/Wands14.jpg","Visionary leadership.",9,7,10,8,"Tyrannical leadership.",6,5,5,5],
+["Ace of Cups","3/36/Cups01.jpg","Emotional new beginning. Love overflows.",8,10,6,9,"Blocked emotions.",6,5,6,6],
+["Two of Cups","f/f8/Cups02.jpg","Partnership and mutual attraction.",8,10,7,8,"Imbalance in partnership.",6,5,6,6],
+["Three of Cups","7/7a/Cups03.jpg","Celebration with community.",8,8,7,8,"Overindulgence or drama.",6,6,6,6],
+["Four of Cups","3/35/Cups04.jpg","Contemplation. An offering is missed.",4,4,4,6,"Renewed motivation.",8,8,8,8],
+["Five of Cups","d/d7/Cups05.jpg","Grief. Two cups remain standing.",3,3,4,5,"Acceptance and moving on.",8,8,8,8],
+["Six of Cups","1/17/Cups06.jpg","Nostalgia and innocent joy.",7,8,5,7,"Living in the past.",6,6,6,6],
+["Seven of Cups","a/ae/Cups07.jpg","Fantasy and choices.",6,5,5,6,"Clarity from confusion.",8,8,8,8],
+["Eight of Cups","6/60/Cups08.jpg","Walking away for deeper meaning.",6,4,5,8,"Fear of abandoning the familiar.",6,6,5,6],
+["Nine of Cups","2/24/Cups09.jpg","Wish fulfillment.",9,9,8,9,"Smugness masks emptiness.",7,6,7,6],
+["Ten of Cups","8/84/Cups10.jpg","Emotional fulfillment.",10,10,8,9,"Broken harmony.",6,5,6,6],
+["Page of Cups","a/ad/Cups11.jpg","Intuitive offering surfaces.",7,7,6,8,"Emotional immaturity.",6,5,6,6],
+["Knight of Cups","f/fa/Cups12.jpg","Romantic proposal.",7,9,6,8,"Moodiness or unrealism.",6,5,5,6],
+["Queen of Cups","6/62/Cups13.jpg","Emotional depth and compassion.",8,9,6,9,"Overwhelm or codependency.",5,5,6,5],
+["King of Cups","0/04/Cups14.jpg","Emotional mastery and calm authority.",8,8,8,9,"Manipulation or volatility.",6,5,6,5],
+["Ace of Swords","1/1a/Swords01.jpg","Mental breakthrough and clarity.",8,6,9,7,"Confusion or harsh words.",6,5,6,5],
+["Two of Swords","9/9e/Swords02.jpg","Difficult decision.",5,5,5,5,"Forced choice brings freedom.",8,7,8,8],
+["Three of Swords","0/02/Swords03.jpg","Heartbreak. Grief must be felt.",3,2,4,5,"Recovery from heartbreak.",8,7,7,8],
+["Four of Swords","b/bf/Swords04.jpg","Rest and recuperation.",5,5,5,8,"Restlessness or burnout.",5,6,5,6],
+["Five of Swords","2/23/Swords05.jpg","Hollow victory.",4,3,5,3,"Reconciliation. Pride softens.",8,8,7,8],
+["Six of Swords","2/29/Swords06.jpg","Transition to calmer waters.",6,5,6,7,"Stuck in rough waters.",5,5,5,6],
+["Seven of Swords","3/34/Swords07.jpg","Strategy or deception.",5,3,6,4,"Conscience returns.",7,7,6,8],
+["Eight of Swords","a/a7/Swords08.jpg","Mental imprisonment.",3,3,3,4,"Breaking free.",8,8,8,8],
+["Nine of Swords","2/2f/Swords09.jpg","Anxiety and nightmares.",2,3,3,3,"Release from anxiety.",8,7,7,8],
+["Ten of Swords","d/d4/Swords10.jpg","Rock bottom. Sunrise on horizon.",2,2,2,5,"The worst is over.",8,7,7,8],
+["Page of Swords","4/4c/Swords11.jpg","Curiosity and vigilance.",7,5,7,6,"Gossip or all talk.",6,5,6,5],
+["Knight of Swords","b/b0/Swords12.jpg","Swift decisive action.",8,5,8,6,"Impulsive or ruthless.",6,5,6,5],
+["Queen of Swords","d/d4/Swords13.jpg","Clear perception.",7,5,8,7,"Cold or overly critical.",6,5,6,5],
+["King of Swords","3/33/Swords14.jpg","Intellectual authority.",7,5,9,7,"Abuse of power.",6,4,6,5],
+["Ace of Pentacles","f/fd/Pents01.jpg","Material new beginning.",8,6,9,7,"Missed opportunity.",6,6,5,6],
+["Two of Pentacles","9/9f/Pents02.jpg","Juggling priorities.",7,6,7,6,"Overwhelm.",5,6,5,6],
+["Three of Pentacles","4/42/Pents03.jpg","Collaboration and craftsmanship.",8,6,9,7,"Poor teamwork.",6,6,5,6],
+["Four of Pentacles","3/35/Pents04.jpg","Security and conservation.",6,4,7,4,"Greed or fear of loss.",6,5,6,7],
+["Five of Pentacles","9/96/Pents05.jpg","Hardship. Sanctuary is near.",3,3,3,4,"Recovery from loss.",8,8,8,8],
+["Six of Pentacles","a/a6/Pents06.jpg","Generosity and reciprocity.",8,7,7,8,"Strings attached.",6,6,6,6],
+["Seven of Pentacles","6/6a/Pents07.jpg","Patience. Do not dig up seeds.",6,6,7,7,"Impatience.",6,6,5,6],
+["Eight of Pentacles","4/49/Pents08.jpg","Dedicated craftsmanship.",8,5,9,6,"Perfectionism or drudgery.",6,6,6,5],
+["Nine of Pentacles","f/f0/Pents09.jpg","Luxury earned independently.",9,7,9,8,"Over-dependence.",6,6,6,6],
+["Ten of Pentacles","4/42/Pents10.jpg","Legacy and generational wealth.",9,8,9,8,"Family conflict.",6,5,6,6],
+["Page of Pentacles","e/ec/Pents11.jpg","Studious ambition.",7,5,7,6,"Dreams without discipline.",6,6,5,6],
+["Knight of Pentacles","d/d5/Pents12.jpg","Steady progress.",7,6,8,6,"Stagnation.",5,6,5,6],
+["Queen of Pentacles","8/88/Pents13.jpg","Nurturing abundance.",8,8,8,7,"Neglect of self.",6,6,6,5],
+["King of Pentacles","1/1c/Pents14.jpg","Material mastery.",9,7,10,7,"Corruption by wealth.",6,5,6,5]
 ];
 var DECK=D.map(function(c){return{name:c[0],img:'https://upload.wikimedia.org/wikipedia/commons/'+c[1],upright:{reading:c[2],energy:c[3],love:c[4],career:c[5],spirit:c[6]},reversed:{reading:c[7],energy:c[8],love:c[9],career:c[10],spirit:c[11]}}});
 
@@ -746,7 +752,7 @@ function initDailyOracle(){
   var state=loadDaily(),el=document.getElementById('dailySpread');el.innerHTML='';
   state.cards.forEach(function(c,idx){var card=DECK[c.index],orient=c.reversed?'reversed':'upright',rd=card[orient];
     var slot=document.createElement('div');slot.className='t-slot'+(c.revealed?' flipped':'');slot.style.width='130px';
-    slot.innerHTML='<div class="t-inner"><div class="t-face t-back"><span></span><div class="label">A.1MM</div></div><div class="t-face t-front"><img src="'+card.img+'" alt="'+card.name+'" class="'+(c.reversed?'reversed':'')+'"><div class="card-name">'+card.name+'</div><div class="orient">'+(c.reversed?'\u27F2 Rev':'\u2191 Up')+'</div></div></div><div class="t-reading '+(c.revealed?'visible':'')+'" id="dr-'+idx+'"><div class="r-text">'+getProReading(card.name,c.reversed)+'</div><div class="r-dims"><div class="r-dim">Energy <span>'+rd.energy+'/10</span></div><div class="r-dim">Love <span>'+rd.love+'/10</span></div><div class="r-dim">Career <span>'+rd.career+'/10</span></div><div class="r-dim">Spirit <span>'+rd.spirit+'/10</span></div></div></div>';
+    slot.innerHTML='<div class="t-inner"><div class="t-face t-back"><span></span><div class="label">A.1MM</div></div><div class="t-face t-front">'+'<img src="'+card.img+'" alt="'+card.name+'" class="'+(c.reversed?'reversed':'')+'" data-rev="'+(c.reversed?'1':'0')+'" onerror="this.outerHTML=makeCardArt(this.alt,this.dataset.rev==1)"><span style="display:none" class="'+(c.reversed?'reversed':'')+'">&nbsp;</span><div class="card-name">'+card.name+'</div><div class="orient">'+(c.reversed?'\u27F2 Rev':'\u2191 Up')+'</div></div></div><div class="t-reading '+(c.revealed?'visible':'')+'" id="dr-'+idx+'"><div class="r-text">'+getProReading(card.name,c.reversed)+'</div><div class="r-dims"><div class="r-dim">Energy <span>'+rd.energy+'/10</span></div><div class="r-dim">Love <span>'+rd.love+'/10</span></div><div class="r-dim">Career <span>'+rd.career+'/10</span></div><div class="r-dim">Spirit <span>'+rd.spirit+'/10</span></div></div></div>';
     if(!c.revealed&&!state.allRevealed)slot.onclick=function(){flipDaily(idx)};else slot.style.cursor='default';
     el.appendChild(slot);
   });
@@ -769,16 +775,16 @@ var currentSpread='three',tarotState={};
 function initTarot(){var rab=document.getElementById('revealAllBtn');if(rab)rab.style.display='none';var el=document.getElementById('spreadTypes');el.innerHTML='';SPREADS.forEach(function(s){el.innerHTML+='<button class="spread-btn'+(s.id===currentSpread?' active':'')+'" onclick="selSpread(\''+s.id+'\')">'+s.name+' · $'+s.price+'</button>'});startSpread()}
 function selSpread(id){var sp=SPREADS.find(function(s){return s.id===id});showPayModal(sp.name+' Spread',''+sp.price,'tarot',function(){currentSpread=id;document.querySelectorAll('.spread-btn').forEach(function(b,i){b.classList.toggle('active',SPREADS[i].id===id)});startSpread()})}
 function startSpread(){var sp=SPREADS.find(function(s){return s.id===currentSpread});var idx=[...Array(78).keys()].sort(function(){return Math.random()-.5}).slice(0,sp.count);tarotState={cards:idx.map(function(i){return{index:i,reversed:Math.random()<.5,revealed:false}}),allRevealed:false};renderSpread();document.getElementById('fortuneBox').className='fortune-box';document.getElementById('fortuneBox').innerHTML='';document.getElementById('synthBox').style.display='none';var rab=document.getElementById('revealAllBtn');if(rab){rab.style.display='block';rab.disabled=false}}
-function renderSpread(){var area=document.getElementById('spreadArea');area.innerHTML='';tarotState.cards.forEach(function(c,idx){var card=DECK[c.index],orient=c.reversed?'reversed':'upright',rd=card[orient];var slot=document.createElement('div');slot.className='t-slot'+(c.revealed?' flipped':'');slot.innerHTML='<div class="t-inner"><div class="t-face t-back"><span></span><div class="label">A.1MM</div></div><div class="t-face t-front"><img src="'+card.img+'" alt="'+card.name+'" class="'+(c.reversed?'reversed':'')+'"><div class="card-name">'+card.name+'</div><div class="orient">'+(c.reversed?'\u27F2 Rev':'\u2191 Up')+'</div></div></div><div class="t-reading '+(c.revealed?'visible':'')+'" id="tr-'+idx+'"><div class="r-text">'+getProReading(card.name,c.reversed)+'</div><div class="r-dims"><div class="r-dim">Energy <span>'+rd.energy+'/10</span></div><div class="r-dim">Love <span>'+rd.love+'/10</span></div><div class="r-dim">Career <span>'+rd.career+'/10</span></div><div class="r-dim">Spirit <span>'+rd.spirit+'/10</span></div></div></div>';if(!c.revealed)slot.onclick=function(){flipSpreadCard(idx)};else slot.style.cursor='default';area.appendChild(slot);if(!c.revealed)gsap.from(slot,{opacity:0,y:24,rotateX:12,duration:.45,delay:idx*.08,ease:'power3.out'})})}
+function renderSpread(){var area=document.getElementById('spreadArea');area.innerHTML='';tarotState.cards.forEach(function(c,idx){var card=DECK[c.index],orient=c.reversed?'reversed':'upright',rd=card[orient];var slot=document.createElement('div');slot.className='t-slot'+(c.revealed?' flipped':'');slot.innerHTML='<div class="t-inner"><div class="t-face t-back"><span></span><div class="label">A.1MM</div></div><div class="t-face t-front">'+'<img src="'+card.img+'" alt="'+card.name+'" class="'+(c.reversed?'reversed':'')+'" data-rev="'+(c.reversed?'1':'0')+'" onerror="this.outerHTML=makeCardArt(this.alt,this.dataset.rev==1)"><span style="display:none" class="'+(c.reversed?'reversed':'')+'">&nbsp;</span><div class="card-name">'+card.name+'</div><div class="orient">'+(c.reversed?'\u27F2 Rev':'\u2191 Up')+'</div></div></div><div class="t-reading '+(c.revealed?'visible':'')+'" id="tr-'+idx+'"><div class="r-text">'+getProReading(card.name,c.reversed)+'</div><div class="r-dims"><div class="r-dim">Energy <span>'+rd.energy+'/10</span></div><div class="r-dim">Love <span>'+rd.love+'/10</span></div><div class="r-dim">Career <span>'+rd.career+'/10</span></div><div class="r-dim">Spirit <span>'+rd.spirit+'/10</span></div></div></div>';if(!c.revealed)slot.onclick=function(){flipSpreadCard(idx)};else slot.style.cursor='default';area.appendChild(slot);if(!c.revealed)gsap.from(slot,{opacity:0,y:24,rotateX:12,duration:.45,delay:idx*.08,ease:'power3.out'})})}
 function flipSpreadCard(idx){if(tarotState.cards[idx].revealed||tarotState.allRevealed)return;tarotState.cards[idx].revealed=true;if(tarotState.cards.every(function(c){return c.revealed}))tarotState.allRevealed=true;var slots=document.querySelectorAll('#spreadArea .t-slot'),slot=slots[idx];slot.classList.add('flipped');slot.style.cursor='default';gsap.fromTo(slot.querySelector('.t-inner'),{rotateY:0,scale:.85},{rotateY:180,scale:1,duration:.8,ease:'back.out(1.4)'});setTimeout(function(){document.getElementById('tr-'+idx).classList.add('visible')},600);if(tarotState.allRevealed){var rab=document.getElementById('revealAllBtn');if(rab)rab.style.display='none';setTimeout(function(){showFortuneGeneric(tarotState,'fortuneBox','Spread Reading');showSynthGeneric(tarotState,'synthBox')},1000)}}
 
 // ══════════════ FORTUNE & SYNTH (shared) ══════════════
-function showFortuneGeneric(state,elId,title){var n=state.cards.length;var sc=state.cards.map(function(c){return DECK[c.index][c.reversed?'reversed':'upright']});var aE=sc.reduce(function(a,s){return a+s.energy},0)/n,aL=sc.reduce(function(a,s){return a+s.love},0)/n,aC=sc.reduce(function(a,s){return a+s.career},0)/n,aS=sc.reduce(function(a,s){return a+s.spirit},0)/n;var t=Math.round((aE+aL+aC+aS)/4*10);var stars=t>=85?'\u2605\u2605\u2605\u2605\u2605':t>=70?'\u2605\u2605\u2605\u2605\u2606':t>=55?'\u2605\u2605\u2605\u2606\u2606':t>=40?'\u2605\u2605\u2606\u2606\u2606':'\u2605\u2606\u2606\u2606\u2606';var tier=t>=85?'Transcendent':t>=70?'Radiant':t>=55?'Balanced':t>=40?'Contemplative':'Transformative';var p=document.getElementById(elId);p.innerHTML='<h2>'+title+'</h2><div class="score">'+t+'/100</div><div class="stars">'+stars+'</div><div class="tier-label">'+tier+'</div><div class="dims-grid"><div class="dim-card"><div class="dl">Energy</div><div class="ds">'+aE.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aE*10+'%"></div></div></div><div class="dim-card"><div class="dl">Love</div><div class="ds">'+aL.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aL*10+'%"></div></div></div><div class="dim-card"><div class="dl">Career</div><div class="ds">'+aC.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aC*10+'%"></div></div></div><div class="dim-card"><div class="dl">Spirit</div><div class="ds">'+aS.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aS*10+'%"></div></div></div></div>';p.classList.add('visible');gsap.fromTo(p,{opacity:0,y:24},{opacity:1,y:0,duration:.8,ease:'power2.out'})}
+function showFortuneGeneric(state,elId,title){var n=state.cards.length;var sc=state.cards.map(function(c){return DECK[c.index][c.reversed?'reversed':'upright']});var aE=sc.reduce(function(a,s){return a+s.energy},0)/n,aL=sc.reduce(function(a,s){return a+s.love},0)/n,aC=sc.reduce(function(a,s){return a+s.career},0)/n,aS=sc.reduce(function(a,s){return a+s.spirit},0)/n;var t=Math.round((aE+aL+aC+aS)/4*10);var stars=t>=78?'\u2605\u2605\u2605\u2605\u2605':t>=62?'\u2605\u2605\u2605\u2605\u2606':t>=48?'\u2605\u2605\u2605\u2606\u2606':t>=35?'\u2605\u2605\u2606\u2606\u2606':'\u2605\u2606\u2606\u2606\u2606';var tier=t>=78?'Transcendent':t>=62?'Radiant':t>=48?'Balanced':t>=35?'Contemplative':'Transformative';var p=document.getElementById(elId);p.innerHTML='<h2>'+title+'</h2><div class="score">'+t+'/100</div><div class="stars">'+stars+'</div><div class="tier-label">'+tier+'</div><div class="dims-grid"><div class="dim-card"><div class="dl">Energy</div><div class="ds">'+aE.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aE*10+'%"></div></div></div><div class="dim-card"><div class="dl">Love</div><div class="ds">'+aL.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aL*10+'%"></div></div></div><div class="dim-card"><div class="dl">Career</div><div class="ds">'+aC.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aC*10+'%"></div></div></div><div class="dim-card"><div class="dl">Spirit</div><div class="ds">'+aS.toFixed(1)+'</div><div class="db"><div class="db-fill" style="width:'+aS*10+'%"></div></div></div></div>';p.classList.add('visible');gsap.fromTo(p,{opacity:0,y:24},{opacity:1,y:0,duration:.8,ease:'power2.out'})}
 function showSynthGeneric(state,elId){
   var n=state.cards.length;
   var sc=state.cards.map(function(c){return DECK[c.index][c.reversed?'reversed':'upright']});
   var t=Math.round(sc.reduce(function(a,s){return a+(s.energy+s.love+s.career+s.spirit)},0)/n/4*10);
-  var tk=t>=85?'transcendent':t>=70?'radiant':t>=55?'balanced':t>=40?'contemplative':'transformative';
+  var tk=t>=78?'transcendent':t>=62?'radiant':t>=48?'balanced':t>=35?'contemplative':'transformative';
   var tpl=SYNTH_TIER[tk];
   // Card list
   var cl=state.cards.map(function(c){return'<strong>'+DECK[c.index].name+'</strong> ('+(c.reversed?'Rev':'Up')+')'}).join(' \u00B7 ');
@@ -909,7 +915,7 @@ function confirmPay(){if(pendingPayCb){var u=loadUser();u.orders.push({type:pend
 
 // ══════════════ ACCOUNT PAGES ══════════════
 function renderOrders(){var u=loadUser(),el=document.getElementById('ordersContent');if(!el)return;if(!u.orders||!u.orders.length){el.innerHTML='<p style="color:var(--bone);opacity:.4;text-align:center;margin-top:40px;font-style:italic">No orders yet.</p>';return}el.innerHTML='<div style="text-align:left">'+u.orders.slice().reverse().map(function(o){var d=new Date(o.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});return'<div style="padding:14px 0;border-bottom:1px solid rgba(201,168,76,.06);display:flex;justify-content:space-between"><div><div style="font-family:var(--f-heading);font-size:.72rem;color:var(--bone);letter-spacing:1px;text-transform:capitalize">'+o.type+(o.tier?' \u2014 '+o.tier:'')+(o.note?' ('+o.note+')':'')+'</div><div style="font-size:.68rem;color:var(--faded);margin-top:2px">'+d+'</div></div><div style="font-family:var(--f-heading);color:var(--gold);font-size:.78rem">'+(o.price?'$'+o.price:'Free')+'</div></div>'}).join('')+'</div>'}
-function renderSubscription(){var u=loadUser(),el=document.getElementById('subContent');if(!el)return;if(u.vip){var d=new Date(u.vipDate).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});el.innerHTML='<div style="padding:30px;border:2px solid var(--gold);background:rgba(201,168,76,.03)"><div style="font-size:2rem;margin-bottom:8px">\u2726</div><div style="font-family:var(--f-display);font-size:1.2rem;color:var(--gold);margin-bottom:6px">'+u.vipTier+'</div><div style="font-size:.88rem;color:var(--bone);opacity:.6;margin-bottom:16px">Active since '+d+'</div><p style="font-size:.85rem;color:var(--bone);opacity:.55;margin-bottom:20px;font-style:italic">All services unlocked.</p><button onclick="cancelSub()" style="font-family:var(--f-heading);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border:1px solid rgba(201,168,76,.15);background:transparent;color:var(--faded);cursor:pointer">Cancel</button></div>';}else{el.innerHTML='<p style="color:var(--bone);opacity:.4;font-style:italic;margin-top:40px">No active subscription.</p><p style="margin-top:12px"><a onclick="go(\'divination\')" style="font-family:var(--f-heading);font-size:.72rem;letter-spacing:2px;color:var(--gold);cursor:pointer;text-decoration:underline">View Plans</a></p>';}}
+function renderSubscription(){var u=loadUser(),el=document.getElementById('subContent');if(!el)return;if(u.vip){var d=new Date(u.vipDate).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});el.innerHTML='<div style="padding:30px;border:2px solid var(--gold);background:rgba(201,168,76,.03)"><div style="font-size:2rem;margin-bottom:8px">\u2726</div><div style="font-family:var(--f-display);font-size:1.2rem;color:var(--gold);margin-bottom:6px">'+u.vipTier+'</div><div style="font-size:.88rem;color:var(--bone);opacity:.6;margin-bottom:16px">Active since '+d+'</div><p style="font-size:.85rem;color:var(--bone);opacity:.55;margin-bottom:20px;font-style:italic">All services unlocked.</p><button onclick="cancelSub()" style="font-family:var(--f-heading);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border:1px solid rgba(201,168,76,.15);background:transparent;color:var(--faded);cursor:pointer" data-i18n="pay_cancel">Cancel</button></div>';}else{el.innerHTML='<p style="color:var(--bone);opacity:.4;font-style:italic;margin-top:40px">No active subscription.</p><p style="margin-top:12px"><a onclick="go(\'divination\')" style="font-family:var(--f-heading);font-size:.72rem;letter-spacing:2px;color:var(--gold);cursor:pointer;text-decoration:underline">View Plans</a></p>';}}
 
 // ══════════════ REVEAL ALL CARDS ══════════════
 function revealAllCards(){
@@ -922,42 +928,141 @@ function revealAllCards(){
 
 
 // ══════════════ PROFESSIONAL TAROT READINGS ══════════════
+// ══════════════ CARD ART (SVG) ══════════════
+var CARD_SYM={
+'The Fool':'0','The Magician':'I','The High Priestess':'II','The Empress':'III','The Emperor':'IV',
+'The Hierophant':'V','The Lovers':'VI','The Chariot':'VII','Strength':'VIII','The Hermit':'IX',
+'Wheel of Fortune':'X','Justice':'XI','The Hanged Man':'XII','Death':'XIII','Temperance':'XIV',
+'The Devil':'XV','The Tower':'XVI','The Star':'XVII','The Moon':'XVIII','The Sun':'XIX',
+'Judgement':'XX','The World':'XXI'};
+var CARD_ICON={
+'The Fool':'\u2605','The Magician':'\u2726','The High Priestess':'\u263D','The Empress':'\u2640',
+'The Emperor':'\u2642','The Hierophant':'\u2721','The Lovers':'\u2661','The Chariot':'\u2726',
+'Strength':'\u2654','The Hermit':'\u2605','Wheel of Fortune':'\u2638','Justice':'\u2696',
+'The Hanged Man':'\u29B6','Death':'\u2620','Temperance':'\u269E','The Devil':'\u2625',
+'The Tower':'\u26A1','The Star':'\u2729','The Moon':'\u263E','The Sun':'\u2609',
+'Judgement':'\u2721','The World':'\u2295'};
+var SUIT_CLR={Wands:'#d45',Cups:'#48c',Swords:'#9ab',Pentacles:'#c9a84c'};
+var SUIT_ICN={Wands:'\u2663',Cups:'\u2661',Swords:'\u2694',Pentacles:'\u2B23'};
+function makeCardArt(name,rev){
+  var isMaj=CARD_SYM[name]!=null;
+  var sym,col,num,shortName;
+  if(isMaj){sym=CARD_ICON[name]||'\u2726';col='#c9a84c';num=CARD_SYM[name];shortName=name.replace('The ','');}
+  else{var s=name.indexOf('Wands')>-1?'Wands':name.indexOf('Cups')>-1?'Cups':name.indexOf('Swords')>-1?'Swords':'Pentacles';
+    sym=SUIT_ICN[s];col=SUIT_CLR[s];shortName=name;
+    var r=name.split(' of ')[0];num={Ace:'A',Two:'2',Three:'3',Four:'4',Five:'5',Six:'6',Seven:'7',Eight:'8',Nine:'9',Ten:'10',Page:'Pg',Knight:'Kn',Queen:'Qu',King:'Kg'}[r]||'';}
+  if(shortName.length>16)shortName=shortName.substring(0,14)+'..';
+  var rotStyle=rev?' style="transform:rotate(180deg)"':'';
+  return '<div'+rotStyle+'><svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:168px;display:block"><defs><linearGradient id="cg'+name.length+'" x1="0" y1="0" x2=".7" y2="1"><stop offset="0%" stop-color="#1a0a2e"/><stop offset="100%" stop-color="#080808"/></linearGradient></defs><rect width="100" height="160" rx="5" fill="url(#cg'+name.length+')" stroke="'+col+'" stroke-width="1.2" opacity=".92"/><rect x="6" y="6" width="88" height="148" rx="3" fill="none" stroke="'+col+'" stroke-width=".4" opacity=".2"/><text x="50" y="74" text-anchor="middle" font-size="32" fill="'+col+'" opacity=".8" font-family="serif">'+sym+'</text><text x="50" y="20" text-anchor="middle" font-size="13" fill="'+col+'" opacity=".65" font-family="Cinzel,serif" font-weight="700" letter-spacing="1.5">'+num+'</text><text x="50" y="152" text-anchor="middle" font-size="13" fill="'+col+'" opacity=".65" font-family="Cinzel,serif" font-weight="700" letter-spacing="1.5" transform="rotate(180 50 148)">'+num+'</text><line x1="18" y1="28" x2="82" y2="28" stroke="'+col+'" stroke-width=".4" opacity=".2"/><line x1="18" y1="132" x2="82" y2="132" stroke="'+col+'" stroke-width=".4" opacity=".2"/><text x="50" y="110" text-anchor="middle" font-size="6" fill="#e8e0d4" opacity=".4" font-family="Cormorant Garamond,serif" font-style="italic">'+shortName+'</text></svg></div>';
+}
+
+// ══════════════ FRIENDLY TAROT READINGS ══════════════
 var PRO_MAJOR={
-"The Fool":{u:"The Fool stands at the precipice between the known and the infinite. Ruled by Uranus, assigned Hebrew letter Aleph (breath of spirit), this is primordial innocence before the descent into matter. The Kabbalistic path between Kether and Chokmah opens. Trust the leap \u2014 the universe has cleared the road even if your mortal eyes cannot see it. A new cycle demands you shed the armor of past experience and move with beginner\u2019s mind. Uranian breakthroughs are imminent.",r:"The Fool reversed warns of recklessness masquerading as spontaneity. Uranus manifests as chaos without purpose. You may be avoiding necessary preparation, or leaping to escape rather than to grow. The shadow warns against spiritual bypassing \u2014 not all emptiness is sacred. Ground yourself before the next step, lest you fall rather than fly."},
-"The Magician":{u:"Mercury\u2019s chosen vessel channels divine will through the four elements arrayed on his altar. Beth, the Hebrew letter of the house, reminds you that you ARE the temple. The path from Kether to Binah activates pure creative intelligence. All tools are present \u2014 your willpower is the fifth element that binds them. This is mastery through focused intention: as above, so below. Expect breakthroughs in communication and manifestation.",r:"The Magician reversed reveals Mercury in its trickster aspect \u2014 manipulation, deceit, or talent squandered on illusions. The tools remain on the altar but the will is scattered. Beware of charlatans, including the one in your mirror. Shadow work: confronting where you use intelligence to avoid rather than to create."},
-"The High Priestess":{u:"The Moon\u2019s sacred guardian sits between the pillars of Boaz and Jachin \u2014 severity and mercy, the known and unknown. Gimel leads from Kether to Tiphareth along the path of intuitive knowing that bypasses rational mind. The Torah scroll holds mysteries revealed only in silence. Your subconscious broadcasts clearly; still the noise and listen. Lunar intuition peaks \u2014 dreams and synchronicities are messages, not coincidences.",r:"Reversed, the High Priestess warns that secrets are being kept from you \u2014 or by you, from yourself. The Moon\u2019s shadow brings denial, repression, and willful blindness. You may be ignoring intuition in favor of comfort. The veil is not a barrier but a mirror \u2014 what you refuse to see in darkness will manifest in waking life."},
-"The Empress":{u:"Venus incarnate in fullest expression \u2014 Daleth, the doorway through which creation pours into the material plane. The path from Chokmah to Binah bridges divine masculine seed into feminine form. Abundance is not something you seek but something you allow. Open your senses to beauty and let creativity flow without judgment. A period of lush growth and sensory awakening begins.",r:"The Empress reversed reveals Venus in her possessive aspect. Creative blocks stem from self-neglect or over-giving that depletes the source. The shadow of the Great Mother is codependency \u2014 nurturing others to avoid nurturing the self. Return to your own garden before tending others\u2019."},
-"The Emperor":{u:"Aries-ruled authority manifests through structure, discipline, and sovereign will. Heh, the window \u2014 through the Emperor\u2019s framework you gain vision and perspective. The path from Chokmah to Tiphareth establishes divine order. This is not tyranny but sacred architecture that allows freedom to flourish within form. Assert your boundaries. Build the throne from which you rule your own kingdom with wisdom.",r:"The Emperor reversed reveals the tyrant within \u2014 Mars in its destructive aspect, rigidity that crushes what it claims to protect. Control born of fear rather than strength. Authority without compassion becomes oppression. Examine where you are either over-controlling or abdicating your rightful power."},
-"The Hierophant":{u:"Taurus grounds the spiritual into teachable tradition \u2014 Vav, the nail connecting heaven to earth. The path from Chokmah to Chesed transmits esoteric wisdom through exoteric forms. A teacher, mentor, or institution holds keys you need. Receive the teaching, then transcend the teacher. Sacred tradition offers structure for growth.",r:"Reversed, tradition calcifies into dogma. The shadow of Taurus is spiritual materialism \u2014 collecting teachings like possessions. You may be trapped in someone else\u2019s belief system or rebelling against all structure without discernment. Become your own hierophant while honoring what came before."},
-"The Lovers":{u:"Gemini\u2019s duality finds resolution in sacred union. Zayin, the sword of discernment, cuts through illusion to reveal authentic choice. The path from Binah to Tiphareth demands choosing with full awareness. This is not merely romance but the alchemical marriage of opposing forces within yourself. A pivotal decision approaches where head and heart must align.",r:"The Lovers reversed warns of disharmony born from avoidance. Gemini\u2019s shadow is indecision that becomes self-betrayal. Misaligned values, broken trust, or refusal to commit. The sword of discernment rusts when unused. Examine which unions are sacred and which are chains disguised as bonds."},
-"The Chariot":{u:"Cancer\u2019s cardinal water surges forward through sheer willpower. Cheth, the fence, contains and directs emotional force into triumph. The sphinxes of light and dark obey through mastery of inner polarity, not domination. Victory comes through emotional intelligence wielded with warrior precision. Move forward \u2014 the cosmos has cleared the road.",r:"Reversed, the charioteer loses the reins. Cancer\u2019s shadow: emotional overwhelm disguised as aggression, or passivity disguised as patience. Direction is lost because internal conflicts pull in opposite directions. Stop. Realign inner polarity before attempting to advance."},
-"Strength":{u:"Leo\u2019s solar fire tamed by infinite gentleness. Teth, the serpent of kundalini energy, rises through the lemniscate of eternal balance. The path from Chesed to Geburah harmonizes mercy with severity. True strength is mastery of instinct through compassion. The lion submits not through force but through recognition of love as supreme power. Your courage now must be soft, patient, and unwavering.",r:"Strength reversed reveals Leo\u2019s shadow \u2014 self-doubt masking as false humility, or raw instinct overwhelming reason. The inner beast slips its leash not because you lack power but because you doubt it. Where have you abandoned your own authority? The serpent energy turns destructive when denied expression."},
-"The Hermit":{u:"Virgo\u2019s discriminating wisdom illuminates through deliberate solitude. Yod, the divine spark, the hand of creation itself. The path from Chesed to Tiphareth is the soul\u2019s pilgrimage inward. The lantern holds the hexagram of integrated truth. This is sacred withdrawal \u2014 the teacher goes to the mountain to return with fire. Your answers are in the silence between heartbeats.",r:"Reversed, sacred solitude becomes pathological isolation. Virgo\u2019s shadow is analysis paralysis \u2014 withdrawing not to seek wisdom but to avoid vulnerability. The lantern dims with fear of what it might reveal. The mountain becomes a prison when you refuse to descend with what you\u2019ve learned."},
-"Wheel of Fortune":{u:"Jupiter\u2019s great wheel turns through Kaph, the open palm of receiving. The path from Chesed to Netzach. The sphinx atop the wheel represents consciousness that remains stable amid change. A major cycle shifts in your favor. Karmic acceleration \u2014 what you seeded in past cycles now bears fruit. Accept the turn with grace.",r:"Reversed, Jupiter\u2019s downturn meets resistance. Excess expectation followed by bitter disappointment. You may be clinging to a cycle that has completed or forcing the wheel\u2019s direction. The karmic lesson is surrender \u2014 the wisdom to know what you can and cannot control."},
-"Justice":{u:"Libra\u2019s scales weigh truth with mathematical precision. Lamed, the ox-goad, drives toward balance. The path from Geburah to Tiphareth demands radical honesty. Legal matters, contracts, and karmic debts are adjudicated now. Cause and effect are clarified \u2014 not punishment but recalibration. Accept what is fair, even if it stings.",r:"Justice reversed warns of dishonesty \u2014 yours or another\u2019s. Libra\u2019s shadow is false equilibrium maintained through denial. Legal outcomes may be unjust. The scales are tampered with. Examine where you are rationalizing unfairness for comfort\u2019s sake."},
-"The Hanged Man":{u:"Neptune dissolves the ego\u2019s grip through sacred surrender. Mem, the waters of the unconscious. The path from Geburah to Hod inverts all assumptions. Odin hung nine days to receive the runes; the crucified god sees the world anew. This is not defeat but deliberate sacrifice of perspective. Let go of how you think things should be.",r:"Reversed, sacrifice becomes martyrdom without purpose. Neptune\u2019s shadow is passive suffering dressed as spirituality. You may be stalling, refusing either the old or the new. Make the sacrifice or end it \u2014 but stop dangling."},
-"Death":{u:"Scorpio\u2019s transformative power strips away what no longer serves. Nun, the seed that must die to become the tree. The path from Tiphareth to Netzach demands ego death for the soul\u2019s resurrection. A major ending clears the field for new growth. Grieve what passes, then turn toward the sunrise visible between the towers. Pluto ensures this transformation is irreversible and necessary.",r:"Death reversed warns of resistance to necessary transformation. Scorpio\u2019s shadow clings to what is decaying, mistaking preservation for loyalty. The longer you postpone the ending, the more painful the collapse. That which refuses to die becomes undead \u2014 animated but lifeless."},
-"Temperance":{u:"Sagittarius\u2019s philosophical fire tempered by angelic alchemy. Samekh, the tent-prop supporting integrated being. The path from Tiphareth to Yesod brings solar consciousness into lunar receptivity. The angel pours between chalices of fire and water, achieving the impossible blend. Moderation is not mediocrity but mastery. Patience and precise calibration yield miracles.",r:"Temperance reversed reveals Sagittarius\u2019s shadow \u2014 excess, impatience, the arrogant belief that more is always better. The alchemical blend is off-ratio. You may be rushing a process that requires time, or numbing yourself to avoid the discipline of integration."},
-"The Devil":{u:"Capricorn\u2019s earthly ambition meets its shadow in chains worn by choice. Ayin, the eye that sees only surfaces. The path from Tiphareth to Hod traps consciousness in materiality. Pan\u2019s laughter echoes: the chains are loose enough to remove. This card mirrors your addiction \u2014 substance, person, pattern, or belief. The Devil doesn\u2019t imprison; he illuminates your complicity.",r:"Reversed, the Devil\u2019s chains shatter. Shadow work bears fruit as you recognize the bondage. An addiction broken, a toxic pattern seen clearly. The dark night yields to dawn. But freedom from one devil means nothing if you immediately seek another."},
-"The Tower":{u:"Mars strikes the tower of false security. Peh, the mouth speaking devastating truth. The path from Hod to Netzach annihilates the intellectual fortress that once served but now imprisons. Lightning is divine will correcting human hubris. What crumbles was never solid. The crown that falls is the ego\u2019s false sovereignty. This destruction is liberation.",r:"The Tower reversed suggests internal collapse, invisible or being delayed. Mars\u2019s force turns inward as anxiety or slow erosion of a condemned structure. Avoiding the inevitable only increases devastation. Sometimes the kindest thing is to strike the match yourself."},
-"The Star":{u:"Aquarius pours celestial waters onto earth and sea. Tzaddi, the fishhook drawing the soul upward. The path from Netzach to Yesod restores hope after devastation. Naked and vulnerable under infinite sky, you are never more connected to Source. The eight-pointed star is the compass of spiritual navigation. Healing flows. Faith is restored as direct experience.",r:"The Star reversed warns of despair or disconnection from hope. Aquarius\u2019s shadow is alienation disguised as independence. You may have lost faith not in the divine but in yourself as worthy of its gifts. Return to the source \u2014 vulnerability is the prerequisite for grace."},
-"The Moon":{u:"Pisces navigates the labyrinth of the unconscious. Qoph, the back of the head where dreams reside. The path from Netzach to Malkuth descends through illusion to embodied truth. Nothing is as it appears. Walk between the towers with instinct as your guide. Neptune heightens psychic sensitivity but also capacity for self-deception.",r:"Reversed, the Moon\u2019s terrors dissipate. What seemed like monsters were projections of unintegrated shadow. The tide recedes, revealing solid ground. Trust the emerging clarity but don\u2019t rush \u2014 some illusions served a protective purpose."},
-"The Sun":{u:"Solar radiance in purest expression. Resh, the face turned toward divine light. The path from Hod to Yesod bathes intellect in golden warmth. The child rides bareback, innocent and free. This is ego integrated with soul \u2014 not destroyed but illuminated. Success, vitality, and clarity shine on all endeavors. The inner child reclaims its throne.",r:"The Sun reversed dims but does not extinguish. Temporary clouds obscure your natural radiance \u2014 imposter syndrome, burnout, or inability to receive joy fully. The inner child retreats behind walls. The light is still there; you have merely turned from it."},
-"Judgement":{u:"Pluto\u2019s trumpet sounds the resurrection of the integrated self. Shin, the triple flame of spirit descending into matter. The path from Hod to Malkuth calls the dead parts of yourself to rise. This is not punishment but recognition \u2014 a higher self calling the earthly self to account, to rise, to remember purpose. A major calling announces itself. Answer.",r:"Judgement reversed: you are ignoring the call. Pluto\u2019s shadow refuses to transform \u2014 hearing the trumpet but pulling the coffin lid closed. Self-doubt or fear keeps you entombed. The resurrection is not optional; its timing depends on your willingness."},
-"The World":{u:"Saturn\u2019s final gift \u2014 completion, integration, the dance at the center of the mandala. Tav, cosmic signature. The path from Yesod to Malkuth brings the entire Tree of Life into manifestation. The four fixed signs surround the dancer who has transcended duality. A major cycle completes. The World is not an ending but the pause before the Fool steps off the next cliff into a higher octave.",r:"The World reversed: near-completion frustrated by a final obstacle. Saturn\u2019s shadow is fear of completion itself \u2014 because to finish is to begin again. Closure is delayed by internal resistance. Tie the last thread. The new world awaits beyond your hesitation."}
+"The Fool":{u:"A brand new chapter is opening for you! The Fool is all about fresh starts, taking that exciting first step into the unknown. You don\u2019t need to have everything figured out \u2014 sometimes the best adventures begin with a leap of faith. Trust your instincts, stay open to surprises, and don\u2019t let fear of the unknown hold you back. The universe is making space for something wonderful.",r:"You might be hesitating at the edge of something new, and that\u2019s okay \u2014 but ask yourself: are you being cautiously wise, or just afraid? Sometimes we overthink things to avoid taking any risk at all. This card gently nudges you to check whether you\u2019re playing it safe out of wisdom or out of fear. A little preparation goes a long way, but don\u2019t prepare forever."},
+"The Magician":{u:"You have everything you need right now to make things happen. The Magician says: your skills, your ideas, your willpower \u2014 they\u2019re all ready to go. This is a powerful moment for turning plans into reality. Focus your energy on one clear goal and watch how things start aligning. You\u2019re more capable than you think.",r:"Your talents are real, but they might be a bit scattered right now. Are you trying to juggle too many things? Or maybe you\u2019re not fully believing in your own abilities? This card asks you to refocus. Pick one thing, commit to it fully, and stop second-guessing yourself. Also watch out for anyone (including yourself) who\u2019s selling you a story that\u2019s too good to be true."},
+"The High Priestess":{u:"Your intuition is speaking loud and clear right now \u2014 are you listening? The High Priestess represents that quiet inner voice that knows things before your logical mind catches up. Pay attention to your gut feelings, your dreams, and those little coincidences that seem meaningful. Not everything needs to be analyzed; some things just need to be felt and trusted.",r:"You might be ignoring a gut feeling that\u2019s trying to tell you something important. Maybe it\u2019s easier to go along with what everyone else thinks, or to stay in denial about something you already know deep down. This card invites you to get quiet, check in with yourself honestly, and stop pushing away the truth just because it\u2019s inconvenient."},
+"The Empress":{u:"Abundance and creativity are flowing your way! The Empress is the ultimate nurturing energy \u2014 think growth, beauty, and things blossoming in your life. This is a wonderful time for creative projects, self-care, connecting with nature, and letting yourself enjoy life\u2019s pleasures. You deserve to feel good and to create beautiful things.",r:"You might be running on empty. Have you been giving so much to others that you forgot about yourself? Or maybe a creative block has you feeling stuck and uninspired? The Empress reversed is a loving reminder to fill your own cup first. Take a bath, go for a walk, cook something delicious. You can\u2019t pour from an empty vessel."},
+"The Emperor":{u:"It\u2019s time to step into your power and take charge of the situation. The Emperor represents structure, discipline, and confident leadership. Whether it\u2019s your career, finances, or personal life, now is the moment to set clear boundaries, make firm decisions, and build something solid. You have the authority and wisdom to lead \u2014 own it.",r:"Are you being too rigid or controlling? Or on the flip side, are you avoiding responsibility and letting things fall apart? This card asks you to find the balance between healthy structure and suffocating control. Strong leadership comes from confidence and compassion, not from fear or force."},
+"The Hierophant":{u:"There\u2019s wisdom available to you through learning, tradition, or a trusted mentor. The Hierophant encourages you to seek guidance \u2014 maybe through a class, a spiritual practice, a counselor, or simply by listening to someone who\u2019s walked this path before. You don\u2019t have to figure everything out alone. Sometimes the old ways hold exactly the answer you need.",r:"Are you following rules that no longer serve you? Maybe someone else\u2019s beliefs have been running your life for too long. This card gives you permission to question the status quo and find your own spiritual or philosophical path. Respect tradition, but don\u2019t let it become a cage."},
+"The Lovers":{u:"A significant choice stands before you, and it\u2019s about aligning your heart with your values. The Lovers isn\u2019t just about romance (though love may be in the air!) \u2014 it\u2019s about any decision where you need to be truly honest about what matters most to you. Choose with your whole heart and don\u2019t compromise on what you believe in.",r:"Something feels off in a relationship or a major decision. Are you avoiding a choice because both options are scary? Or staying in something that doesn\u2019t truly align with your values? This card asks for honest self-reflection about what you really want versus what feels safe or comfortable."},
+"The Chariot":{u:"Victory through determination! The Chariot says you have the drive and willpower to overcome any obstacle in your path right now. Stay focused, keep your eyes on the prize, and don\u2019t let distractions pull you off course. You\u2019re building incredible momentum \u2014 keep pushing forward with confidence. Success is closer than you think.",r:"You might be feeling pulled in different directions, or like you\u2019ve lost your sense of direction entirely. When internal conflicts aren\u2019t resolved, it\u2019s hard to move forward. Take a pause, figure out what you truly want, and then channel all your energy in that one direction. Trying to go everywhere at once gets you nowhere."},
+"Strength":{u:"True strength isn\u2019t about force \u2014 it\u2019s about patience, gentleness, and inner courage. You have the ability to handle whatever challenges come your way, not by fighting harder but by staying calm and compassionate. This card celebrates your resilience and reminds you that the bravest thing is often to respond with love instead of aggression.",r:"Self-doubt might be creeping in, or you may be losing patience with yourself or others. Remember: feeling vulnerable doesn\u2019t mean you\u2019re weak. This card encourages you to be gentle with yourself. Stop trying to force things and let your natural inner strength shine through at its own pace."},
+"The Hermit":{u:"Some alone time is exactly what you need right now. The Hermit isn\u2019t about being lonely \u2014 it\u2019s about deliberately stepping back from the noise to find your own answers. Meditate, journal, take a solo walk, or just sit with your thoughts. The clarity you\u2019re looking for won\u2019t come from others; it\u2019s already inside you, waiting in the quiet.",r:"Are you isolating yourself too much, or avoiding solitude because silence feels uncomfortable? Either extreme is out of balance. If you\u2019ve been hiding from the world, it might be time to reconnect. If you\u2019ve been too busy to think, it\u2019s time to slow down. Find the middle ground between togetherness and solitude."},
+"Wheel of Fortune":{u:"A big shift is happening, and it\u2019s in your favor! The Wheel of Fortune reminds you that life moves in cycles, and right now the wheel is turning toward opportunity and positive change. Embrace what\u2019s coming with an open heart. Things that felt stuck are starting to move again. Good fortune, happy coincidences, and new doors are opening.",r:"Change feels uncomfortable right now, or things aren\u2019t going as planned. Remember: every downturn is temporary. The wheel keeps spinning, and this difficult phase will pass. Instead of fighting the current, focus on what you can learn from it. Sometimes the detour takes you somewhere even better than the original destination."},
+"Justice":{u:"Fairness and truth are on your side. Justice says that honest actions will be rewarded, and situations will resolve in a way that feels right and balanced. If you\u2019ve been doing the right thing, trust that it will pay off. This is also a good time for any legal matters, negotiations, or decisions that require clear-headed thinking.",r:"Something feels unfair, and you might be right. But also ask yourself: am I seeing the full picture? This card invites you to be completely honest \u2014 with others and with yourself. If you\u2019ve been cutting corners or avoiding accountability, now is the time to set things straight. Balance starts from within."},
+"The Hanged Man":{u:"Sometimes the best thing you can do is... nothing. The Hanged Man asks you to pause, let go of control, and look at your situation from a completely different angle. What seems like a delay or sacrifice might actually be the universe creating space for a breakthrough. Patience isn\u2019t passive \u2014 it\u2019s a powerful choice.",r:"You might be stuck in a pattern of sacrifice that isn\u2019t actually serving anyone. Or maybe you\u2019re resisting a necessary pause because slowing down feels scary. This card says: either commit to the surrender fully, or stop pretending you\u2019re okay with being stuck. It\u2019s time to make a move, one way or another."},
+"Death":{u:"Don\u2019t panic \u2014 this card is about transformation, not literal endings! Something in your life is completing its natural cycle to make room for something new and better. Let go of what\u2019s run its course with gratitude. That relationship, job, habit, or phase of life served its purpose, and now it\u2019s time for a beautiful new beginning.",r:"You\u2019re holding on to something that needs to go. Maybe out of fear, habit, or nostalgia, but clinging to the past is preventing your next chapter from beginning. Change is inevitable, and resisting it only makes the transition harder. Take a deep breath and trust that letting go will free you for something amazing."},
+"Temperance":{u:"Balance, patience, and finding your flow \u2014 that\u2019s what Temperance is all about. You\u2019re being asked to blend different parts of your life together harmoniously. No extremes right now; the magic is in moderation and steady progress. Take things one step at a time, and trust that slow and steady wins this particular race.",r:"Things feel out of balance. Maybe you\u2019re working too hard, playing too hard, or swinging between extremes. This card is a friendly warning to pump the brakes before you burn out. Ask yourself where you need more moderation and patience. Forcing faster results right now will actually slow you down."},
+"The Devil":{u:"Time for some radical honesty: what habit, pattern, or attachment is keeping you small? The Devil shines a light on the things we\u2019re chained to by choice \u2014 whether it\u2019s a toxic relationship, an addiction, negative self-talk, or just staying in your comfort zone. The good news? Those chains are looser than you think. You CAN break free.",r:"You\u2019re starting to see through an illusion that held you captive. A pattern is breaking, a truth is dawning, and you\u2019re reclaiming your power. This is incredibly positive! Just be careful not to trade one unhealthy attachment for another. True freedom means being comfortable standing on your own."},
+"The Tower":{u:"Something unexpected is shaking up your world, and while it might feel chaotic, it\u2019s actually clearing away things that weren\u2019t built on solid ground. The Tower\u2019s disruption is a gift in disguise \u2014 it shows you what was never truly secure and makes space for something authentic. After the storm, you\u2019ll build back stronger.",r:"You sense that something is off or about to change, but you\u2019re trying to hold it together. Sometimes it\u2019s better to address the cracks before the whole thing collapses. This card encourages you to be proactive about change rather than waiting for life to force your hand. Controlled demolition is gentler than an earthquake."},
+"The Star":{u:"Hope, healing, and renewed faith \u2014 the Star is one of the most beautiful cards in the deck! After any difficulty, this card promises that things are getting better. You\u2019re being showered with cosmic support and inspiration. Allow yourself to dream again, to believe in good things, and to trust that the universe has your back. The best is yet to come.",r:"You might be feeling hopeless or disconnected from your sense of purpose. It\u2019s okay to feel this way sometimes, but don\u2019t let temporary disappointment make you forget how beautiful and capable you are. This card gently asks: have you given up too soon? The light is still there. Sometimes you just need to look up."},
+"The Moon":{u:"Not everything is as it seems right now. The Moon illuminates the realm of emotions, dreams, and intuition, but it also brings confusion and illusion. Trust your feelings but verify the facts. Pay attention to your dreams and subconscious signals. Something important is trying to surface \u2014 give it time to reveal itself naturally.",r:"Confusion is starting to clear! Things that were murky or scary are being seen in a new light. If you\u2019ve been anxious about something, you may realize it wasn\u2019t as bad as you feared. This is a time of emerging clarity. Trust the process and let the fog lift at its own pace."},
+"The Sun":{u:"Pure joy, success, and positivity! The Sun is the happiest card in the deck and brings warmth, confidence, and good vibes to everything it touches. This is YOUR moment to shine. Celebrate your achievements, express yourself boldly, and soak up the good energy. Things are going wonderfully, and you absolutely deserve it!",r:"Your light is still shining, but something is dimming it \u2014 maybe self-doubt, burnout, or feeling like you don\u2019t deserve good things. This card reminds you that your happiness matters and your inner child deserves joy. Whatever is blocking your sunshine, gently remove it. The warmth is still there, just behind the clouds."},
+"Judgement":{u:"A major awakening or calling is coming through. Judgement is about hearing the call to step into a higher version of yourself \u2014 a new career, a spiritual awakening, or simply the courage to finally pursue what your soul has been whispering about. Rise up! This isn\u2019t about being judged; it\u2019s about answering your life\u2019s purpose.",r:"Are you ignoring an inner calling because it feels too big, too scary, or too different from what you\u2019re used to? This card says the calling won\u2019t go away just because you ignore it. The longer you wait, the louder it gets. Give yourself permission to grow, even if it means outgrowing your current life."},
+"The World":{u:"Congratulations \u2014 you\u2019ve completed a major cycle! The World celebrates achievement, fulfillment, and the deep satisfaction of reaching a meaningful milestone. Take a moment to appreciate how far you\u2019ve come. You\u2019ve earned this. And the best part? This completion opens the door to an exciting new adventure at an even higher level.",r:"You\u2019re so close to finishing something important, but one last hurdle remains. Don\u2019t give up right before the finish line! This card asks: what\u2019s the final piece you need to complete? Sometimes we resist closure because endings feel bittersweet. But completing this chapter is the only way to start the next amazing one."}
 };
 function getProReading(name,isRev){
   var m=PRO_MAJOR[name];
   if(m)return isRev?m.r:m.u;
   var card=DECK.find(function(c){return c.name===name});
-  if(!card)return isRev?'Reversed energy calls for introspection.':'The upright energy flows with clarity.';
+  if(!card)return isRev?'This card in reverse invites you to pause and reflect.':'This card brings positive energy into your reading.';
   var base=isRev?card.reversed.reading:card.upright.reading;
   var suit=name.indexOf('Wands')>-1?'Fire':name.indexOf('Cups')>-1?'Water':name.indexOf('Swords')>-1?'Air':'Earth';
-  var elem={Fire:'Mars and the creative will of Atziluth, the archetypal world',Water:'the Moon and emotional currents of Briah, the creative world',Air:'Mercury and the blade of intellect in Yetzirah, the formative world',Earth:'Venus and material manifestation in Assiah, the world of action'};
-  var shadow={Fire:'burnout, scattered ambition, and misdirected aggression',Water:'emotional flooding, codependency, and boundary dissolution',Air:'anxiety, mental cruelty, and overthinking that paralyzes',Earth:'greed, spiritual stagnation, and clinging to the material'};
-  if(isRev)return base+' The shadow of '+suit+' emerges \u2014 '+shadow[suit]+'. This reversal is not punishment but redirection. Examine where the '+suit.toLowerCase()+' element has become stagnant or destructive. The path forward requires honest shadow work and releasing what no longer serves your highest good.';
-  return base+' The pure essence of '+suit+' flows through this position, activated by '+elem[suit]+'. The planetary influences support decisive movement. Trust the elemental current and let it carry you toward alignment.';
+  var suitName={Fire:'Wands (passion, creativity, ambition)',Water:'Cups (emotions, love, intuition)',Air:'Swords (thoughts, communication, truth)',Earth:'Pentacles (money, health, practical matters)'};
+  var advice={Fire:'Channel your passion into focused action. Creative projects and bold moves are favored right now.',Water:'Trust your emotions and let your intuition guide important decisions. Nurturing relationships brings rewards.',Air:'Clear thinking and honest communication will serve you well. Write down your thoughts to gain clarity.',Earth:'Focus on practical steps and steady progress. Financial and health matters benefit from attention now.'};
+  var revAdvice={Fire:'Your passion may need redirecting. If you feel burned out or scattered, step back and reconnect with what truly excites you.',Water:'Emotional boundaries need attention. Make sure you are caring for yourself as well as others.',Air:'Overthinking might be creating unnecessary stress. Try to simplify and focus on one problem at a time.',Earth:'Are material concerns blocking your spiritual growth? Sometimes less is more. Reassess your priorities.'};
+  if(isRev)return base+' As a card of '+suitName[suit]+', this reversal gently reminds you: '+revAdvice[suit];
+  return base+' As a card of '+suitName[suit]+', the energy here is clear: '+advice[suit];
 }
+
+// ══════════════ i18n LANGUAGE SYSTEM ══════════════
+var currentLang='en';
+var I18N={
+  nav_home:{en:'Home',zh:'\u9996\u9875'},nav_collection:{en:'Collection',zh:'\u7cfb\u5217'},
+  nav_divination:{en:'Divination',zh:'\u5360\u535c'},nav_contact:{en:'Contact',zh:'\u8054\u7cfb'},
+  nav_bag:{en:'Ritual Bag',zh:'\u4eea\u5f0f\u888b'},nav_orders:{en:'My Orders',zh:'\u6211\u7684\u8ba2\u5355'},
+  nav_subscription:{en:'Subscription',zh:'\u8ba2\u9605'},
+  hero_tagline:{en:'Where gothic devotion meets tarot mysticism \u2014 each thread woven with arcane intention.',zh:'\u54e5\u7279\u5f0f\u5fe0\u8bda\u4e0e\u5854\u7f57\u795e\u79d8\u4e3b\u4e49\u7684\u4ea4\u6c47 \u2014 \u6bcf\u4e00\u7f15\u7ebf\u90fd\u7f16\u7ec7\u7740\u795e\u79d8\u7684\u610f\u56fe\u3002'},
+  cat_atelier:{en:'Atelier',zh:'\u5de5\u574a'},cat_atelier_desc:{en:'Garments consecrated under the signs they embody.',zh:'\u5728\u661f\u5ea7\u795d\u798f\u4e0b\u7684\u670d\u88c5\u3002'},
+  cat_divination:{en:'Divination',zh:'\u5360\u535c'},cat_divination_desc:{en:'Tarot, astrology, and astro dice. Peer beyond the veil.',zh:'\u5854\u7f57\u3001\u5360\u661f\u3001\u661f\u8c61\u9ab0\u5b50\u3002\u63ed\u5f00\u5e55\u5e03\u3002'},
+  daily_label:{en:'\u2014 Free Daily Oracle \u2014',zh:'\u2014 \u6bcf\u65e5\u514d\u8d39\u795e\u8c15 \u2014'},
+  daily_title:{en:'Draw Your Fate',zh:'\u62bd\u53d6\u547d\u8fd0'},
+  daily_sub:{en:'Five cards from the 78-card Rider-Waite-Smith deck \u2014 each may appear upright or reversed.',zh:'78\u5f20\u97e6\u7279\u724c\u4e2d\u62bd\u53d65\u5f20 \u2014 \u6bcf\u5f20\u53ef\u80fd\u6b63\u4f4d\u6216\u9006\u4f4d\u3002'},
+  back_sanctum:{en:'\u2190 Back to Sanctum',zh:'\u2190 \u8fd4\u56de\u9996\u9875'},
+  atelier_label:{en:'\u2014 The Atelier \u2014',zh:'\u2014 \u5de5\u574a \u2014'},
+  atelier_title:{en:'The Collection',zh:'\u670d\u88c5\u7cfb\u5217'},
+  atelier_sub:{en:'Each piece is consecrated under the sign it embodies.',zh:'\u6bcf\u4ef6\u4f5c\u54c1\u5728\u5176\u661f\u5ea7\u4e0b\u88ab\u795d\u798f\u3002'},
+  back_collection:{en:'\u2190 Back to Collection',zh:'\u2190 \u8fd4\u56de\u7cfb\u5217'},
+  oracle_label:{en:'\u2014 The Oracle Chamber \u2014',zh:'\u2014 \u795e\u8c15\u5ba4 \u2014'},
+  oracle_title:{en:'Divination Services',zh:'\u5360\u535c\u670d\u52a1'},
+  oracle_sub:{en:'Three sacred instruments to illuminate your path. New seekers receive one complimentary reading of each type.',zh:'\u4e09\u79cd\u795e\u5723\u5de5\u5177\u7167\u4eae\u60a8\u7684\u9053\u8def\u3002\u65b0\u7528\u6237\u6bcf\u79cd\u514d\u8d39\u4f53\u9a8c\u4e00\u6b21\u3002'},
+  free_badge:{en:'\u2726 First Reading Free for All Services',zh:'\u2726 \u6240\u6709\u670d\u52a1\u9996\u6b21\u514d\u8d39'},
+  srv_tarot:{en:'Tarot Spreads',zh:'\u5854\u7f57\u724c\u9635'},
+  srv_tarot_desc:{en:'Single card, three-card, Celtic Cross, relationship, and career layouts.',zh:'\u5355\u724c\u3001\u4e09\u724c\u3001\u51ef\u5c14\u7279\u5341\u5b57\u3001\u611f\u60c5\u3001\u4e8b\u4e1a\u724c\u9635\u3002'},
+  srv_astro:{en:'Astrology Reading',zh:'\u5360\u661f\u89e3\u8bfb'},
+  srv_astro_desc:{en:'Birth chart, annual forecast, planetary transits, moon phase guidance.',zh:'\u661f\u76d8\u3001\u5e74\u5ea6\u9884\u6d4b\u3001\u884c\u661f\u8fc7\u5883\u3001\u6708\u76f8\u6307\u5f15\u3002'},
+  srv_dice:{en:'Astro Dice',zh:'\u661f\u8c61\u9ab0\u5b50'},
+  srv_dice_desc:{en:'Planet \u00D7 Sign \u00D7 House \u2014 three dice cast and interpreted.',zh:'\u884c\u661f\u00D7\u661f\u5ea7\u00D7\u5bab\u4f4d \u2014 \u4e09\u9897\u9ab0\u5b50\u6295\u63b7\u89e3\u8bfb\u3002'},
+  sub_label:{en:'\u2014 Subscription Covenant \u2014',zh:'\u2014 \u8ba2\u9605\u5951\u7ea6 \u2014'},
+  sub_title:{en:'Unlimited Access',zh:'\u65e0\u9650\u8bbf\u95ee'},
+  sub_sub:{en:'Subscribe for unlimited readings across all instruments, plus exclusive perks.',zh:'\u8ba2\u9605\u5373\u53ef\u65e0\u9650\u4f7f\u7528\u6240\u6709\u5360\u535c\u5de5\u5177\u3002'},
+  sub_begin:{en:'Begin the Covenant',zh:'\u5f00\u542f\u5951\u7ea6'},sub_ascend:{en:'Ascend to Devotee',zh:'\u5347\u7ea7\u4fe1\u5f92'},
+  back_oracle:{en:'\u2190 Back to Oracle Chamber',zh:'\u2190 \u8fd4\u56de\u795e\u8c15\u5ba4'},
+  tarot_label:{en:'\u2014 Arcanum I \u2014',zh:'\u2014 \u5965\u79d8 I \u2014'},
+  tarot_title:{en:'Tarot Spreads',zh:'\u5854\u7f57\u724c\u9635'},
+  tarot_sub:{en:'Choose your spread, then tap each card to reveal its whisper.',zh:'\u9009\u62e9\u724c\u9635\uff0c\u70b9\u51fb\u6bcf\u5f20\u724c\u63ed\u793a\u5176\u4f4e\u8bed\u3002'},
+  reveal_all:{en:'\u2726 Reveal All Cards',zh:'\u2726 \u4e00\u952e\u7ffb\u724c'},
+  dice_label:{en:'\u2014 Arcanum III \u2014',zh:'\u2014 \u5965\u79d8 III \u2014'},
+  dice_title:{en:'Astro Dice Oracle',zh:'\u661f\u8c61\u9ab0\u5b50\u795e\u8c15'},
+  dice_sub:{en:'Cast three dice \u2014 Planet, Sign, House \u2014 and the cosmos shall speak.',zh:'\u6295\u63b7\u4e09\u9897\u9ab0\u5b50 \u2014 \u884c\u661f\u3001\u661f\u5ea7\u3001\u5bab\u4f4d \u2014 \u5b87\u5b99\u7ed9\u4e88\u56de\u7b54\u3002'},
+  dice_cast:{en:'Cast the Dice',zh:'\u6295\u63b7\u9ab0\u5b50'},
+  astro_label:{en:'\u2014 Arcanum II \u2014',zh:'\u2014 \u5965\u79d8 II \u2014'},
+  astro_title:{en:'Astrology Readings',zh:'\u5360\u661f\u89e3\u8bfb'},
+  astro_sub:{en:'Select a celestial service to illuminate your cosmic blueprint.',zh:'\u9009\u62e9\u661f\u8c61\u670d\u52a1\uff0c\u7167\u4eae\u60a8\u7684\u5b87\u5b99\u84dd\u56fe\u3002'},
+  celestial_label:{en:"Today's Celestial Snapshot",zh:'\u4eca\u65e5\u661f\u8c61\u5feb\u7167'},
+  birth_sign_label:{en:'Your Birth Sign:',zh:'\u60a8\u7684\u661f\u5ea7\uff1a'},
+  cart_title:{en:'Ritual Bag',zh:'\u4eea\u5f0f\u888b'},cart_total:{en:'Total',zh:'\u5408\u8ba1'},
+  cart_checkout:{en:'Proceed to Checkout',zh:'\u53bb\u7ed3\u7b97'},
+  pay_title:{en:'Unlock Reading',zh:'\u89e3\u9501\u89e3\u8bfb'},
+  pay_or:{en:'or subscribe for unlimited access',zh:'\u6216\u8ba2\u9605\u4eab\u65e0\u9650\u8bbf\u95ee'},
+  pay_sub_link:{en:'View Subscription Plans \u2192',zh:'\u67e5\u770b\u8ba2\u9605\u65b9\u6848 \u2192'},
+  pay_cancel:{en:'Cancel',zh:'\u53d6\u6d88'},pay_now:{en:'Pay Now',zh:'\u7acb\u5373\u652f\u4ed8'},
+  orders_title:{en:'My Orders',zh:'\u6211\u7684\u8ba2\u5355'},
+  mysub_title:{en:'My Subscription',zh:'\u6211\u7684\u8ba2\u9605'},
+  dd_orders:{en:'My Orders',zh:'\u6211\u7684\u8ba2\u5355'},dd_sub:{en:'My Subscription',zh:'\u6211\u7684\u8ba2\u9605'},
+  dd_logout:{en:'Logout',zh:'\u9000\u51fa'},
+  footer_copy:{en:'\u00A9 MMXXVI A.1MM \u2014 All rites reserved. \u2629',zh:'\u00A9 MMXXVI A.1MM \u2014 \u4fdd\u7559\u6240\u6709\u6743\u5229 \u2629'}
+};
+function toggleLang(){currentLang=currentLang==='en'?'zh':'en';localStorage.setItem('a1mm_lang',currentLang);applyLang()}
+function applyLang(){
+  var tb=document.getElementById('langToggle');
+  if(tb)tb.innerHTML=currentLang==='en'?'<span class="active-lang">EN</span> / \u4e2d':'EN / <span class="active-lang">\u4e2d</span>';
+  document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(I18N[k]&&I18N[k][currentLang])el.textContent=I18N[k][currentLang]});
+  var sel=document.getElementById('birthSignSelect');if(sel)sel.options[0].textContent=currentLang==='zh'?'\u9009\u62e9\u60a8\u7684\u661f\u5ea7...':'Select your sign...';
+}
+(function(){var s=localStorage.getItem('a1mm_lang');if(s)currentLang=s})();
+
+
 
 // ══════════════ CELESTIAL ANALYSIS ══════════════
 function initCelestial(){
@@ -1037,7 +1142,7 @@ function showSignAdvice(sign){
 
 
 // ══════════════ INIT ══════════════
-gsap.registerPlugin(ScrollTrigger);updBadge();refreshUserUI();dailyInited=true;initDailyOracle();
+gsap.registerPlugin(ScrollTrigger);updBadge();refreshUserUI();applyLang();dailyInited=true;initDailyOracle();
 gsap.from('.hero h1',{opacity:0,y:36,duration:1,ease:'power3.out'});
 gsap.from('.hero .tagline',{opacity:0,y:24,duration:1,delay:.2,ease:'power3.out'});
 gsap.from('.cat-grid',{opacity:0,y:36,duration:1,delay:.4,ease:'power3.out'});
